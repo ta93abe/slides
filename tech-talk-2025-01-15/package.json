@@ -1,0 +1,21 @@
+{
+  "name": "tech-talk-2025-01-15",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "slidev build",
+    "dev": "slidev --open",
+    "export": "slidev export"
+  },
+  "slidev": {
+    "title": "モダンTypeScript入門",
+    "date": "2025-01-15",
+    "description": "TypeScript 5.x の新機能と実践的な型活用術"
+  },
+  "dependencies": {
+    "@slidev/cli": "^51.8.0",
+    "@slidev/theme-default": "latest",
+    "@slidev/theme-seriph": "latest",
+    "vue": "^3.5.14"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "pug-at-fukuoka-2025-06-06",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "slidev build",
+    "dev": "slidev --open",
+    "export": "slidev export"
+  },
+  "slidev": {
+    "title": "PUG at Fukuoka",
+    "date": "2025-06-06",
+    "description": "Presentation slides for PUG at Fukuoka"
+  },
+  "dependencies": {
+    "@slidev/cli": "^51.8.0",
+    "@slidev/theme-default": "latest",
+    "@slidev/theme-seriph": "latest",
+    "vue": "^3.5.14"
+  }
+}
