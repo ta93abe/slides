@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "build": "node build.js",
     "new": "scaffdog generate slide",
     "dev:pug-at-fukuoka-2025-06-06": "pnpm --filter pug-at-fukuoka-2025-06-06 dev"
   },

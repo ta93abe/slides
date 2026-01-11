@@ -3,7 +3,7 @@
 ## ビルド
 ```bash
 # 全スライドをビルド（dist/に出力）
-deno task build
+pnpm build
 ```
 
 ## 開発
@@ -25,7 +25,7 @@ pnpm install
 ## Cloudflare デプロイ
 ```bash
 # ビルド + デプロイ（CI/CD）
-pnpm install && deno task build
+pnpm install && pnpm build
 npx wrangler deploy
 ```
 
