@@ -1,0 +1,23 @@
+{
+  "name": "slidev-theme-ta93abe",
+  "version": "1.0.0",
+  "type": "module",
+  "engines": {
+    "node": ">=18.0.0",
+    "slidev": ">=51.0.0"
+  },
+  "slidev": {
+    "colorSchema": "both",
+    "defaults": {
+      "fonts": {
+        "sans": "Noto Sans JP",
+        "mono": "Fira Code"
+      },
+      "hightlighter": "shiki"
+    }
+  },
+  "keywords": [
+    "slidev-theme",
+    "slidev"
+  ]
+}

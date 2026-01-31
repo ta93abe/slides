@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Fira+Code:wght@400;500&display=swap');
+
+:root {
+  --slidev-theme-primary: #3b82f6;
+  --slidev-theme-secondary: #10b981;
+  --slidev-theme-accent: #f59e0b;
+}
+
+.slidev-layout {
+  @apply px-14 py-10;
+}
+
+h1 {
+  @apply text-4xl font-bold text-blue-500;
+  background: linear-gradient(135deg, var(--slidev-theme-primary), var(--slidev-theme-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+h2 {
+  @apply text-2xl font-semibold text-gray-700 dark:text-gray-200;
+}
+
+h3 {
+  @apply text-xl font-medium text-gray-600 dark:text-gray-300;
+}
+
+p {
+  @apply text-lg leading-relaxed;
+}
+
+code {
+  @apply font-mono bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-sm;
+}
+
+pre {
+  @apply rounded-lg shadow-lg !bg-gray-900;
+}
+
+a {
+  @apply text-blue-500 hover:text-blue-600 underline underline-offset-2;
+}
+
+ul, ol {
+  @apply space-y-2 text-lg;
+}
+
+li::marker {
+  @apply text-blue-500;
+}
+
+.dark h1 {
+  background: linear-gradient(135deg, #60a5fa, #34d399);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

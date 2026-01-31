@@ -32,8 +32,7 @@ questions:
   },
   "dependencies": {
     "@slidev/cli": "^51.8.0",
-    "@slidev/theme-default": "latest",
-    "@slidev/theme-seriph": "latest",
+    "slidev-theme-ta93abe": "workspace:*",
     "vue": "^3.5.14"
   }
 }
@@ -43,19 +42,22 @@ questions:
 
 ```markdown
 ---
-theme: seriph
-background: https://cover.sli.dev
+theme: ta93abe
 title: {{ inputs.title }}
-class: text-center
 drawings:
   persist: false
 transition: slide-left
 mdc: true
+layout: cover
 ---
 
 # {{ inputs.title }}
 
 {{ inputs.description }}
+
+<template v-slot:footer>
+{{ inputs.date }}
+</template>
 
 ---
 
