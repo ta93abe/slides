@@ -29,7 +29,16 @@ description: This skill should be used when the user asks to "create a new slide
 
 例: `PUG at Fukuoka` + `2025-06-06` → `pug-at-fukuoka-2025-06-06`
 
+## ナレッジソース
+
+スライドの内容を充実させるため、`~/zettelkasten`（Obsidian Vault）から関連ノートを検索・参照する。
+タイトルやトピックに関連するキーワードで Glob/Grep を使って該当ノートを探し、slides.md の素材として活用する。
+
 ## 作成手順
+
+### 0. Obsidian Vaultから関連ノートを検索
+
+タイトル・概要のキーワードで `~/zettelkasten` 内を検索し、関連するノートがあれば内容をスライドに反映する。
 
 ### 1. pnpm create slidev でプロジェクト作成
 

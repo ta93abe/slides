@@ -60,6 +60,10 @@ pnpm --filter <slide-name> export
 
 各スライドの`package.json`内の`slidev`フィールドがビルド対象の識別子。このフィールドがないディレクトリはスキップされる。
 
+## ナレッジソース
+
+- **Obsidian Vault**: `~/zettelkasten` — スライド作成時にノートを参照し、内容の素材として活用する
+
 ## 技術スタック
 
 - **Slidev** (v52+): Markdownベースのプレゼンテーションフレームワーク（Vue 3）
