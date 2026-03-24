@@ -1,0 +1,94 @@
+/* Layout-specific styles */
+
+/* Cover layout */
+.slidev-layout.cover {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.slidev-layout.cover h1 {
+  font-size: 3em;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--enbu-gold-light), var(--enbu-primary), var(--enbu-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.2;
+  margin-bottom: 0.3em;
+}
+
+.slidev-layout.cover p {
+  color: var(--enbu-text-muted);
+  font-size: 1.2em;
+}
+
+/* Center layout */
+.slidev-layout.center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.slidev-layout.center h1 {
+  font-size: 2.5em;
+  background: linear-gradient(135deg, var(--enbu-primary), var(--enbu-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.slidev-layout.center h2 {
+  font-size: 1.6em;
+  color: var(--enbu-text-muted);
+  font-weight: 500;
+}
+
+/* Two-cols layout */
+.slidev-layout.two-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* Section divider — part titles */
+.slidev-layout.section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: radial-gradient(ellipse at bottom, var(--enbu-surface) 0%, var(--enbu-bg) 70%);
+}
+
+.slidev-layout.section h1 {
+  font-size: 2em;
+  color: var(--enbu-text-muted);
+  font-weight: 500;
+}
+
+.slidev-layout.section h2 {
+  font-size: 2.8em;
+  color: var(--enbu-text);
+  font-weight: 900;
+}
+
+/* Flame decoration for section dividers */
+.slidev-layout.section::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, var(--enbu-accent), var(--enbu-primary), var(--enbu-gold), var(--enbu-primary), var(--enbu-accent), transparent);
+  border-radius: 2px;
+}
