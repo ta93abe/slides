@@ -13,7 +13,7 @@ questions:
     message: 'スライドの説明'
 ---
 
-# `{{ inputs.name }}/package.json`
+# `slides/{{ inputs.name }}/package.json`
 
 ```json
 {
@@ -39,7 +39,7 @@ questions:
 }
 ```
 
-# `{{ inputs.name }}/slides.md`
+# `slides/{{ inputs.name }}/slides.md`
 
 ```markdown
 ---
@@ -94,7 +94,7 @@ class: text-center
 
 ```
 
-# `{{ inputs.name }}/.gitignore`
+# `slides/{{ inputs.name }}/.gitignore`
 
 ```
 node_modules
@@ -106,7 +106,7 @@ dist
 components.d.ts
 ```
 
-# `{{ inputs.name }}/.npmrc`
+# `slides/{{ inputs.name }}/.npmrc`
 
 ```
 # for pnpm
