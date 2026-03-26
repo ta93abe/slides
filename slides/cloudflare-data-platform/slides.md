@@ -1,5 +1,5 @@
 ---
-theme: ../theme-enbu
+theme: enbu
 title: Cloudflare Data Platform
 drawings:
   persist: false

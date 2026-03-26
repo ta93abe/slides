@@ -37,6 +37,8 @@ pnpm --filter <slide-name> export
 │       ├── components/            # Vueカスタムコンポーネント（任意）
 │       ├── snippets/              # コードスニペット（任意）
 │       └── pages/                 # 追加ページ（任意）
+├── themes/                        # Slidevカスタムテーマ
+│   └── enbu/                      # 炎舞テーマ（slidev-theme-enbu）
 ├── build.js                       # 全スライド一括ビルドスクリプト
 ├── .claude/skills/new-slide/       # スライド作成スキル
 ├── wrangler.toml                  # Cloudflare Workers設定（dist/を静的配信）
@@ -45,6 +47,15 @@ pnpm --filter <slide-name> export
     ├── slides.json                # スライド一覧メタデータ
     └── _redirects                 # / → ta93abe.com/slides へリダイレクト
 ```
+
+### テーマの利用
+
+`themes/` 配下のテーマは `slidev-theme-*` として pnpm workspace で管理。スライドから利用するには:
+
+1. スライドの `package.json` に `"slidev-theme-enbu": "workspace:*"` を追加
+2. `slides.md` の frontmatter で `theme: enbu` を指定
+
+npm 公開する場合は `themes/enbu/` ディレクトリから `npm publish` するだけで移行可能。
 
 ### ビルドの仕組み（build.js）
 
