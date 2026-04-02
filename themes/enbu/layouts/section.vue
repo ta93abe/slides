@@ -13,7 +13,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100%;
-  background: radial-gradient(ellipse at bottom, var(--enbu-surface) 0%, var(--enbu-bg) 70%);
+  background: radial-gradient(ellipse at bottom, rgba(30, 21, 15, 0.6) 0%, var(--enbu-bg) 70%);
   position: relative;
 }
 
@@ -26,18 +26,19 @@
   bottom: 3rem;
   left: 50%;
   transform: translateX(-50%);
-  width: 200px;
-  height: 3px;
+  width: 160px;
+  height: 2px;
   background: linear-gradient(
     90deg,
     transparent,
-    var(--enbu-accent),
-    var(--enbu-primary),
+    var(--enbu-accent-dark),
+    var(--enbu-primary-dark),
     var(--enbu-gold),
-    var(--enbu-primary),
-    var(--enbu-accent),
+    var(--enbu-primary-dark),
+    var(--enbu-accent-dark),
     transparent
   );
   border-radius: 2px;
+  opacity: 0.4;
 }
 </style>

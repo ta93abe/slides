@@ -1,27 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
 :root {
-  /* Cloudflare Orange */
-  --enbu-primary: #F6821F;
-  --enbu-primary-light: #FFA94D;
-  --enbu-primary-dark: #D4690A;
+  /* 朱色 — 炎の中心 */
+  --enbu-primary: #D4690A;
+  --enbu-primary-light: #E8913A;
+  --enbu-primary-dark: #A34D00;
 
-  /* Flame Red */
-  --enbu-accent: #E03E1A;
-  --enbu-accent-light: #F25C3A;
-  --enbu-accent-dark: #991F05;
+  /* 深紅 — 炎の根元 */
+  --enbu-accent: #8B2500;
+  --enbu-accent-light: #B23817;
+  --enbu-accent-dark: #5C1800;
 
-  /* Flame Gold */
-  --enbu-gold: #FFCC66;
-  --enbu-gold-light: #FFEBB3;
+  /* 琥珀 — 炎の芯 */
+  --enbu-gold: #D4A04A;
+  --enbu-gold-light: #E8C888;
 
-  /* Surfaces */
-  --enbu-bg: #0D0907;
-  --enbu-surface: #1A120E;
-  --enbu-surface-light: #2A1E18;
+  /* 焦茶の闇 */
+  --enbu-bg: #110C08;
+  --enbu-surface: #1E150F;
+  --enbu-surface-light: #2E2118;
 
-  /* Text */
-  --enbu-text: #F5F0EB;
+  /* 和紙のような文字色 */
+  --enbu-text: #E8DDD0;
   --enbu-text-muted: #8B7B6E;
   --enbu-text-dim: #5C4F44;
 
@@ -65,37 +65,39 @@ html.dark {
   line-height: 1.7;
 }
 
-/* Strong / Bold — primary orange */
+/* Strong / Bold */
 .slidev-layout strong {
-  color: var(--enbu-primary);
+  color: var(--enbu-primary-light);
   font-weight: 700;
 }
 
 /* Links */
 .slidev-layout a {
-  color: var(--enbu-primary-light);
+  color: var(--enbu-gold);
   text-decoration: none;
-  border-bottom: 1px solid var(--enbu-primary-dark);
+  border-bottom: 1px solid var(--enbu-gold-light);
   transition: color 0.2s, border-color 0.2s;
+  opacity: 0.85;
 }
 
 .slidev-layout a:hover {
-  color: var(--enbu-gold);
-  border-color: var(--enbu-gold);
+  color: var(--enbu-gold-light);
+  border-color: var(--enbu-gold-light);
+  opacity: 1;
 }
 
-/* Blockquotes — flame accent bar */
+/* Blockquotes */
 .slidev-layout blockquote {
-  border-left: 4px solid var(--enbu-accent);
+  border-left: 3px solid var(--enbu-accent);
   background: var(--enbu-surface);
   padding: 0.75em 1.25em;
-  border-radius: 0 8px 8px 0;
+  border-radius: 0 6px 6px 0;
   color: var(--enbu-text-muted);
   font-style: normal;
 }
 
 .slidev-layout blockquote strong {
-  color: var(--enbu-accent-light);
+  color: var(--enbu-primary);
 }
 
 /* Tables */
@@ -106,7 +108,7 @@ html.dark {
 
 .slidev-layout th {
   background: var(--enbu-surface-light);
-  color: var(--enbu-primary);
+  color: var(--enbu-gold);
   font-weight: 700;
   padding: 0.5em 0.75em;
   border-bottom: 2px solid var(--enbu-accent-dark);
@@ -131,7 +133,7 @@ html.dark {
 
 .slidev-layout ul > li::before {
   content: '▸';
-  color: var(--enbu-primary);
+  color: var(--enbu-primary-dark);
   font-weight: bold;
   margin-left: -1.2em;
   margin-right: 0.4em;
@@ -146,27 +148,28 @@ html.dark {
   font-weight: 700;
 }
 
-/* Horizontal rule — gradient flame line */
+/* Horizontal rule */
 .slidev-layout hr {
   border: none;
-  height: 2px;
+  height: 1px;
   background: linear-gradient(
     90deg,
     transparent,
     var(--enbu-accent-dark),
-    var(--enbu-primary),
+    var(--enbu-primary-dark),
     var(--enbu-gold),
-    var(--enbu-primary),
+    var(--enbu-primary-dark),
     var(--enbu-accent-dark),
     transparent
   );
   margin: 1.5em 0;
+  opacity: 0.6;
 }
 
 /* Selection highlight */
 .slidev-layout ::selection {
-  background: var(--enbu-primary);
-  color: var(--enbu-bg);
+  background: var(--enbu-primary-dark);
+  color: var(--enbu-text);
 }
 
 /* Slide number */
@@ -180,5 +183,5 @@ html.dark {
 }
 
 .slidev-progress > div {
-  background: linear-gradient(90deg, var(--enbu-accent), var(--enbu-primary), var(--enbu-gold));
+  background: linear-gradient(90deg, var(--enbu-accent-dark), var(--enbu-primary-dark), var(--enbu-gold));
 }

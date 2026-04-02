@@ -3,33 +3,33 @@ import { defineUnoSetup } from '@slidev/types'
 export default defineUnoSetup(() => ({
   theme: {
     colors: {
-      // Cloudflare orange
+      // 朱色 — 炎の中心
       primary: {
-        DEFAULT: '#F6821F',
-        light: '#FFA94D',
-        dark: '#D4690A',
+        DEFAULT: '#D4690A',
+        light: '#E8913A',
+        dark: '#A34D00',
       },
-      // Flame red accent
+      // 深紅 — 炎の根元
       accent: {
-        DEFAULT: '#E03E1A',
-        light: '#F25C3A',
-        dark: '#991F05',
+        DEFAULT: '#8B2500',
+        light: '#B23817',
+        dark: '#5C1800',
       },
-      // Flame core gold
+      // 琥珀 — 炎の芯
       gold: {
-        DEFAULT: '#FFCC66',
-        light: '#FFEBB3',
-        dark: '#E6A830',
+        DEFAULT: '#D4A04A',
+        light: '#E8C888',
+        dark: '#B8862E',
       },
-      // Background
+      // 焦茶の闇
       surface: {
-        DEFAULT: '#1A120E',
-        light: '#2A1E18',
-        dark: '#0D0907',
+        DEFAULT: '#1E150F',
+        light: '#2E2118',
+        dark: '#110C08',
       },
-      // Text
+      // 和紙のような文字色
       text: {
-        DEFAULT: '#F5F0EB',
+        DEFAULT: '#E8DDD0',
         muted: '#8B7B6E',
         dim: '#5C4F44',
       },

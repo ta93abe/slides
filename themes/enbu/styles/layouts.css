@@ -14,7 +14,7 @@
 .slidev-layout.cover h1 {
   font-size: 3em;
   font-weight: 900;
-  background: linear-gradient(135deg, var(--enbu-gold-light), var(--enbu-primary), var(--enbu-accent));
+  background: linear-gradient(135deg, var(--enbu-gold-light), var(--enbu-gold), var(--enbu-primary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -38,7 +38,7 @@
 
 .slidev-layout.center h1 {
   font-size: 2.5em;
-  background: linear-gradient(135deg, var(--enbu-primary), var(--enbu-accent));
+  background: linear-gradient(135deg, var(--enbu-gold), var(--enbu-primary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -58,7 +58,7 @@
   align-items: start;
 }
 
-/* Section divider — part titles */
+/* Section divider */
 .slidev-layout.section {
   display: flex;
   flex-direction: column;
@@ -69,15 +69,20 @@
 }
 
 .slidev-layout.section h1 {
-  font-size: 2em;
-  color: var(--enbu-text-muted);
-  font-weight: 500;
+  font-size: 2.4em;
+  color: var(--enbu-text);
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--enbu-gold-light), var(--enbu-gold), var(--enbu-primary-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .slidev-layout.section h2 {
-  font-size: 2.8em;
-  color: var(--enbu-text);
-  font-weight: 900;
+  font-size: 1.2em;
+  color: var(--enbu-text-muted);
+  font-weight: 500;
+  margin-top: 0.5em;
 }
 
 /* Flame decoration for section dividers */
@@ -87,8 +92,9 @@
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 200px;
-  height: 4px;
-  background: linear-gradient(90deg, transparent, var(--enbu-accent), var(--enbu-primary), var(--enbu-gold), var(--enbu-primary), var(--enbu-accent), transparent);
+  width: 160px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--enbu-accent-dark), var(--enbu-primary-dark), var(--enbu-gold), var(--enbu-primary-dark), var(--enbu-accent-dark), transparent);
   border-radius: 2px;
+  opacity: 0.5;
 }

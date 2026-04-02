@@ -33,6 +33,7 @@ onMounted(() => {
     uniform vec2 u_resolution;
     uniform float u_time;
 
+    // --- Simplex noise ---
     vec3 mod289(vec3 x) { return x - floor(x / 289.0) * 289.0; }
     vec2 mod289(vec2 x) { return x - floor(x / 289.0) * 289.0; }
     vec3 permute(vec3 x) { return mod289(((x * 34.0) + 1.0) * x); }
@@ -59,10 +60,65 @@ onMounted(() => {
       return 130.0 * dot(m, g);
     }
 
-    float fbm(vec2 p) {
+    // --- FBM ---
+    float fbm(vec2 p, int octaves) {
       float f = 0.0, amp = 0.5;
-      for (int i = 0; i < 5; i++) { f += amp * snoise(p); p *= 2.1; amp *= 0.5; }
+      for (int i = 0; i < 7; i++) {
+        if (i >= octaves) break;
+        f += amp * snoise(p);
+        p *= 2.03;
+        amp *= 0.48;
+      }
       return f;
+    }
+
+    // Warped FBM for painterly organic feel
+    float warpedFbm(vec2 p, float t) {
+      vec2 q = vec2(fbm(p + vec2(0.0, 0.0), 5), fbm(p + vec2(5.2, 1.3), 5));
+      vec2 r = vec2(fbm(p + 4.0 * q + vec2(1.7, 9.2) + 0.12 * t, 5),
+                     fbm(p + 4.0 * q + vec2(8.3, 2.8) + 0.10 * t, 5));
+      return fbm(p + 3.5 * r, 5);
+    }
+
+    // --- Soft flame tongue (painterly) ---
+    float flameTongue(vec2 p, float t, float seed, float width, float height) {
+      float xOff = snoise(vec2(seed * 13.7, t * 0.5)) * 0.05;
+      float dx = p.x - xOff;
+      // Softer gaussian with wider spread at base
+      float shape = exp(-dx * dx / (width * width * (0.6 + p.y * 2.0)));
+      float tip = smoothstep(height, height * 0.2, p.y);
+      float base = smoothstep(-0.02, 0.08, p.y);
+      // Gentle turbulence
+      float turbulence = snoise(vec2(dx * 6.0 + seed, p.y * 4.0 - t * 2.0)) * 0.25;
+      return shape * tip * base * (1.0 + turbulence);
+    }
+
+    // --- Moth (蛾) ---
+    // Returns intensity of a moth at position, orbiting the flame
+    float moth(vec2 p, float t, float seed, float orbitR, float speed, float size) {
+      // Elliptical orbit around flame center
+      float angle = t * speed + seed * 6.283;
+      float wobble = snoise(vec2(seed * 7.0, t * 0.8)) * 0.3;
+      vec2 center = vec2(
+        cos(angle + wobble) * orbitR * 0.7,
+        sin(angle * 0.7 + wobble) * orbitR + 0.45
+      );
+
+      // Wing flutter
+      float flutter = sin(t * 12.0 + seed * 20.0) * 0.3 + 0.7;
+
+      // Moth body
+      vec2 d = p - center;
+      float dist = length(d);
+
+      // Wing shape: elongated horizontally with flutter
+      float wingSpread = size * (1.0 + flutter * 0.5);
+      float wingShape = exp(-d.x * d.x / (wingSpread * wingSpread) - d.y * d.y / (size * size * 0.4));
+
+      // Soft glow around moth
+      float glow = exp(-dist * dist / (size * size * 3.0)) * 0.3;
+
+      return (wingShape + glow) * smoothstep(0.0, 0.1, dist * 0.5 + 0.05);
     }
 
     void main() {
@@ -71,38 +127,104 @@ onMounted(() => {
       vec2 p = uv;
       p.x = (p.x - 0.5) * aspect;
 
-      float flameWidth = 0.14 + 0.09 * pow(p.y, 0.7);
-      float flameMask = 1.0 - smoothstep(0.0, flameWidth, abs(p.x));
-      float verticalFade = smoothstep(0.88, 0.0, p.y);
-      float bottomFade = smoothstep(-0.02, 0.08, p.y);
-      flameMask *= verticalFade * bottomFade;
+      // Slower, more meditative pace
+      float t = u_time * 0.25;
 
-      float t = u_time * 0.4;
-      vec2 nc = vec2(p.x * 3.0, p.y * 2.5 - t * 2.2);
-      float n1 = fbm(nc);
-      float n2 = fbm(nc * 1.8 + vec2(5.2, 1.3));
-      flameMask += (n1 * 0.15 + n2 * 0.08) * flameMask;
+      // === Main flame body ===
+      float baseWidth = 0.08 + 0.14 * pow(1.0 - p.y, 1.8);
+      float envelope = 1.0 - smoothstep(0.0, baseWidth, abs(p.x));
+      float verticalFade = smoothstep(0.85, 0.0, p.y);
+      float bottomFade = smoothstep(-0.02, 0.06, p.y);
+      float flameMask = envelope * verticalFade * bottomFade;
+
+      // Organic turbulence — more painterly, slower
+      vec2 nc = vec2(p.x * 3.5, p.y * 2.5 - t * 2.0);
+      float warp = warpedFbm(nc * 0.6, t);
+      float detail1 = fbm(nc * 1.0 + vec2(3.1, 7.4), 6);
+
+      // Softer distortion for nihonga feel
+      float distort = snoise(vec2(p.x * 5.0 + t * 0.2, p.y * 3.5 - t * 1.5)) * 0.06;
+      float curl = snoise(vec2(p.x * 10.0, p.y * 6.0 - t * 2.5)) * 0.03;
+
+      flameMask *= 1.0 + warp * 0.2 + detail1 * 0.1 + distort + curl;
       flameMask = clamp(flameMask, 0.0, 1.0);
 
-      vec3 core = vec3(1.0, 0.92, 0.7);
-      vec3 mid = vec3(0.95, 0.5, 0.1);
-      vec3 outer = vec3(0.6, 0.12, 0.02);
-      vec3 edge = vec3(0.25, 0.05, 0.01);
+      // === Flame tongues — fewer, softer ===
+      float tongues = 0.0;
+      tongues += flameTongue(p, t, 0.0, 0.055, 0.72) * 0.55;
+      tongues += flameTongue(p, t * 1.05, 1.0, 0.04, 0.82) * 0.45;
+      tongues += flameTongue(p, t * 0.92, 2.0, 0.05, 0.62) * 0.4;
+      tongues += flameTongue(p, t * 1.15, 3.0, 0.035, 0.52) * 0.3;
+      tongues += flameTongue(p, t * 0.88, 4.0, 0.045, 0.68) * 0.35;
+
+      flameMask = max(flameMask, tongues);
+      flameMask = clamp(flameMask, 0.0, 1.0);
+
+      // === Color palette — 速水御舟「炎舞」に寄せた配色 ===
+      // 暗い焦茶の根元 → 深い朱色 → 琥珀 → 淡い金の芯
+      vec3 coreLight = vec3(0.92, 0.68, 0.28);           // 明るい琥珀（白にせず暖色を保つ）
+      vec3 coreAmber = vec3(0.82, 0.52, 0.15);           // 琥珀
+      vec3 midOrange = vec3(0.72, 0.32, 0.05);           // 深い朱色
+      vec3 deepRed   = vec3(0.55, 0.12, 0.02);           // 暗い朱
+      vec3 darkEdge  = vec3(0.30, 0.08, 0.02);           // 焦げ茶
+      vec3 embers    = vec3(0.15, 0.05, 0.01);            // 闇に溶ける縁
 
       float intensity = flameMask;
-      vec3 fc = mix(edge, outer, smoothstep(0.0, 0.2, intensity));
-      fc = mix(fc, mid, smoothstep(0.15, 0.45, intensity));
-      fc = mix(fc, core, smoothstep(0.5, 0.85, intensity));
-      fc *= snoise(vec2(t * 4.0, 0.0)) * 0.08 + 1.0;
+      float heightBias = smoothstep(0.0, 0.55, p.y) * 0.25;
+      float adjustedI = clamp(intensity + heightBias * intensity, 0.0, 1.0);
 
-      vec3 bg = vec3(0.04, 0.025, 0.015) + vec3(0.03, 0.015, 0.005) * (1.0 - uv.y);
-      float gd = length(vec2(p.x * 0.7, (p.y - 0.25) * 1.2));
-      bg += vec3(0.5, 0.18, 0.03) * exp(-gd * 2.5) * 0.12;
+      vec3 fc = mix(embers, darkEdge, smoothstep(0.0, 0.12, adjustedI));
+      fc = mix(fc, deepRed, smoothstep(0.08, 0.25, adjustedI));
+      fc = mix(fc, midOrange, smoothstep(0.2, 0.45, adjustedI));
+      fc = mix(fc, coreAmber, smoothstep(0.4, 0.7, adjustedI));
+      fc = mix(fc, coreLight, smoothstep(0.75, 0.95, adjustedI));
 
+      // Subtle flicker — less aggressive than before
+      float flicker = snoise(vec2(t * 3.0, p.y * 2.0)) * 0.04 + 1.0;
+      fc *= flicker;
+
+      // === Heat haze ===
+      float hazeY = smoothstep(0.35, 0.9, p.y);
+      float hazeX = exp(-p.x * p.x * 10.0);
+      float haze = hazeY * hazeX * 0.05;
+      haze *= (1.0 + snoise(vec2(p.x * 2.0, p.y * 1.5 - t * 1.0)) * 0.4);
+      vec3 hazeColor = vec3(0.35, 0.12, 0.03) * haze;
+
+      // === Background: 焦げ茶の闇（絵の背景色）===
+      vec3 bg = vec3(0.055, 0.035, 0.022);
+      // Warm glow from flame — 控えめ
+      float gd = length(vec2(p.x * 0.7, (p.y - 0.25) * 0.8));
+      bg += vec3(0.30, 0.08, 0.02) * exp(-gd * 2.5) * 0.12;
+      // Upward warm gradient
+      bg += vec3(0.04, 0.02, 0.008) * (1.0 - uv.y) * 0.4;
+      // Ambient glow
+      bg += vec3(0.2, 0.06, 0.01) * flameMask * 0.1 * exp(-gd * 1.8);
+
+      // === Moths (蛾) ===
+      float mothGlow = 0.0;
+      // 5匹の蛾 — 炎の周りを漂う
+      mothGlow += moth(p, t, 0.0, 0.18, 0.35, 0.012);
+      mothGlow += moth(p, t, 1.3, 0.22, -0.28, 0.010);
+      mothGlow += moth(p, t, 2.7, 0.15, 0.42, 0.011);
+      mothGlow += moth(p, t, 4.1, 0.25, -0.32, 0.009);
+      mothGlow += moth(p, t, 5.5, 0.20, 0.38, 0.010);
+
+      // Moth color — 白銀〜淡い金（絵の蛾の色）
+      vec3 mothColor = vec3(0.85, 0.82, 0.72) * mothGlow * 0.8;
+
+      // === Composite ===
       vec3 color = mix(bg, fc, flameMask);
-      float vignette = 1.0 - length((uv - 0.5) * vec2(1.2, 1.0)) * 0.8;
+      color += hazeColor;
+      color += mothColor;
+
+      // Vignette — stronger for nihonga scroll feel
+      float vignette = 1.0 - length((uv - 0.5) * vec2(1.2, 1.0)) * 0.65;
+      vignette = clamp(vignette, 0.0, 1.0);
+      vignette = smoothstep(0.0, 1.0, vignette);
       color *= vignette;
-      color += (fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453) - 0.5) * 0.02;
+
+      // Very subtle grain — like washi paper texture
+      color += (fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453) - 0.5) * 0.012;
 
       gl_FragColor = vec4(color, 1.0);
     }

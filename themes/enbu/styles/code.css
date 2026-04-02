@@ -22,31 +22,32 @@
   position: relative;
 }
 
-/* Code block top accent line */
+/* Code block top accent line — 控えめに */
 .slidev-layout pre::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--enbu-accent), var(--enbu-primary), var(--enbu-gold));
+  height: 1px;
+  background: linear-gradient(90deg, var(--enbu-accent-dark), var(--enbu-primary-dark), var(--enbu-gold));
   border-radius: 8px 8px 0 0;
+  opacity: 0.5;
 }
 
 /* Shiki line highlighting */
 .slidev-layout .shiki .line.highlighted {
-  background: rgba(246, 130, 31, 0.12);
-  border-left: 3px solid var(--enbu-primary);
-  margin-left: -3px;
+  background: rgba(212, 105, 10, 0.1);
+  border-left: 2px solid var(--enbu-primary-dark);
+  margin-left: -2px;
 }
 
 .slidev-layout .shiki .line.diff.add {
-  background: rgba(76, 175, 80, 0.12);
+  background: rgba(76, 175, 80, 0.1);
 }
 
 .slidev-layout .shiki .line.diff.remove {
-  background: rgba(224, 62, 26, 0.12);
+  background: rgba(139, 37, 0, 0.1);
 }
 
 /* Monaco editor */
