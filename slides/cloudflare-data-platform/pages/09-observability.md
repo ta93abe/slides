@@ -38,3 +38,9 @@ layout: section
 ```
 
 </div>
+
+<div v-click class="mt-4 text-sm op-70">
+
+**vs CloudWatch + X-Ray**: X-Ray はSDK導入 + コード計装が必要。Workers Observability は `enabled: true` だけで全操作が自動トレース。ただし CloudWatch はメトリクス・アラーム・ダッシュボードが統合されており、Workers 側はトレース/ログのエクスポートに留まる。
+
+</div>

@@ -18,8 +18,10 @@ layout: section
 
 <v-click>
 
-```
-Workers（軽量・接着剤）→ 重い処理 → Sandbox（Docker不要）→ さらに低レベル → Containers（任意のDocker）
+```mermaid
+flowchart LR
+    W["Workers\n軽量・接着剤"] -->|重い処理| S["Sandbox\nDocker不要"]
+    S -->|さらに低レベル| C["Containers\n任意のDocker"]
 ```
 
 </v-click>
@@ -32,29 +34,50 @@ Workers（軽量・接着剤）→ 重い処理 → Sandbox（Docker不要）→
 
 ---
 
-# Workers の Binding — ゼロレイテンシ接続
+# Workers の Binding — サービスが変数になる
 
 ```ts
-// Lambda: SDK + IAM + HTTP
+// Lambda: SDK初期化 + IAM認証 + HTTPリクエスト
 const s3 = new S3Client({ region: "us-east-1" });
 await s3.send(new PutObjectCommand({
   Bucket: "my-bucket", Key: "file.json", Body: data
 }));
 
-// Workers: Binding で直接アクセス
+// Workers: Binding で直接アクセス（env にサービスが注入済み）
 await env.BUCKET.put("file.json", data);
 ```
 
 <v-click>
 
-**AWS Lambda**: Policy-based（IAM ポリシーで誰が何をできるか定義）
-
-**Workers**: Capability-based（Binding を持つ Worker だけがアクセス可能）
+| | Lambda + S3 | Workers + R2 |
+|---|---|---|
+| **アクセス制御** | IAM ポリシーで「誰が何をしていいか」定義 | Binding がなければ触る能力自体がない |
+| **コード量** | SDK + 認証 + エラーハンドリング | 1行 |
+| **コールドスタート** | SDK ロード + TLS ハンドシェイク | オーバーヘッドなし |
+| **設定ミスのリスク** | IAM の過剰な権限付与 | `wrangler.jsonc` に書かなければアクセス不可 |
 
 </v-click>
 
 <v-click>
 
-SDK 不要・認証不要・ネットワークホップなし
+**Binding の本質**: 環境変数に接続文字列ではなく **認証済みのサービス参照** が入っている
 
 </v-click>
+
+---
+
+# セキュリティモデルの比較 — トレードオフは逆方向
+
+| | AWS（IAM） | Cloudflare（Binding） |
+|---|---|---|
+| **設計思想** | 細かく制御できる | 間違えにくい |
+| **リスクの方向** | 広すぎるアクセスを与えがち | リソース単位の粗い制御しかできない |
+| **典型的な事故** | `s3:*` + `Resource: *` で全バケット公開 | Worker のコード脆弱性経由でバケット全体にアクセス |
+
+<v-clicks>
+
+- **AWS**: ポリシーが複雑 → 設定ミス → 意図しないアクセスが通る
+- **Cloudflare**: Binding = バケット全体。プレフィックス制限や行レベル制御ができない
+- **どちらが安全か？** → 問いが違う。AWS は「運用の規律」、Cloudflare は「コードの品質」に安全性が依存する
+
+</v-clicks>

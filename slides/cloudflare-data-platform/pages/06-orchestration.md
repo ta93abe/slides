@@ -10,13 +10,14 @@ layout: section
 
 Temporal / Step Functions に相当。TypeScript でコードとして定義。
 
-```
-Cron Trigger → Worker → Workflow
-  Step 1: dlt で SaaS → R2 取込（リトライ: 3回 exponential backoff）
-  Step 2: dbt run で変換（10分タイムアウト）
-  Step 3: Soda でデータ品質チェック（失敗時: Slack アラート）
-  Step 4: Evidence ビルドトリガー
-  Step 5: 完了通知
+```mermaid
+flowchart LR
+    Cron[Cron Trigger] --> Worker --> WF[Workflow]
+    WF --> S1["1. dlt: SaaS → R2 取込\nリトライ: 3回"]
+    S1 --> S2["2. dbt run: 変換\n10分タイムアウト"]
+    S2 --> S3["3. Soda: 品質チェック\n失敗時: Slack"]
+    S3 --> S4["4. Evidence\nビルドトリガー"]
+    S4 --> S5["5. 完了通知"]
 ```
 
 <v-clicks>
@@ -27,3 +28,9 @@ Cron Trigger → Worker → Workflow
 - **クラッシュ耐性** — 途中から再開（Durable Objects が状態保持）
 
 </v-clicks>
+
+<div v-click class="mt-4 text-sm op-70">
+
+**vs Step Functions**: Step Functions は ASL（JSON）でフロー定義。Workflows は TypeScript でロジックとフローが一体。Step Functions の方がビジュアルエディタ・実行履歴UIが成熟。Workflows はコードファーストで軽量だが、GUI での可視化は弱い。
+
+</div>

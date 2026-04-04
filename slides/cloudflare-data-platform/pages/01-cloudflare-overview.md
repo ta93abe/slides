@@ -10,9 +10,9 @@ layout: section
 
 <v-clicks>
 
-- 2010年創業。CDN・DDoS 防御・WAF からスタート
+- 2009年創業。CDN・DDoS 防御・WAF からスタート
 - 現在は **330+ 都市のエッジネットワーク**を持つグローバルクラウドプラットフォーム
-- 2025年通期の年間収益 $2.17B（前年比 +30%）
+- 2025年通期の年間収益 $2.35B（前年比 +27%）
 - Fortune 500 の 38% が顧客、日本では **ISMAP** 取得済み
 
 </v-clicks>
@@ -36,7 +36,7 @@ layout: section
 ```mermaid
 timeline
     title Cloudflare の進化
-    2010 : CDN : DDoS防御・WAF : グローバルエッジネットワーク構築
+    2009 : CDN : DDoS防御・WAF : グローバルエッジネットワーク構築
     2017 : Edge Computing : Cloudflare Workers : V8 Isolate で 0ms コールドスタート
     2019-2024 : ストレージ : KV → DO → R2 → D1 : フルスタック開発基盤
     2023-2025 : AI + クラウドインフラ : Workers AI・Containers : Data Platform

@@ -16,7 +16,7 @@ layout: section
 
 - **2つの入力**: HTTP エンドポイント / Workers Binding
 - **SQL 変換**: フィルタ・正規化・PII マスキングを適用
-- **Exactly-once 配信**: 重複・欠損なし
+- **At-least-once 配信**: メッセージ欠損なし（重複は発生しうる）
 - **Iceberg 自動管理**: JSON → Parquet 変換・パーティショニング自動処理
 
 </v-clicks>
@@ -64,3 +64,9 @@ WHERE event_type != 'debug'
 | **dlt on Sandbox** | SaaS API → R2 Iceberg バッチ取り込み |
 
 </v-click>
+
+<div v-click class="mt-4 text-sm op-70">
+
+**vs Kinesis Data Firehose**: Firehose は S3/Redshift/OpenSearch に配信可能で成熟している。Pipelines は Iceberg 自動管理が強み。ただし Firehose は Iceberg 直接書き込み未対応（Iceberg には別途 Glue + Spark が必要）。
+
+</div>

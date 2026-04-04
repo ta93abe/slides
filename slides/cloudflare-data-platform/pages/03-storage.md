@@ -35,7 +35,10 @@ layout: section
 
 <div class="mt-4 text-sm op-70">
 
-Snowflake/DuckDB/Spark が何度読んでもコスト $0
+| | R2 | S3 |
+|---|---|---|
+| エグレス | **$0** | $0.09/GB |
+| 10TB 読み出し | **$0** | **$900/月** |
 
 </div>
 
@@ -72,9 +75,15 @@ my-bucket/
 
 - **ACID トランザクション** / **スキーマ進化** / **タイムトラベル**
 - セットアップは1コマンド: `wrangler r2 bucket catalog enable my-bucket`
-- 2025年12月に**自動コンパクション**追加
+- 2025年9月に**自動コンパクション**追加
 
 </v-clicks>
+
+<div v-click class="mt-2 text-sm op-70">
+
+**vs AWS Glue Data Catalog**: Glue はクローラー設定が必要。R2 Data Catalog は `catalog enable` だけ。ただし Glue は Hive/Delta/Hudi も対応、R2 は Iceberg のみ。
+
+</div>
 
 ---
 
@@ -89,9 +98,9 @@ my-bucket/
 <v-clicks>
 
 - SELECT / WHERE / ORDER BY / LIMIT
-- GROUP BY / 集約関数（33種）
+- GROUP BY / 集約関数
 - CTE（WITH ... AS）
-- スカラー関数 163種
+- スカラー関数 190+種
 - 複合型（struct / array / map）
 - EXPLAIN
 
@@ -105,14 +114,14 @@ my-bucket/
 
 - **JOIN（全種類）**
 - WINDOW 関数
-- UNION / サブクエリ
+- UNION / サブクエリ / SELECT DISTINCT
 
 </v-clicks>
 
 <div v-click class="mt-6 border border-yellow-500/30 rounded p-3 text-sm">
 
-**正直な評価**: JOIN 未対応のため Snowflake/BigQuery の代替にはならない。<br>
-「R2 に貯めて手軽に探索する」用途なら今すぐ実用的。Beta 中は無料。
+**vs Athena**: Athena は JOIN/WINDOW/サブクエリ全対応の完成されたエンジン。R2 SQL は Beta で JOIN すら未対応。<br>
+ただし Athena はスキャン量課金（$5/TB）+ S3 エグレス。R2 SQL は Beta 中無料。
 
 </div>
 
