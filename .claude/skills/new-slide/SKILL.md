@@ -1,11 +1,11 @@
 ---
 name: new-slide
-description: This skill should be used when the user asks to "create a new slide", "make a presentation", "新しいスライドを作って", "スライドを追加", "プレゼンを作成", or mentions creating a Slidev project. Scaffolds a new Slidev slide project under the slides/ directory.
+description: This skill should be used when the user asks to "create a new slide", "make a presentation", "新しいスライドを作って", "スライドを追加", "プレゼンを作成", or mentions creating a Slidev project. Scaffolds a new Slidev slide project under the contents/ directory.
 ---
 
 # New Slide Project
 
-新しいSlidevスライドプロジェクトを `slides/` 配下にスキャフォールドするスキル。
+新しいSlidevスライドプロジェクトを `contents/` 配下にスキャフォールドするスキル。
 
 ## 必要な情報
 
@@ -43,7 +43,7 @@ description: This skill should be used when the user asks to "create a new slide
 ### 1. pnpm create slidev でプロジェクト作成
 
 ```bash
-cd slides && pnpm create slidev <project-name>
+cd contents && pnpm create slidev <project-name>
 ```
 
 第1引数にプロジェクト名を渡すと対話式プロンプトをスキップできる。

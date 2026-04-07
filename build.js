@@ -4,7 +4,7 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const slidesDir = join(__dirname, "slides");
+const slidesDir = join(__dirname, "contents");
 const distDir = join(__dirname, "dist");
 
 // Auto-detect slide projects
