@@ -1,9 +1,3 @@
-<script setup>
-defineProps({
-  background: { type: String, default: '' },
-})
-</script>
-
 <template>
   <div class="slidev-layout cover">
     <FlameBackground />

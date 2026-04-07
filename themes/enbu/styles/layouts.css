@@ -85,16 +85,3 @@
   margin-top: 0.5em;
 }
 
-/* Flame decoration for section dividers */
-.slidev-layout.section::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 160px;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--enbu-accent-dark), var(--enbu-primary-dark), var(--enbu-gold), var(--enbu-primary-dark), var(--enbu-accent-dark), transparent);
-  border-radius: 2px;
-  opacity: 0.5;
-}

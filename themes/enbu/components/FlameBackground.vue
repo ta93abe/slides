@@ -3,6 +3,7 @@ import { onMounted, onUnmounted, ref } from "vue";
 
 const canvasRef = ref(null);
 let animationId = null;
+let resizeHandler = null;
 
 onMounted(() => {
     const canvas = canvasRef.value;
@@ -14,14 +15,14 @@ onMounted(() => {
     });
     if (!gl) return;
 
-    function resize() {
+    resizeHandler = () => {
         const dpr = Math.min(window.devicePixelRatio, 2);
         canvas.width = canvas.clientWidth * dpr;
         canvas.height = canvas.clientHeight * dpr;
         gl.viewport(0, 0, canvas.width, canvas.height);
-    }
-    resize();
-    window.addEventListener("resize", resize);
+    };
+    resizeHandler();
+    window.addEventListener("resize", resizeHandler);
 
     const vsSource = `
     attribute vec2 a_position;
@@ -243,10 +244,19 @@ onMounted(() => {
 
     const vs = createShader(gl.VERTEX_SHADER, vsSource);
     const fs = createShader(gl.FRAGMENT_SHADER, fsSource);
+    if (!vs || !fs) return;
+
     const program = gl.createProgram();
     gl.attachShader(program, vs);
     gl.attachShader(program, fs);
     gl.linkProgram(program);
+
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        console.error(gl.getProgramInfoLog(program));
+        gl.deleteProgram(program);
+        return;
+    }
+
     gl.useProgram(program);
 
     const buf = gl.createBuffer();
@@ -276,6 +286,7 @@ onMounted(() => {
 
 onUnmounted(() => {
     if (animationId) cancelAnimationFrame(animationId);
+    if (resizeHandler) window.removeEventListener("resize", resizeHandler);
 });
 </script>
 
