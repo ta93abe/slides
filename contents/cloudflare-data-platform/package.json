@@ -13,10 +13,10 @@
     "description": "Cloudflare Data Platformの紹介"
   },
   "dependencies": {
-    "@slidev/cli": "^52.14.1",
+    "@slidev/cli": "^52.14.2",
     "@slidev/theme-default": "latest",
     "@slidev/theme-seriph": "latest",
     "slidev-theme-enbu": "workspace:*",
-    "vue": "^3.5.29"
+    "vue": "^3.5.32"
   }
 }
