@@ -1,0 +1,69 @@
+/* Code blocks */
+.slidev-layout pre,
+.slidev-layout code {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* Inline code */
+.slidev-layout :not(pre) > code {
+  background: var(--enbu-surface-light);
+  color: var(--enbu-gold);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.88em;
+  border: 1px solid var(--enbu-surface-light);
+}
+
+/* Code block container */
+.slidev-layout pre {
+  background: var(--enbu-surface) !important;
+  border: 1px solid var(--enbu-surface-light);
+  border-radius: 8px;
+  position: relative;
+}
+
+/* Code block top accent line — 控えめに */
+.slidev-layout pre::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--enbu-accent-dark), var(--enbu-primary-dark), var(--enbu-gold));
+  border-radius: 8px 8px 0 0;
+  opacity: 0.5;
+}
+
+/* Shiki line highlighting */
+.slidev-layout .shiki .line.highlighted {
+  background: rgba(212, 105, 10, 0.1);
+  border-left: 2px solid var(--enbu-primary-dark);
+  margin-left: -2px;
+}
+
+.slidev-layout .shiki .line.diff.add {
+  background: rgba(76, 175, 80, 0.1);
+}
+
+.slidev-layout .shiki .line.diff.remove {
+  background: rgba(139, 37, 0, 0.1);
+}
+
+/* Monaco editor */
+.monaco-editor {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* TwoSlash popover */
+.twoslash-popup-container {
+  background: var(--enbu-surface) !important;
+  border: 1px solid var(--enbu-primary-dark) !important;
+  border-radius: 6px !important;
+  color: var(--enbu-text) !important;
+}
+
+.twoslash-popup-container code {
+  color: var(--enbu-gold) !important;
+}

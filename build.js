@@ -4,20 +4,16 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+const slidesDir = join(__dirname, "contents");
 const distDir = join(__dirname, "dist");
-
-// Directories to ignore
-const IGNORE_DIRS = ["node_modules", "dist", ".git", ".scaffdog", ".vscode", ".serena", ".claude"];
 
 // Auto-detect slide projects
 async function detectSlides() {
   const slides = [];
-  const entries = await readdir(__dirname);
+  const entries = await readdir(slidesDir);
 
   for (const entry of entries) {
-    if (IGNORE_DIRS.includes(entry)) continue;
-
-    const entryPath = join(__dirname, entry);
+    const entryPath = join(slidesDir, entry);
     const entryStat = await stat(entryPath).catch(() => null);
     if (!entryStat?.isDirectory()) continue;
 
@@ -52,7 +48,7 @@ console.log(`Found ${slides.length} slide(s): ${slides.map((s) => s.id).join(", 
 // Build each slide
 for (const slide of slides) {
   console.log(`Building ${slide.id}...`);
-  const slideDir = join(__dirname, slide.id);
+  const slideDir = join(slidesDir, slide.id);
   const outDir = join(distDir, slide.id);
 
   execSync(`pnpm slidev build --base /${slide.id}/ --out ${outDir}`, {

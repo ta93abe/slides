@@ -1,0 +1,33 @@
+{
+  "name": "slidev-theme-enbu",
+  "version": "0.1.0",
+  "description": "炎舞 — Cloudflare orange & flame red dark theme for Slidev",
+  "author": "ta93abe",
+  "license": "MIT",
+  "type": "module",
+  "keywords": [
+    "slidev-theme",
+    "slidev"
+  ],
+  "engines": {
+    "node": ">=18.0.0",
+    "slidev": ">=52.0.0"
+  },
+  "slidev": {
+    "colorSchema": "dark",
+    "defaults": {
+      "fonts": {
+        "sans": "Noto Sans JP",
+        "mono": "JetBrains Mono",
+        "weights": "400,500,700,900"
+      },
+      "highlighter": "shiki"
+    }
+  },
+  "files": [
+    "components",
+    "layouts",
+    "setup",
+    "styles"
+  ]
+}
