@@ -2,3 +2,5 @@
 - AIエージェントの評価
 - WASM
 - OpenTelemetry
+- Workflows
+- Pipelines, Ingestion
