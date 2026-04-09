@@ -150,10 +150,7 @@ image: https://cover.sli.dev
 
 Use code snippets and get the highlighting directly, and even types hover!
 
-```ts [filename-example.ts] {all|4|6|6-7|9|all} twoslash
-// TwoSlash enables TypeScript hover information
-// and errors in markdown code blocks
-// More at https://shiki.style/packages/twoslash
+```ts [filename-example.ts] {all|4|6|6-7|9|all}
 import { computed, ref } from 'vue';
 
 const count = ref(0);
@@ -623,7 +620,7 @@ Slidev provides built-in Monaco Editor support.
 
 Add `{monaco}` to the code block to turn it into an editor:
 
-```ts {monaco}
+```ts
 import { ref } from 'vue';
 import { emptyArray } from './external';
 
@@ -632,7 +629,7 @@ const arr = ref(emptyArray(10));
 
 Use `{monaco-run}` to create an editor that can execute the code directly in the slide:
 
-```ts {monaco-run}
+```ts
 import { version } from 'vue';
 import { emptyArray, sayHello } from './external';
 
