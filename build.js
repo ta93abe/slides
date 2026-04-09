@@ -1,4 +1,4 @@
-import { execSync } from "node:child_process";
+import { execFileSync } from "node:child_process";
 import { readdir, readFile, rm, mkdir, writeFile, stat } from "node:fs/promises";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -51,10 +51,15 @@ for (const slide of slides) {
   const slideDir = join(slidesDir, slide.id);
   const outDir = join(distDir, slide.id);
 
-  execSync(`pnpm slidev build --base /${slide.id}/ --out ${outDir}`, {
-    cwd: slideDir,
-    stdio: "inherit",
-  });
+  execFileSync(
+    "pnpm",
+    ["slidev", "build", "--base", `/${slide.id}/`, "--out", outDir],
+    {
+      cwd: slideDir,
+      stdio: "inherit",
+      env: { ...process.env, NODE_OPTIONS: "--max-old-space-size=1536" },
+    },
+  );
 }
 
 // Sort slides by date (newest first)
