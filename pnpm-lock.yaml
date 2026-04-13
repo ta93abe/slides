@@ -19,6 +19,9 @@ importers:
       '@slidev/theme-seriph':
         specifier: latest
         version: 0.25.0
+      slidev-addon-excalidraw:
+        specifier: ^1.1.0
+        version: 1.1.0
       slidev-theme-enbu:
         specifier: workspace:*
         version: link:../../themes/enbu
@@ -2459,6 +2462,9 @@ packages:
 
   sisteransi@1.0.5:
     resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
+
+  slidev-addon-excalidraw@1.1.0:
+    resolution: {integrity: sha512-RMNskVsy4wtq666iizGhw6whWzQgmFN1YIjMfzwUHzkbLfkAUn9drUqiJqsaFNevTOB1sL7T6sFBwmY7fPY+OA==}
 
   source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
@@ -5785,6 +5791,8 @@ snapshots:
       totalist: 3.0.1
 
   sisteransi@1.0.5: {}
+
+  slidev-addon-excalidraw@1.1.0: {}
 
   source-map-js@1.2.1: {}
 
