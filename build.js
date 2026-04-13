@@ -1,11 +1,18 @@
 import { execFileSync } from "node:child_process";
-import { readdir, readFile, rm, mkdir, writeFile, stat } from "node:fs/promises";
+import { readdir, readFile, rm, mkdir, writeFile, stat, copyFile } from "node:fs/promises";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const slidesDir = join(__dirname, "contents");
 const distDir = join(__dirname, "dist");
+const sharedFavicon = join(__dirname, "assets", "favicon.png");
+
+async function copyFaviconToSlide(slideDir) {
+  const publicDir = join(slideDir, "public");
+  await mkdir(publicDir, { recursive: true });
+  await copyFile(sharedFavicon, join(publicDir, "favicon.png"));
+}
 
 // Auto-detect slide projects
 async function detectSlides() {
@@ -50,6 +57,8 @@ for (const slide of slides) {
   console.log(`Building ${slide.id}...`);
   const slideDir = join(slidesDir, slide.id);
   const outDir = join(distDir, slide.id);
+
+  await copyFaviconToSlide(slideDir);
 
   execFileSync(
     "pnpm",
