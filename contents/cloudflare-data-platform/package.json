@@ -10,12 +10,16 @@
   "slidev": {
     "title": "Cloudflare Data Platform",
     "date": "2026-03-24",
-    "description": "Cloudflare Data Platformの紹介"
+    "description": "Cloudflare Data Platformの紹介",
+    "addons": [
+      "slidev-addon-excalidraw"
+    ]
   },
   "dependencies": {
     "@slidev/cli": "^52.14.2",
     "@slidev/theme-default": "latest",
     "@slidev/theme-seriph": "latest",
+    "slidev-addon-excalidraw": "^1.1.0",
     "slidev-theme-enbu": "workspace:*",
     "vue": "^3.5.32"
   }

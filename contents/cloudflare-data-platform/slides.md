@@ -1,5 +1,6 @@
 ---
 theme: enbu
+favicon: /favicon.png
 title: Cloudflare Data Platform
 drawings:
   persist: false
