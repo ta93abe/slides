@@ -11,6 +11,7 @@
 https://workers.cloudflare.com/product/data-platform
 
 ISMAPにも登録された。
+
 ## Cloudflare Workers
 
 Cloudflare の重要サービスの一つ。
@@ -19,6 +20,10 @@ Cloudflare の重要サービスの一つ。
 
 従来のSDK＋IAMとは一線を画す。
 
+## Durable Objects
+
+裏で支える意外と重要なサービス。
+
 ## Ingestion
 
 - Linear
@@ -26,16 +31,19 @@ Cloudflare の重要サービスの一つ。
 - Spotify
 - Moneyfoward (CSV)
 - Workers Observability
+- PostgreSQL → Debezium
+- PostgreSQL → DuckDB
+- Obsidian
 これらを　Excalidraw でデータソースからいろんなツールを使ってR2に保存するまでを書きたい。
 
 ### Cloudflare Pipelines
 
 ストリーミングデータを取り込むのは Cloudflare Workers
 
-#### Stream（データ入力）
-#### Sink（データ出力先）
-#### Pipeline（SQL 変換）
-#### 設定変更（マイグレーション）
+#### Stream
+#### Sink
+#### Pipeline
+#### 設定変更
 ### dlt on Cloudflare Sandbox
 
 バッチ処理は dlt でやる。
@@ -44,20 +52,55 @@ Cloudflare の重要サービスの一つ。
 
 ## Cloudflare R2
 
-
-
 #### データロケーション
 
 ### Cloudflare Data Catalog
+
+Icebreg 対応できる。
+
 ### Cloudflare R2 SQL
+
+Athena のようなもの。
+まだまだ発展途上。
+
+## dbt on Cloudflare Containers
+
+dbt を Cloudflare Containers 上でビルドできる。
+R2 にバインディングができるのでアーティファクトをR2に置くみたいなことも簡単。
+
+
 ## Orchestration
 ### Cloudflare Workflow
+
+Workers を Cron Trigger で動かしまくるのは限度があるので、Workflowを使う。
+
+コードで書いて、Cloudflareダッシュボードから依存関係含めグラフが見られる。
+
+https://blog.cloudflare.com/ja-jp/workflow-diagrams/
+
 ## AI
-### Workers AI
 ### Cloudflare Agents
-### AI Search
+
+- Sandbox との連携
+- Agent to Agent
+のサンプルみたいのを書きたい。
+
+### Workers AI
 ### AI Gateway
+
+これを使うと何が嬉しいかを書く。
+キャッシュ、レート制限、ロギング、アナリティクス
+
 ### Vectorize
+
+RAGをつくるとか。
+
+### AI Search
+
+R2にファイルを配置する、ドメインを接続するだけですごく簡単にできるよ。
+
+ObsidianのファイルをR2においてRAGを実装するとかやりたい。
+
 ### 例えば、LLM-as-a-Judge
 
 LLM が別の LLM の出力を評価する手法。AI パイプラインに「評価者」を組み込むことで、人間がすべてのアウトプットをレビューせずとも継続的な品質管理が可能になる。
@@ -111,6 +154,8 @@ Reference Agent（正解例と比較）
 
 ### data analysis on Cloudflare Sandbox
 
+https://developers.cloudflare.com/sandbox/#data-analysis--notebooks
+
 ### marimo on Cloudflare Workers
 
 ノートブックが簡単に扱える。
@@ -119,10 +164,16 @@ Reference Agent（正解例と比較）
 https://blog.cloudflare.com/ja-jp/marimo-cloudflare-notebooks/
 
 ### Evidence on Cloudflare Workers
+
+Evidence は Static Assets を吐き出すのでそれをホスティングできる。
+
 #### Browser Rendering で Evidence のスクリーンショットを撮る
+
+Playwright API をサポートしているのでスクリーンショットをとってSlackにスナップショットを送るなどをできる。
+
 ### Reverse ETL
 
-専用の Reverse ETL ツール（Census, Hightouch）は SaaS 料金がかかる。Cloudflare スタックだけで同等のことが実現できる:
+Workers で書くこともできる。
 
 ```
 Cron Trigger → Worker → R2 SQL クエリ (Binding) → SaaS API に書き戻し
@@ -130,7 +181,7 @@ Cron Trigger → Worker → R2 SQL クエリ (Binding) → SaaS API に書き戻
 ↑ TODO: この図をExcalidrawで書く。
 
 
-より複雑なケース（エラーハンドリング・リトライ・進捗管理）は Workflows で組む:
+Workflows で組めばエラーハンドリング・リトライ・進捗管理ができる:
 
 ```
 Cron Trigger → Worker → Workflow
@@ -187,9 +238,20 @@ Skill も公開されているので簡単に作りやすいと思う。
 
 ### API
 
+https://developers.cloudflare.com/api/
 
 ### Wrangler
+
+https://developers.cloudflare.com/workers/wrangler/
+https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler
+
 ### ローカルエミュレーション
+
+ローカルエミュレートできると何が嬉しいの？
+Wrangler は簡単にローカルエミュレートできる。できないサービスもあるけど。
+LocalStack が AWS や Snowflake に対応している。
+kumo みたいのもあるね。https://github.com/sivchari/kumo
+Cloudflare の文脈では kumo はUIコンポーネントライブラリ kumo-ui.com
 
 ### コミュニティー
 
