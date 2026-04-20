@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.5.5",
+  "checkpoint_id": "5a8fa8757a4d",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "themes/enbu/layouts/cover.vue",
+    "themes/enbu/styles/base.css"
+  ],
+  "sessions": [
+    {
+      "metadata": "/5a/8fa8757a4d/0/metadata.json",
+      "transcript": "/5a/8fa8757a4d/0/full.jsonl",
+      "content_hash": "/5a/8fa8757a4d/0/content_hash.txt",
+      "prompt": "/5a/8fa8757a4d/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 110,
+    "cache_creation_tokens": 307228,
+    "cache_read_tokens": 3526444,
+    "output_tokens": 46308,
+    "api_call_count": 46
+  }
+}
