@@ -1,0 +1,28 @@
+{
+  "cli_version": "0.5.5",
+  "checkpoint_id": "8680912a5218",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "contents/cloudflare-data-platform/public/cloudflare-access.png",
+    "contents/cloudflare-data-platform/public/data-platform-main-components.excalidraw",
+    "contents/cloudflare-data-platform/public/iceberg-r2-data-catalog.png",
+    "contents/cloudflare-data-platform/public/iceberg-snowflake.png"
+  ],
+  "sessions": [
+    {
+      "metadata": "/86/80912a5218/0/metadata.json",
+      "transcript": "/86/80912a5218/0/full.jsonl",
+      "content_hash": "/86/80912a5218/0/content_hash.txt",
+      "prompt": ""
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 1,
+    "cache_creation_tokens": 1035,
+    "cache_read_tokens": 116104,
+    "output_tokens": 427,
+    "api_call_count": 1
+  }
+}
