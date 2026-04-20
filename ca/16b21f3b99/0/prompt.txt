@@ -1,0 +1,18 @@
+Snowflake でR2_LAKEHOUSE というデータベースをLinked-Catalog Databaseにしたんだけど
+
+---
+
+R2_LAKEHOUSE.streaming.linear_eventsとなっているところをR2_LAKEHOUSE.linear.events_streaming というテーブルに変更するようにR2 Data Catalogの方を修正したい。
+
+---
+
+workers のスライドのあとにDurable Objectsについてしっかりと説明したい。
+
+---
+
+4毎構成でいいよ。
+3-durable-objects.md作って挿入して
+
+---
+
+一旦全部コミットしてほしい。適切な粒度で。

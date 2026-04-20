@@ -1,0 +1,105 @@
+{
+  "cli_version": "0.5.5",
+  "checkpoint_id": "ca16b21f3b99",
+  "session_id": "72e0437b-28b1-4883-b506-7f556759a51c",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-20T13:54:45.944834Z",
+  "branch": "main",
+  "checkpoints_count": 4,
+  "files_touched": [],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "62d2f3269a8d",
+  "token_usage": {
+    "input_tokens": 109,
+    "cache_creation_tokens": 302574,
+    "cache_read_tokens": 3416139,
+    "output_tokens": 46101,
+    "api_call_count": 45
+  },
+  "session_metrics": {
+    "turn_count": 4
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 1070,
+      "user_lines_removed": 556,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        ".claude/agents/entire-search.md": 25,
+        ".claude/settings.json": 84,
+        ".claude/settings.local.json": 27,
+        "contents/cloudflare-data-platform/pages/01-overview.md": 39,
+        "contents/cloudflare-data-platform/pages/02-workers.md": 40,
+        "contents/cloudflare-data-platform/pages/03-storage.md": 30,
+        "contents/cloudflare-data-platform/public/data-platform-main-components.excalidraw": 479,
+        "contents/cloudflare-data-platform/scripts/check_format_version.py": 54,
+        "contents/cloudflare-data-platform/slides.md": 4,
+        "enbu/.gitignore": 8,
+        "enbu/.npmrc": 2,
+        "enbu/.vscode/extensions.json": 3,
+        "enbu/README.md": 50,
+        "enbu/example.md": 80,
+        "enbu/layouts/cover.vue": 7,
+        "enbu/layouts/intro.vue": 7,
+        "enbu/package.json": 34,
+        "enbu/setup/shiki.ts": 11,
+        "enbu/styles/index.ts": 3,
+        "enbu/styles/layout.css": 24,
+        "themes/enbu/layouts/cover.vue": 1,
+        "themes/enbu/styles/base.css": 58
+      },
+      "user_removed_per_file": {
+        "contents/cloudflare-data-platform/pages/01-cloudflare-overview.md": 50,
+        "contents/cloudflare-data-platform/pages/02-data-platform-overview.md": 94,
+        "contents/cloudflare-data-platform/pages/03-storage.md": 52,
+        "contents/cloudflare-data-platform/slides.md": 4,
+        "themes/enbu/components/FlameBackground.vue": 307,
+        "themes/enbu/layouts/cover.vue": 1,
+        "themes/enbu/styles/base.css": 48
+      }
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 27,
+      "user_lines_removed": 0,
+      "agent_lines_added": 1043,
+      "agent_lines_removed": 556,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 27
+      }
+    },
+    {
+      "checkpoint_number": 3,
+      "user_lines_added": 27,
+      "user_lines_removed": 0,
+      "agent_lines_added": 1043,
+      "agent_lines_removed": 556,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 27
+      }
+    },
+    {
+      "checkpoint_number": 4,
+      "user_lines_added": 27,
+      "user_lines_removed": 0,
+      "agent_lines_added": 1818,
+      "agent_lines_removed": 1184,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 27
+      }
+    },
+    {
+      "checkpoint_number": 5,
+      "user_lines_added": 27,
+      "user_lines_removed": 0,
+      "agent_lines_added": 1535,
+      "agent_lines_removed": 1184,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 27
+      }
+    }
+  ]
+}
