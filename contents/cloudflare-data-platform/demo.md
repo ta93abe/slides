@@ -150,7 +150,7 @@ wrangler r2 sql query "<warehouse>" "SHOW TABLES IN analytics"
 
 ## Demo 2: R2 SQL で即時クエリ
 
-**スライド対応**: `04-storage.md`
+**スライド対応**: `04-r2.md`
 **メッセージ**: 貯めたデータを外部ツールなしでその場で探索できる
 
 ### デモ本番の操作
@@ -370,7 +370,7 @@ table.append(users_data)
 
 ## Demo 4: OpenTelemetry → Grafana トレース
 
-**スライド対応**: `10-observability.md`
+**スライド対応**: `06-observability.md`
 **メッセージ**: コード変更ゼロで Worker の全操作が可視化される
 
 ### アーキテクチャ

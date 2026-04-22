@@ -14,7 +14,7 @@ layout: cover
 ## 阿部拓海
 
 ---
-src: ./pages/01-overview.md
+src: ./pages/01-intro.md
 ---
 
 ---
@@ -26,37 +26,33 @@ src: ./pages/03-durable-objects.md
 ---
 
 ---
-src: ./pages/04-storage.md
+src: ./pages/04-r2.md
 ---
 
 ---
-src: ./pages/05-computing.md
+src: ./pages/05-wrangler.md
 ---
 
 ---
-src: ./pages/06-ingest.md
+src: ./pages/06-observability.md
 ---
 
 ---
-src: ./pages/07-orchestration.md
+src: ./pages/07-dbt.md
 ---
 
 ---
-src: ./pages/08-ai.md
+src: ./pages/08-ambient-agent.md
 ---
 
 ---
-src: ./pages/09-activation.md
+src: ./pages/09-durability.md
 ---
 
 ---
-src: ./pages/10-observability.md
+src: ./pages/10-ai-sprawl.md
 ---
 
 ---
-src: ./pages/11-dx.md
----
-
----
-src: ./pages/12-summary.md
+src: ./pages/11-summary.md
 ---
