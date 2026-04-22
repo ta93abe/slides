@@ -1,0 +1,76 @@
+07-orchestraion の中でワークフローのDurabilityについて説明したい。それをCloudflare Workflowがどう解決するのかも。
+
+---
+
+この構成で
+
+---
+
+スライドを作っていくのをLinearのIssueで管理したい。新しいプロジェクトを作って。
+
+---
+
+Cloudflare Data Platform スライド完成というプロジェクトを作った。
+
+---
+
+Cloudflare Data Platform スライド完成には大きく４つのカテゴリーのイシューを考えています。
+  Slide Polish...スライドを洗練させる。
+  Demo...スライドの内容を補足するためのデモを作りより良く説明できるようにする。
+  Fact Check...スライドの表現で嘘がないかをリサーチする。
+  Theme ...Slidevの個人テーマを自作したい。（Issueは１個にまとまると思う）
+
+---
+
+上記のまま（英数小文字ケバブ）
+上記の初期 Issue 案（計 18 件くらい）を 全部作る
+Demo セクションの各デモは「1 Issue」で OK
+
+---
+
+登壇時間は10分ね。
+
+---
+
+a
+デモは説明のための理解の充実のためであって本番では動かさない。
+description に書いて
+
+---
+
+全部やる
+
+---
+
+wrangler cli とローカルエミュレートについては話したい。Cloudflare CLIもちょっとだけ
+
+---
+
+4 スライドで進める（提案通り）→ +2 net、TA-487 で後から削る前提
+
+---
+
+スライド読んでみてこうしたほうがいいとかあればLinearのIssueにしておいて
+
+---
+
+スライドの前半はCloudflare Data PlatformとWorkersとDurable ObjectsとR2の紹介。後半はdbtをCloudflare環境で動かしたい。Ambient AgentをCloudflareで動かす,Durablityについて考える、AIスプロールをどうにかする
+というテーマでスライドを構築したい。Issueを整理してほしい。
+
+---
+
+Wrangler CLIとローカルエミュレートについては書きたい。
+Observablityについても書きたい。
+後半テーマはsolutionというラベルを付けてほしい。
+
+---
+
+各スライドにスピーカーノートはちゃんと書きたい。
+
+---
+
+まとめスライドのIssue立てて。中身は後で書くからカラにしておいて。
+
+---
+
+まず側だけ整理したいからスライドのmdファイルを削除したり、リネームしてほしい。LinearのIssueはステータスなど適宜更新するようにして。

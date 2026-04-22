@@ -1,0 +1,45 @@
+{
+  "cli_version": "0.5.5",
+  "checkpoint_id": "a1f8b8901d9e",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 15,
+  "files_touched": [
+    "contents/cloudflare-data-platform/demo.md",
+    "contents/cloudflare-data-platform/pages/01-intro.md",
+    "contents/cloudflare-data-platform/pages/01-overview.md",
+    "contents/cloudflare-data-platform/pages/04-r2.md",
+    "contents/cloudflare-data-platform/pages/04-storage.md",
+    "contents/cloudflare-data-platform/pages/05-computing.md",
+    "contents/cloudflare-data-platform/pages/05-wrangler.md",
+    "contents/cloudflare-data-platform/pages/06-ingest.md",
+    "contents/cloudflare-data-platform/pages/06-observability.md",
+    "contents/cloudflare-data-platform/pages/07-dbt.md",
+    "contents/cloudflare-data-platform/pages/07-orchestration.md",
+    "contents/cloudflare-data-platform/pages/08-ai.md",
+    "contents/cloudflare-data-platform/pages/08-ambient-agent.md",
+    "contents/cloudflare-data-platform/pages/09-activation.md",
+    "contents/cloudflare-data-platform/pages/09-durability.md",
+    "contents/cloudflare-data-platform/pages/10-ai-sprawl.md",
+    "contents/cloudflare-data-platform/pages/10-observability.md",
+    "contents/cloudflare-data-platform/pages/11-dx.md",
+    "contents/cloudflare-data-platform/pages/11-summary.md",
+    "contents/cloudflare-data-platform/pages/12-summary.md",
+    "contents/cloudflare-data-platform/slides.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/a1/f8b8901d9e/0/metadata.json",
+      "transcript": "/a1/f8b8901d9e/0/full.jsonl",
+      "content_hash": "/a1/f8b8901d9e/0/content_hash.txt",
+      "prompt": "/a1/f8b8901d9e/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 178,
+    "cache_creation_tokens": 1237776,
+    "cache_read_tokens": 10842531,
+    "output_tokens": 130883,
+    "api_call_count": 55
+  }
+}
