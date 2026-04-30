@@ -123,21 +123,3 @@ async alarm() {
 
 </div>
 </div>
-
----
-
-# D1 / KV / R2 / Durable Objects の使い分け
-
-| | D1 | KV | R2 | Durable Objects |
-|---|---|---|---|---|
-| **形** | SQLite（リージョン固定） | Key-Value（最終的整合） | オブジェクトストア | object 単位の State + Logic |
-| **整合性** | 強整合（単一 writer） | 最終的（書き込み反映に数秒） | 強整合 | 強整合（object 内シリアライズ） |
-| **レイテンシ** | 数十 ms | 読み取り ~10ms（エッジキャッシュ） | 数十 ms | **object が active なら μs** |
-| **容量** | 10 GB / DB | 値 25 MB / キー無制限 | 無制限 | 10 GB / object |
-| **向いているもの** | 小規模トランザクション DB | 設定値 / FF / セッション | データレイク / アセット | **per-entity の state + 調停** |
-
-<v-click>
-
-**設計のコツ**: 「粒度」で選ぶ。グローバル共有の真実は D1/R2、エンティティ単位で隔離したい state は Durable Objects、キャッシュ的な値は KV。
-
-</v-click>

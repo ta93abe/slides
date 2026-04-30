@@ -4,32 +4,17 @@ layout: section
 
 # まとめ
 
----
-
-# AWS と比べて — 正直な評価
-
-| 領域 | Cloudflare が勝つ | AWS が勝つ |
-|------|-----------------|-----------|
-| **コスト** | エグレス $0、Beta 中は多くが無料 | 従量課金が複雑だが予測可能 |
-| **DX** | Wrangler 1つで統合、Binding でコード簡潔 | IaC エコシステム（CDK/CFn）が成熟 |
-| **セキュリティ** | Capability-based で設定ミスしにくい | IAM で fine-grained に制御可能 |
-| **クエリエンジン** | R2 SQL は Beta、JOIN 未対応 | Athena/Redshift は完成されたエンジン |
-| **AI** | エッジ推論 + AI Gateway が独自 | Bedrock のモデル選択肢・fine-tuning |
-| **オブザーバビリティ** | 自動トレース（コード変更ゼロ） | CloudWatch の統合ダッシュボード |
-| **エコシステム** | まだ小さい | 圧倒的に広い |
-
-<div v-click class="mt-4 border border-orange-500/30 rounded-lg p-4 text-center">
-
-**結論**: AWS の代替ではなく**補完**。<br>
-R2 をエグレス無料のデータハブにして、AWS/Snowflake から Iceberg 経由で読む。<br>
-インジェストとエッジ配信は Cloudflare、重い分析は既存エンジンに任せる。
-
-</div>
+<!--
+ここまでで Cloudflare Data Platform の全体像 — 基礎 (Workers / DO / R2) → ツール (Wrangler / Honeycomb) → solution (dbt / Ambient Agent / Durability / AI sprawl) を流した。
+最後に、聴衆が何を持ち帰って、何から手を動かせばいいかを 3 枚で締める。
+-->
 
 ---
-layout: end
----
 
-# Thank you
-
-Cloudflare で始める Data Platform
+- まずは cloudflare.com にたどり着きましょう。
+- 無事たどり着いて管理画面に入ったら **Agent Lee** が迎えてくれます。
+- こんな Cloudflare の始め方もあるよ。
+  - 個人のサイト/ブログをホスティング (Astro というフレームワークを使えばフロントエンドも簡単に作れる。Markdown でコンテンツを書いて Contents Collectionでいい感じに表示する)
+  - 日常のちょっとしたことを Workers で実装してみる。
+  - R2 Data Catalog は Iceberg を始めるには結構お手軽
+- 次回は商用環境でのユースケースを聞けたらうれしいです。
