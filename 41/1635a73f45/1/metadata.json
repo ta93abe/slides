@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.5.6",
+  "checkpoint_id": "411635a73f45",
+  "session_id": "fbbd0b36-7edf-4bc9-a036-1186c155f909",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-30T15:31:25.62329Z",
+  "branch": "feature/enbu-h2-wavy",
+  "checkpoints_count": 0,
+  "files_touched": [],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "89805cc66848",
+  "checkpoint_transcript_start": 1099,
+  "transcript_lines_at_start": 1099,
+  "token_usage": {
+    "input_tokens": 2,
+    "cache_creation_tokens": 2996,
+    "cache_read_tokens": 897931,
+    "output_tokens": 1779,
+    "api_call_count": 2
+  },
+  "session_metrics": {
+    "turn_count": 30
+  }
+}
