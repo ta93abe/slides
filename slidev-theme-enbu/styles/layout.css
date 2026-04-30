@@ -4,18 +4,18 @@
     --slidev-theme-primary: #F38020;
 }
 
-/* Hand-drawn wavy underline for h2.
+/* Hand-drawn wavy underline for h1.
    Two SVG waves are layered with different phases / amplitudes / opacities to
    simulate a hand-drawn, irregular squiggle. The stroke uses the theme primary. */
-.slidev-layout h2 {
+.slidev-layout:not(.cover):not(.section) h1 {
     display: inline-block;
-    padding-bottom: 0.15em;
+    padding-bottom: 0.25em;
     background-repeat: repeat-x;
-    background-position: left calc(100% - 2px), left calc(100% - 3px);
-    background-size: 220px 10px, 180px 12px;
+    background-position: left calc(100% - 1px), left calc(100% - 2px);
+    background-size: 260px 20px, 200px 22px;
     background-image:
-        url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 10' preserveAspectRatio='none'%3E%3Cpath d='M2 6 Q 14 2 26 5 T 50 6 Q 62 9 74 5 T 98 6 Q 112 3 124 6 T 148 6 Q 160 8 172 5 T 196 6 Q 208 4 218 6' fill='none' stroke='%23F38020' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"),
-        url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 12' preserveAspectRatio='none'%3E%3Cpath d='M3 7 Q 17 3 30 7 T 56 6 Q 70 10 84 6 T 110 7 Q 124 4 138 7 T 162 6 Q 172 8 178 7' fill='none' stroke='%23F38020' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' opacity='0.55'/%3E%3C/svg%3E");
+        url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 20' preserveAspectRatio='none'%3E%3Cpath d='M2 10 Q 14 1 24 12 Q 36 18 48 4 Q 60 1 72 14 Q 88 18 100 5 Q 112 1 126 13 Q 138 19 152 6 Q 162 1 176 12 Q 190 17 204 4 Q 216 1 232 13 Q 244 18 256 8' fill='none' stroke='%23F38020' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 22' preserveAspectRatio='none'%3E%3Cpath d='M3 11 Q 12 19 22 5 Q 30 1 42 16 Q 54 19 66 4 Q 78 1 90 15 Q 102 20 114 5 Q 124 1 138 14 Q 150 18 162 5 Q 174 1 186 13 Q 194 16 198 11' fill='none' stroke='%23F38020' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' opacity='0.55'/%3E%3C/svg%3E");
 }
 
 .slidev-layout.cover,
