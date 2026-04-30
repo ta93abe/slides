@@ -4,6 +4,20 @@
     --slidev-theme-primary: #F38020;
 }
 
+/* Hand-drawn wavy underline for h2.
+   Two SVG waves are layered with different phases / amplitudes / opacities to
+   simulate a hand-drawn, irregular squiggle. The stroke uses the theme primary. */
+.slidev-layout h2 {
+    display: inline-block;
+    padding-bottom: 0.45em;
+    background-repeat: repeat-x;
+    background-position: left bottom, left bottom;
+    background-size: 220px 10px, 180px 12px;
+    background-image:
+        url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 10' preserveAspectRatio='none'%3E%3Cpath d='M2 6 Q 14 2 26 5 T 50 6 Q 62 9 74 5 T 98 6 Q 112 3 124 6 T 148 6 Q 160 8 172 5 T 196 6 Q 208 4 218 6' fill='none' stroke='%23F38020' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 12' preserveAspectRatio='none'%3E%3Cpath d='M3 7 Q 17 3 30 7 T 56 6 Q 70 10 84 6 T 110 7 Q 124 4 138 7 T 162 6 Q 172 8 178 7' fill='none' stroke='%23F38020' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' opacity='0.55'/%3E%3C/svg%3E");
+}
+
 .slidev-layout.cover,
 .slidev-layout.intro {
     @apply h-full grid;
