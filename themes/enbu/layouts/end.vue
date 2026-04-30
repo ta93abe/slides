@@ -1,6 +1,5 @@
 <template>
   <div class="slidev-layout end">
-    <FlameBackground />
     <div class="end-content">
       <slot />
     </div>
@@ -14,6 +13,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100%;
+  background: #000;
 }
 
 .end-content {

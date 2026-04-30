@@ -50,7 +50,7 @@ wrangler r2 bucket catalog get demo-lake
 
 ## Demo 1: Pipelines ライブインジェスト
 
-**スライド対応**: `06-ingest.md`
+**スライド対応**: `01-intro.md`（Pipelines を Data Platform 構成要素として言及）
 **メッセージ**: curl 1発でデータが Iceberg テーブルに自動変換される
 
 ### アーキテクチャ
@@ -198,7 +198,7 @@ wrangler r2 sql query "<warehouse>" \
 
 ## Demo 3: Snowflake → R2 Iceberg クエリ
 
-**スライド対応**: `04-storage.md` + `12-summary.md`（ベンダーロックインなし）
+**スライド対応**: `04-r2.md` + `11-summary.md`（ベンダーロックインなし）
 **メッセージ**: 同じデータを Snowflake のフル SQL で。エグレス $0。
 
 ### アーキテクチャ
@@ -533,7 +533,7 @@ wrangler d1 execute demo-db --command \
 
 ## Demo 5: Astro データカタログ × AI Search
 
-**スライド対応**: `08-ai.md`（AI Search）+ `09-activation.md`
+**スライド対応**: `07-dbt.md`（dbt artifacts → カタログ）+ `10-ai-sprawl.md`（AI Search で対策）
 **メッセージ**: 「売上に関連するテーブルは？」で検索できるデータカタログ
 
 ### アーキテクチャ

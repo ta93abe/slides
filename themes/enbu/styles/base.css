@@ -19,6 +19,16 @@
   --enbu-text-muted: #B3B3B3;
   --enbu-text-dim: #666666;
 
+  /* Legacy enbu palette — referenced from styles/code.css, styles/layouts.css,
+     layouts/section.vue, layouts/end.vue. Kept as aliases (and gold tones)
+     for in-theme compatibility after the cover refresh. */
+  --enbu-primary: var(--cf-orange);
+  --enbu-primary-dark: var(--cf-red-dark);
+  --enbu-accent: var(--cf-red);
+  --enbu-accent-dark: var(--cf-red-dark);
+  --enbu-gold: #FFB300;
+  --enbu-gold-light: #FFD54F;
+
   /* Slidev overrides */
   --slidev-theme-primary: var(--cf-orange);
   --slidev-theme-accents-vulcan: var(--enbu-surface);
@@ -47,6 +57,7 @@ html.dark {
   background: var(--cf-gradient);
   -webkit-background-clip: text;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
   color: transparent;
 }
 
