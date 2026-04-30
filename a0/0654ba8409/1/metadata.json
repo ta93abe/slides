@@ -1,0 +1,132 @@
+{
+  "cli_version": "0.5.6",
+  "checkpoint_id": "a00654ba8409",
+  "session_id": "fbbd0b36-7edf-4bc9-a036-1186c155f909",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-30T15:17:32.998803Z",
+  "branch": "feature/ta-486",
+  "checkpoints_count": 3,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/01-intro.md",
+    "pnpm-lock.yaml",
+    "pnpm-workspace.yaml",
+    "slidev-theme-enbu/layoutHelper.ts",
+    "themes/enbu/layouts/center.vue",
+    "themes/enbu/layouts/cover.vue",
+    "themes/enbu/layouts/default.vue",
+    "themes/enbu/layouts/end.vue",
+    "themes/enbu/layouts/section.vue",
+    "themes/enbu/layouts/two-cols.vue",
+    "themes/enbu/package.json",
+    "themes/enbu/setup/unocss.ts",
+    "themes/enbu/styles/base.css",
+    "themes/enbu/styles/code.css",
+    "themes/enbu/styles/index.ts",
+    "themes/enbu/styles/layouts.css"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "d192a50ad3a7",
+  "checkpoint_transcript_start": 673,
+  "transcript_lines_at_start": 673,
+  "token_usage": {
+    "input_tokens": 117,
+    "cache_creation_tokens": 65252,
+    "cache_read_tokens": 23937339,
+    "output_tokens": 36009,
+    "api_call_count": 62
+  },
+  "session_metrics": {
+    "turn_count": 24
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-30T15:17:32.95648Z",
+    "agent_lines": 1208,
+    "agent_removed": 70,
+    "human_added": 0,
+    "human_modified": 36,
+    "human_removed": 601,
+    "total_committed": 1244,
+    "total_lines_changed": 1917,
+    "agent_percentage": 66.66666666666666,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 318,
+      "user_lines_removed": 603,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        ".claude/scheduled_tasks.lock": 1,
+        ".claude/settings.local.json": 59,
+        "slidev-theme-enbu/.gitignore": 8,
+        "slidev-theme-enbu/.npmrc": 2,
+        "slidev-theme-enbu/.vscode/extensions.json": 3,
+        "slidev-theme-enbu/README.md": 50,
+        "slidev-theme-enbu/example.md": 81,
+        "slidev-theme-enbu/layouts/cover.vue": 21,
+        "slidev-theme-enbu/layouts/intro.vue": 21,
+        "slidev-theme-enbu/package.json": 34,
+        "slidev-theme-enbu/setup/shiki.ts": 11,
+        "slidev-theme-enbu/styles/index.ts": 3,
+        "slidev-theme-enbu/styles/layout.css": 24
+      },
+      "user_removed_per_file": {
+        "pnpm-lock.yaml": 2,
+        "themes/enbu/layouts/center.vue": 23,
+        "themes/enbu/layouts/cover.vue": 25,
+        "themes/enbu/layouts/default.vue": 12,
+        "themes/enbu/layouts/end.vue": 32,
+        "themes/enbu/layouts/section.vue": 44,
+        "themes/enbu/layouts/two-cols.vue": 27,
+        "themes/enbu/package.json": 33,
+        "themes/enbu/setup/unocss.ts": 38,
+        "themes/enbu/styles/base.css": 208,
+        "themes/enbu/styles/code.css": 69,
+        "themes/enbu/styles/index.ts": 3,
+        "themes/enbu/styles/layouts.css": 87
+      }
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 59,
+      "user_lines_removed": 0,
+      "agent_lines_added": 259,
+      "agent_lines_removed": 603,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 59
+      }
+    },
+    {
+      "checkpoint_number": 3,
+      "user_lines_added": 59,
+      "user_lines_removed": 0,
+      "agent_lines_added": 259,
+      "agent_lines_removed": 603,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 59
+      }
+    },
+    {
+      "checkpoint_number": 4,
+      "user_lines_added": 86,
+      "user_lines_removed": 17,
+      "agent_lines_added": 2104,
+      "agent_lines_removed": 673,
+      "user_added_per_file": {
+        ".claude/settings.local.json": 60,
+        "slidev-theme-enbu/.claude/settings.local.json": 9,
+        "slidev-theme-enbu/layouts/cover.vue": 1,
+        "slidev-theme-enbu/layouts/intro.vue": 1,
+        "slidev-theme-enbu/styles/layout.css": 15
+      },
+      "user_removed_per_file": {
+        "slidev-theme-enbu/layouts/cover.vue": 1,
+        "slidev-theme-enbu/layouts/intro.vue": 1,
+        "slidev-theme-enbu/styles/layout.css": 15
+      }
+    }
+  ]
+}
