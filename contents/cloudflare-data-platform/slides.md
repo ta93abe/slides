@@ -1,5 +1,5 @@
 ---
-theme: seriph
+theme: enbu
 favicon: /favicon.png
 title: Cloudflare Data Platform
 drawings:

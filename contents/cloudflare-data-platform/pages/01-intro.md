@@ -4,7 +4,7 @@ layout: section
 
 # Cloudflare とは
 
-## CDN 企業？エッジコンピューティング企業？
+## CDN？エッジコンピューティング？
 
 ---
 

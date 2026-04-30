@@ -1,6 +1,6 @@
 packages:
   - contents/*
-  - themes/*
+  - slidev-theme-enbu
 
 onlyBuiltDependencies:
   - esbuild
