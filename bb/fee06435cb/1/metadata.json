@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.5.6",
+  "checkpoint_id": "bbfee06435cb",
+  "session_id": "fbbd0b36-7edf-4bc9-a036-1186c155f909",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-30T15:25:31.310616Z",
+  "branch": "feature/enbu-section-layout",
+  "checkpoints_count": 0,
+  "files_touched": [],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "3dbeb65b402a",
+  "checkpoint_transcript_start": 1015,
+  "transcript_lines_at_start": 1015,
+  "token_usage": {
+    "input_tokens": 4,
+    "cache_creation_tokens": 6117,
+    "cache_read_tokens": 1719287,
+    "output_tokens": 5430,
+    "api_call_count": 4
+  },
+  "session_metrics": {
+    "turn_count": 27
+  }
+}
