@@ -1,0 +1,44 @@
+{
+  "cli_version": "0.5.6",
+  "checkpoint_id": "3704d6ce5976",
+  "session_id": "fbbd0b36-7edf-4bc9-a036-1186c155f909",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-30T14:26:10.773339Z",
+  "branch": "feature/ta-501",
+  "checkpoints_count": 0,
+  "files_touched": [],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "1bb108b294ed",
+  "checkpoint_transcript_start": 645,
+  "transcript_lines_at_start": 645,
+  "token_usage": {
+    "input_tokens": 8,
+    "cache_creation_tokens": 3526,
+    "cache_read_tokens": 1035255,
+    "output_tokens": 1316,
+    "api_call_count": 3
+  },
+  "session_metrics": {
+    "turn_count": 15
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 66,
+      "user_lines_removed": 74,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        ".claude/scheduled_tasks.lock": 1,
+        ".claude/settings.local.json": 58,
+        "contents/cloudflare-data-platform/pages/11-summary.md": 7
+      },
+      "user_removed_per_file": {
+        "contents/cloudflare-data-platform/pages/01-intro.md": 7,
+        "contents/cloudflare-data-platform/pages/03-durable-objects.md": 18,
+        "contents/cloudflare-data-platform/pages/11-summary.md": 49
+      }
+    }
+  ]
+}
