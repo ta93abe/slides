@@ -368,7 +368,7 @@ table.append(users_data)
 
 ---
 
-## Demo 4: OpenTelemetry → Grafana トレース
+## Demo 4: OpenTelemetry → Honeycomb トレース
 
 **スライド対応**: `06-observability.md`
 **メッセージ**: コード変更ゼロで Worker の全操作が可視化される
@@ -383,12 +383,12 @@ flowchart LR
         D1op["d1.exec"]
     end
 
-    Worker -->|自動トレース\nOTLP| Grafana["Grafana Cloud\nTempo + Loki"]
+    Worker -->|自動トレース\nOTLP| Honeycomb["Honeycomb\ntraces + logs"]
 ```
 
 ### 方針
 
-**追加の Worker を作らない**。Demo 1 の Pipelines にデータを POST する Worker を1つ作り、その Worker のトレースを Grafana で見せる。
+**追加の Worker を作らない**。Demo 1 の Pipelines にデータを POST する Worker を1つ作り、その Worker のトレースを Honeycomb で見せる。
 
 ```
 Demo Worker:
@@ -400,11 +400,12 @@ Demo Worker:
 
 これで r2 / fetch / d1 の3種類のスパンが1つのトレースに含まれる。
 
-### Grafana Cloud セットアップ
+### Honeycomb セットアップ
 
-1. Grafana Cloud 無料アカウント作成
-2. **Connections → Add new connection → OpenTelemetry (OTLP)** → トークン作成
-3. エンドポイントとトークンを控える
+1. Honeycomb 無料アカウント作成（[ui.honeycomb.io](https://ui.honeycomb.io/)）
+2. プロフィールアイコン → **Team Settings → Environments** → 該当環境の歯車 → **API Keys → Create Ingest API Key**
+   - **Permissions**: `Can create services/datasets`（OTLP 取り込みに必須）
+3. 払い出された API キー（`hcaik_...`）を控える（再表示不可）
 
 ### Cloudflare 側の設定
 
@@ -412,17 +413,19 @@ Cloudflare ダッシュボード → Workers & Pages → Observability → Add d
 
 ```
 # トレース用
-Destination Name: grafana-traces
+Destination Name: honeycomb-traces
 Destination Type: Traces
-OTLP Endpoint:   https://otlp-gateway-prod-us-east-2.grafana.net/otlp/v1/traces
-Custom Headers:   Authorization: Basic <GRAFANA_TOKEN>
+OTLP Endpoint:   https://api.honeycomb.io/v1/traces
+Custom Headers:   x-honeycomb-team: <HONEYCOMB_API_KEY>
 
 # ログ用
-Destination Name: grafana-logs
+Destination Name: honeycomb-logs
 Destination Type: Logs
-OTLP Endpoint:   https://otlp-gateway-prod-us-east-2.grafana.net/otlp/v1/logs
-Custom Headers:   Authorization: Basic <GRAFANA_TOKEN>
+OTLP Endpoint:   https://api.honeycomb.io/v1/logs
+Custom Headers:   x-honeycomb-team: <HONEYCOMB_API_KEY>
 ```
+
+> Honeycomb はデータセットを `service.name` 属性で自動分離するので、`x-honeycomb-dataset` ヘッダは不要。
 
 ### Demo Worker（wrangler.jsonc）
 
@@ -441,11 +444,11 @@ Custom Headers:   Authorization: Basic <GRAFANA_TOKEN>
     "traces": {
       "enabled": true,
       "head_sampling_rate": 1,
-      "destinations": ["grafana-traces"]
+      "destinations": ["honeycomb-traces"]
     },
     "logs": {
       "enabled": true,
-      "destinations": ["grafana-logs"]
+      "destinations": ["honeycomb-logs"]
     }
   },
   "triggers": {
@@ -512,20 +515,21 @@ wrangler d1 execute demo-db --command \
 ### デモ本番の操作
 
 1. Demo Worker をデプロイ: `wrangler deploy`
-2. 手動トリガーまたは Cron を待つ
-3. **Grafana Cloud → Explore → Tempo** を開く
-4. 最新のトレースを選択
+2. 手動トリガーまたは Cron を待つ（数分でデータが Honeycomb に到着）
+3. **Honeycomb UI → 該当 Environment → 該当 Dataset（`service.name`）→ Recent Traces** を開く
+4. 最新のトレースを選択 → **Trace Waterfall** ビューで span を確認
 
-**見せるポイント（Grafana 画面）**:
-- 1つのリクエスト内に `r2.get` → `fetch` → `d1.exec` のスパンが並ぶ
+**見せるポイント（Honeycomb 画面）**:
+- 1つのリクエスト内に `r2.get` → `fetch` → `d1.exec` のスパンが並ぶ（Trace Waterfall）
 - 各スパンの実行時間・ステータスが見える
 - **コードに計装用のライブラリを追加していない** ことを強調
 - `observability.traces.enabled = true` だけで全部出る
+- Honeycomb の Query Builder で `duration_ms > 100` 等の絞り込みも即実行可能
 
 ### サンプリングの説明
 
 ```jsonc
-// 本番では 5% にして Grafana のコストを抑える
+// 本番では 5% にして Honeycomb のイベント取り込み量を抑える
 "head_sampling_rate": 0.05
 ```
 
