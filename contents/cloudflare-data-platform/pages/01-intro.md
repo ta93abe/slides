@@ -1,0 +1,39 @@
+---
+layout: section
+---
+
+# Cloudflare とは
+
+## CDN 企業？エッジコンピューティング企業？
+
+---
+
+# Cloudflare Data Platform
+
+2025年9月に Cloudflare が [Announcing the Cloudflare Data Platform: ingest, store, and query your data directly on Cloudflare](https://blog.cloudflare.com/cloudflare-data-platform/) で発表されました。
+
+<v-click>
+
+Cloudflare Data Platform を構成するサービス
+
+- **Pipelines**: ストリーミングイベントインジェストサービス
+- **R2 Data Catalog**: Iceberg カタログサービス
+- **R2 SQL**: 分散クエリエンジン
+
+</v-click>
+
+<v-click>
+<Excalidraw
+  drawFilePath="./data-platform-main-components.excalidraw"
+  :darkMode="true"
+  :background="false"
+  class="my-16"
+/>
+</v-click>
+
+---
+layout: center
+---
+
+2025年12月には Cloudflare for Government が ISMAP 認定を取得しました。<br />
+https://www.ismap.go.jp/csm?id=cloud_service_list_detail&sys_id=e0773ab5837f3610aa68c6a8beaad39e
