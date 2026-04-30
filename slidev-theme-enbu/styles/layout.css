@@ -9,9 +9,9 @@
    simulate a hand-drawn, irregular squiggle. The stroke uses the theme primary. */
 .slidev-layout h2 {
     display: inline-block;
-    padding-bottom: 0.45em;
+    padding-bottom: 0.15em;
     background-repeat: repeat-x;
-    background-position: left bottom, left bottom;
+    background-position: left calc(100% - 2px), left calc(100% - 3px);
     background-size: 220px 10px, 180px 12px;
     background-image:
         url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 10' preserveAspectRatio='none'%3E%3Cpath d='M2 6 Q 14 2 26 5 T 50 6 Q 62 9 74 5 T 98 6 Q 112 3 124 6 T 148 6 Q 160 8 172 5 T 196 6 Q 208 4 218 6' fill='none' stroke='%23F38020' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"),
