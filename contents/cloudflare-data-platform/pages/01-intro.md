@@ -31,12 +31,6 @@ Cloudflare Data Platform を構成するサービス
 />
 </v-click>
 
----
-layout: center
----
-
-# Cloudflare for Government が ISMAP 認定を取得
-
 <!--
 2025年12月に Cloudflare for Government が ISMAP（政府情報システムのためのセキュリティ評価制度）に登録された。
 
@@ -47,4 +41,3 @@ layout: center
 - 政府クラウド調達基準（ISMAP）に通った Cloudflare 製品が日本で正式に存在する
 - 登録されたのは「Cloudflare for Government」という米国政府向け製品ライン
 -->
-
