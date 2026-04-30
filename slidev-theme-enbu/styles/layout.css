@@ -1,7 +1,7 @@
 :root {
-    /* default theme color */
+    /* default theme color (Cloudflare Orange) */
     /* can be overrided by uses `themeConfig` option */
-    --slidev-theme-primary: #5d8392;
+    --slidev-theme-primary: #F38020;
 }
 
 .slidev-layout.cover,
