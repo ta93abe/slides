@@ -1,0 +1,1 @@
+PR #7 (https://github.com/ta93abe/slides/pull/7) の最新 push (c426142) に対する CI 状態 (Workers Builds: slides と claude-review) を `gh pr view 7 --json statusCheckRollup` で確認し、失敗していれば原因とリンクをユーザに報告して。成功していれば「ビルド OK」とだけ短く報告。
