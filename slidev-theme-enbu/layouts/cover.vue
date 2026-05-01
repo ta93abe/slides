@@ -20,8 +20,6 @@ const style = computed(() => handleBackground(props.background));
             <div class="stars stars-medium" />
             <div class="stars stars-bright" />
             <div class="shooting-star shooting-star-1" />
-            <div class="shooting-star shooting-star-2" />
-            <div class="shooting-star shooting-star-3" />
         </div>
         <!-- 闇に纏う炎: 3 層の radial gradient を blur + 揺らがせて立ち昇る炎を表現 -->
         <div class="flame flame-base" />
@@ -230,26 +228,6 @@ const style = computed(() => handleBackground(props.background));
     top: 8%;
     left: -10%;
     animation: shoot 14s ease-out infinite;
-}
-
-.shooting-star-2 {
-    --angle: 22deg;
-    --dx: 480px;
-    --dy: 195px;
-    top: 4%;
-    left: 30%;
-    width: 110px;
-    animation: shoot 19s ease-out 6s infinite;
-}
-
-.shooting-star-3 {
-    --angle: 15deg;
-    --dx: 360px;
-    --dy: 96px;
-    top: 18%;
-    left: 55%;
-    width: 75px;
-    animation: shoot 23s ease-out 11s infinite;
 }
 
 @keyframes shoot {
