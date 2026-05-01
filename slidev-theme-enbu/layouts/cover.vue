@@ -248,72 +248,145 @@ const style = computed(() => handleBackground(props.background));
     bottom: 5%;
     left: 50%;
     transform: translateX(-50%);
-    width: 260px;
-    height: 60px;
+    width: 280px;
+    height: 80px;
     pointer-events: none;
-    z-index: 1; /* 炎より手前に置きたい場合は調整 */
+    z-index: 1;
+    /* 接地面の影 */
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.65));
 }
 
-/* log: 細長い丸太。linear-gradient で木目の陰影、border-radius で角を丸める */
+/* log: リアルな丸太。background を 7 層重ねて樹皮 / 木目 / ノイズ / 節を表現 */
 .log {
     position: absolute;
-    width: 220px;
-    height: 16px;
-    background: linear-gradient(
-        to bottom,
-        #6b3f22 0%,
-        #4a2a14 45%,
-        #2c1808 100%
-    );
-    border-radius: 8px;
+    width: 240px;
+    height: 26px;
+    background:
+        /* (1) SVG fractalNoise: 木の表面のザラつき。混色で繊維感を出す */
+        url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='26'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.4' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.18  0 0 0 0 0.10  0 0 0 0 0.05  0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+        /* (2) 上部のハイライト (光が当たっている上面) */
+        linear-gradient(to bottom,
+            rgba(170, 110, 65, 0.55) 0%,
+            rgba(115, 70, 38, 0.18) 22%,
+            transparent 45%,
+            transparent 70%,
+            rgba(0, 0, 0, 0.45) 100%),
+        /* (3) 縦の割れ目 (薄い暗線、樹皮の裂け目) */
+        linear-gradient(to right,
+            transparent 18%, rgba(0, 0, 0, 0.45) 18.3%, transparent 18.7%,
+            transparent 47%, rgba(0, 0, 0, 0.4) 47.3%, transparent 47.6%,
+            transparent 73%, rgba(0, 0, 0, 0.5) 73.3%, transparent 73.7%),
+        /* (4) 節 (knot): 円形のダーク斑、木の枝跡 */
+        radial-gradient(circle 4px at 32% 55%, rgba(20, 10, 4, 0.85) 30%, rgba(40, 22, 10, 0.5) 70%, transparent),
+        radial-gradient(circle 3px at 64% 40%, rgba(15, 8, 3, 0.8) 25%, rgba(35, 18, 8, 0.45) 70%, transparent),
+        /* (5) 木目の細かい縦縞 (繊維方向の凹凸) */
+        repeating-linear-gradient(90deg,
+            rgba(60, 35, 18, 0.5) 0px,
+            transparent 1px,
+            transparent 4px,
+            rgba(40, 22, 10, 0.4) 5px,
+            transparent 6px,
+            transparent 9px,
+            rgba(80, 50, 28, 0.3) 10px,
+            transparent 11px),
+        /* (6) 樹皮の大きなまだら (色ムラ) */
+        radial-gradient(ellipse 20px 7px at 25% 45%, rgba(30, 18, 8, 0.5), transparent),
+        radial-gradient(ellipse 16px 6px at 58% 60%, rgba(40, 22, 10, 0.45), transparent),
+        radial-gradient(ellipse 24px 8px at 82% 38%, rgba(25, 14, 6, 0.55), transparent),
+        /* (7) 樹皮の主色 (暗い茶のグラデ) */
+        linear-gradient(to bottom,
+            #6a3d20 0%,
+            #4a2914 32%,
+            #341d0d 65%,
+            #1c0e05 100%);
+    background-blend-mode: overlay, normal, normal, normal, normal, normal, normal, normal, normal;
+    border-radius: 13px;
     box-shadow:
-        0 2px 6px rgba(0, 0, 0, 0.6),
-        inset 0 1px 0 rgba(190, 120, 70, 0.45),
-        inset 0 -2px 4px rgba(0, 0, 0, 0.4);
+        0 3px 5px rgba(0, 0, 0, 0.55),                  /* 接地影 */
+        inset 0 2px 1px rgba(200, 135, 85, 0.4),        /* 上端のハイライトライン */
+        inset 0 -3px 6px rgba(0, 0, 0, 0.6),            /* 下端の影 */
+        inset 0 0 20px rgba(50, 25, 10, 0.5),           /* 内側全体に陰影 */
+        inset 8px 0 12px rgba(0, 0, 0, 0.35),           /* 左端の暗がり */
+        inset -8px 0 12px rgba(0, 0, 0, 0.35);          /* 右端の暗がり */
 }
 
-/* 木口 (両端の年輪) */
+/* 木口 (両端の年輪): 多層 radial-gradient で年輪 + 樹皮の輪 */
 .log::before,
 .log::after {
     content: '';
     position: absolute;
     top: 0;
-    width: 16px;
-    height: 16px;
+    width: 26px;
+    height: 26px;
     border-radius: 50%;
     background:
+        /* 樹皮の輪 (外側の暗い枠) */
         radial-gradient(circle at 50% 50%,
-            #8b5a2b 0%,
-            #6b3f22 30%,
-            #3a2010 65%,
+            transparent 78%,
+            #2a1808 82%,
+            #170b03 100%),
+        /* 年輪 (中心から複数の輪) */
+        radial-gradient(circle at 50% 50%,
+            #b07848 0%,
+            #8b5a2b 8%,
+            #6b3f22 14%,
+            #835230 22%,
+            #5e371a 30%,
+            #4a2a14 40%,
+            #623a1c 48%,
+            #3e2210 58%,
+            #2c1808 72%,
             #1a0d05 100%);
-    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.6);
+    box-shadow:
+        inset 0 0 6px rgba(0, 0, 0, 0.7),
+        inset 0 2px 1px rgba(195, 130, 80, 0.35);
 }
 
-.log::before { left: -3px; }
-.log::after  { right: -3px; }
+.log::before { left: -4px; }
+.log::after  { right: -4px; }
 
-/* 奥の薪 (横向き、土台) */
+/* 奥の薪 (土台、ほぼ水平) */
 .log-back {
     bottom: 4px;
     left: 20px;
     transform: rotate(-2deg);
 }
 
-/* 手前左の薪 (やや傾いて) */
+/* 手前左の薪 (時計回りに傾く) */
 .log-left {
-    bottom: 14px;
-    left: 8px;
-    width: 240px;
+    bottom: 22px;
+    left: 4px;
+    width: 260px;
     transform: rotate(8deg);
 }
 
-/* 手前右の薪 (反対方向に傾いて、井桁を完成) */
+/* 手前右の薪 (反時計回りに傾いて井桁完成) — こちらは燃え始めている端を強調 */
 .log-right {
-    bottom: 14px;
+    bottom: 22px;
     left: 12px;
-    width: 240px;
+    width: 260px;
     transform: rotate(-8deg);
+}
+
+/* 主炎側の端 (左端) は炭化 + 内側から赤い熱を発する */
+.log-back::before,
+.log-left::before,
+.log-right::after {
+    background:
+        radial-gradient(circle at 50% 50%,
+            transparent 78%,
+            #2a1808 82%,
+            #170b03 100%),
+        radial-gradient(circle at 45% 50%,
+            rgba(255, 140, 50, 0.85) 0%,
+            rgba(220, 80, 20, 0.55) 18%,
+            #5e371a 38%,
+            #3e2210 60%,
+            #1a0d05 100%);
+    box-shadow:
+        inset 0 0 6px rgba(0, 0, 0, 0.6),
+        inset 0 2px 1px rgba(195, 130, 80, 0.3),
+        0 0 14px 3px rgba(255, 110, 40, 0.4);
 }
 
 /* 焚き火を包む周辺光 (大きくぼやけた柔らかいオレンジ) */
