@@ -198,41 +198,55 @@ const style = computed(() => handleBackground(props.background));
 /* 流れ星: 細い光跡が斜めに走る。
    animation の duration を長く取り、発光〜消失は最初の 5-10% だけにすることで
    「たまに流れる」演出を実現。3 本を時差・角度・速度を変えて配置。 */
+/* 流れ星の本体: 左 = 尾（透明にフェード）/ 右 = 先端（明るいコア）。
+   transform-origin: right center で回転と進行方向の起点を先端に揃える。 */
 .shooting-star {
     position: absolute;
     width: 90px;
-    height: 1.2px;
-    background: linear-gradient(to right, transparent 0%, rgba(255, 255, 240, 0.9) 60%, rgba(255, 220, 180, 0.6) 90%, transparent 100%);
-    border-radius: 1px;
+    height: 1.5px;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 240, 0) 0%,
+        rgba(255, 255, 240, 0.15) 40%,
+        rgba(255, 255, 240, 0.6) 80%,
+        rgba(255, 255, 240, 1) 100%
+    );
+    border-radius: 999px;
+    transform-origin: right center;
+    box-shadow:
+        0 0 6px 1px rgba(255, 240, 210, 0.55),
+        0 0 12px 3px rgba(255, 200, 130, 0.25);
     opacity: 0;
     pointer-events: none;
     will-change: transform, opacity;
 }
 
+/* 進行方向（angle）と移動ベクトル（dx, dy）を整合: dy / dx = tan(angle)。
+   空から地上へ流れる隕石風に、すべて右下方向（angle 正の値）。 */
 .shooting-star-1 {
-    --angle: -18deg;
+    --angle: 18deg;
     --dx: 420px;
     --dy: 137px;
-    top: 18%;
+    top: 8%;
     left: -10%;
     animation: shoot 14s ease-out infinite;
 }
 
 .shooting-star-2 {
-    --angle: -22deg;
+    --angle: 22deg;
     --dx: 480px;
     --dy: 195px;
-    top: 8%;
+    top: 4%;
     left: 30%;
     width: 110px;
     animation: shoot 19s ease-out 6s infinite;
 }
 
 .shooting-star-3 {
-    --angle: -15deg;
+    --angle: 15deg;
     --dx: 360px;
     --dy: 96px;
-    top: 32%;
+    top: 18%;
     left: 55%;
     width: 75px;
     animation: shoot 23s ease-out 11s infinite;
