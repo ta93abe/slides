@@ -1,0 +1,159 @@
+PR #7 (https://github.com/ta93abe/slides/pull/7) の最新 push (c426142) に対する CI 状態 (Workers Builds: slides と claude-review) を `gh pr view 7 --json statusCheckRollup` で確認し、失敗していれば原因とリンクをユーザに報告して。成功していれば「ビルド OK」とだけ短く報告。
+
+---
+
+マージして
+
+---
+
+どのIssueからやればいい？
+
+---
+
+TA-497 / TA-498 / TA-500をやろう
+
+---
+
+Demo 4: OpenTelemetry → Observe（Snowflake）トレース & ログ
+Honeycombに向け先を変えてほしい
+
+---
+
+変えて
+
+---
+
+書き直して
+06-observability.md を Observe（Snowflake）中心に書き換える
+これもHoneycombにしたい。
+
+---
+
+pages/06-observability.md の実体ファイルはまだ Grafana Cloud 中心のままです
+Honeycombにして
+
+---
+
+マージして。
+
+---
+
+マージして
+
+---
+
+ta-501 をやろう。
+
+---
+
+一旦コミットして
+
+---
+
+全部コミットして
+
+---
+
+LinearのIssueを更新して
+
+---
+
+テーマ作りたい。
+
+---
+
+pnpm create slidev-theme
+でテーマ作り始めたい
+
+---
+
+Theme can be used locally without publishing to NPM. If your theme is only for personal use, you can simply use it as a local theme, or publish it as a private scoped package. However, it is recommended to publish it to the NPM registry if you want to share it with others.
+
+---
+
+ルート直下にslidev-theme-enbuを作った。
+
+---
+
+theme/enbu は削除した。
+
+---
+
+１、Aでいくからそれに合わせて各所を修正して
+
+---
+
+hungする。
+
+---
+
+マージして
+
+---
+
+Cloudflareのprimary color は
+
+---
+
+#F38020これでいく
+
+---
+
+アンダーバーはprimary使って
+
+---
+
+マージして。
+
+---
+
+seriph ってどんなレイアウトがある？
+
+---
+
+h2 に波線の下線を引きたい。手書き風のランダムな波を打つ感じで。
+
+---
+
+cover のレイアウトをデザインして
+
+---
+
+テキストには装飾しないで。
+
+---
+
+coverのh1 はもう少し小さくていいや
+
+---
+
+日本語がきれいに表示できるのは？
+
+---
+
+攻め策
+
+---
+
+安全策: 全体 Noto Sans JP、コード JetBrains Mono（旧 enbu と同じ路線）
+これにする。
+
+---
+
+cover のweight 下げたい。
+
+---
+
+/pr
+
+---
+
+C
+
+---
+
+炎をもう少し下に下げてほしい。
+
+---
+
+炎をユラユラさせて
