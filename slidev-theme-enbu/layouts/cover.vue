@@ -160,7 +160,7 @@ const style = computed(() => handleBackground(props.background));
 /* テキストは装飾せず、素のまま (背景の炎が主役) */
 .cover-content :deep(h1) {
     font-size: 4rem;
-    font-weight: 800;
+    font-weight: 500;
     line-height: 1.1;
     margin: 0;
     color: #fff;
