@@ -1,0 +1,23 @@
+{
+  "cli_version": "0.5.6",
+  "checkpoint_id": "a05d35d5556f",
+  "strategy": "manual-commit",
+  "branch": "feature/enbu-cover-flame-lower",
+  "checkpoints_count": 1,
+  "files_touched": null,
+  "sessions": [
+    {
+      "metadata": "/a0/5d35d5556f/0/metadata.json",
+      "transcript": "/a0/5d35d5556f/0/full.jsonl",
+      "content_hash": "/a0/5d35d5556f/0/content_hash.txt",
+      "prompt": "/a0/5d35d5556f/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 141,
+    "cache_creation_tokens": 439730,
+    "cache_read_tokens": 4797673,
+    "output_tokens": 16016,
+    "api_call_count": 38
+  }
+}
