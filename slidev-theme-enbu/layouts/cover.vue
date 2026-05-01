@@ -25,6 +25,12 @@ const style = computed(() => handleBackground(props.background));
         <div class="ember ember-4" />
         <div class="ember ember-5" />
         <div class="ember ember-6" />
+        <div class="ember ember-7" />
+        <div class="ember ember-8" />
+        <div class="ember ember-9" />
+        <div class="ember ember-10" />
+        <div class="ember ember-11" />
+        <div class="ember ember-12" />
         <div class="cover-content">
             <slot />
         </div>
@@ -117,12 +123,18 @@ const style = computed(() => handleBackground(props.background));
     pointer-events: none;
 }
 
-.ember-1 { left: 22%; bottom: 18%; animation: rise 7s   ease-in-out infinite; }
-.ember-2 { left: 60%; bottom: 10%; animation: rise 9s   ease-in-out 2s   infinite; }
-.ember-3 { left: 78%; bottom: 22%; animation: rise 8s   ease-in-out 4s   infinite; }
-.ember-4 { left: 35%; bottom: 15%; animation: rise 7.5s ease-in-out 1s   infinite; }
-.ember-5 { left: 50%; bottom: 20%; animation: rise 8.5s ease-in-out 3s   infinite; }
-.ember-6 { left: 70%; bottom: 16%; animation: rise 9.5s ease-in-out 5s   infinite; }
+.ember-1  { left: 22%; bottom: 18%; animation: rise 7s    ease-in-out infinite; }
+.ember-2  { left: 60%; bottom: 10%; animation: rise 9s    ease-in-out 2s   infinite; }
+.ember-3  { left: 78%; bottom: 22%; animation: rise 8s    ease-in-out 4s   infinite; }
+.ember-4  { left: 35%; bottom: 15%; animation: rise 7.5s  ease-in-out 1s   infinite; }
+.ember-5  { left: 50%; bottom: 20%; animation: rise 8.5s  ease-in-out 3s   infinite; }
+.ember-6  { left: 70%; bottom: 16%; animation: rise 9.5s  ease-in-out 5s   infinite; }
+.ember-7  { left: 15%; bottom: 14%; animation: rise 8s    ease-in-out 0.5s infinite; }
+.ember-8  { left: 30%; bottom: 22%; animation: rise 7.2s  ease-in-out 1.5s infinite; }
+.ember-9  { left: 45%; bottom: 12%; animation: rise 9.2s  ease-in-out 2.5s infinite; }
+.ember-10 { left: 55%; bottom: 18%; animation: rise 7.8s  ease-in-out 3.5s infinite; }
+.ember-11 { left: 65%; bottom: 14%; animation: rise 8.7s  ease-in-out 4.5s infinite; }
+.ember-12 { left: 85%; bottom: 20%; animation: rise 9.7s  ease-in-out 5.5s infinite; }
 
 @keyframes flicker-base {
     0%   { transform: translateX(-50%) scale(1)   translateY(0);   opacity: 0.85; }
