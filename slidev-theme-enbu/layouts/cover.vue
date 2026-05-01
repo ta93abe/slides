@@ -14,11 +14,14 @@ const style = computed(() => handleBackground(props.background));
 
 <template>
     <div class="slidev-layout cover" :style="style">
-        <!-- 上 1/4 の星空: 3 レイヤー（小・中・明るい）の box-shadow 多重 -->
+        <!-- 上 1/4 の星空: 3 レイヤー（小・中・明るい）の box-shadow 多重 + 流れ星 -->
         <div class="starfield">
             <div class="stars stars-small" />
             <div class="stars stars-medium" />
             <div class="stars stars-bright" />
+            <div class="shooting-star shooting-star-1" />
+            <div class="shooting-star shooting-star-2" />
+            <div class="shooting-star shooting-star-3" />
         </div>
         <!-- 闇に纏う炎: 3 層の radial gradient を blur + 揺らがせて立ち昇る炎を表現 -->
         <div class="flame flame-base" />
@@ -190,6 +193,56 @@ const style = computed(() => handleBackground(props.background));
 @keyframes twinkle {
     0%, 100% { opacity: 0.7; }
     50%      { opacity: 1; }
+}
+
+/* 流れ星: 細い光跡が斜めに走る。
+   animation の duration を長く取り、発光〜消失は最初の 5-10% だけにすることで
+   「たまに流れる」演出を実現。3 本を時差・角度・速度を変えて配置。 */
+.shooting-star {
+    position: absolute;
+    width: 90px;
+    height: 1.2px;
+    background: linear-gradient(to right, transparent 0%, rgba(255, 255, 240, 0.9) 60%, rgba(255, 220, 180, 0.6) 90%, transparent 100%);
+    border-radius: 1px;
+    opacity: 0;
+    pointer-events: none;
+    will-change: transform, opacity;
+}
+
+.shooting-star-1 {
+    --angle: -18deg;
+    --dx: 420px;
+    --dy: 137px;
+    top: 18%;
+    left: -10%;
+    animation: shoot 14s ease-out infinite;
+}
+
+.shooting-star-2 {
+    --angle: -22deg;
+    --dx: 480px;
+    --dy: 195px;
+    top: 8%;
+    left: 30%;
+    width: 110px;
+    animation: shoot 19s ease-out 6s infinite;
+}
+
+.shooting-star-3 {
+    --angle: -15deg;
+    --dx: 360px;
+    --dy: 96px;
+    top: 32%;
+    left: 55%;
+    width: 75px;
+    animation: shoot 23s ease-out 11s infinite;
+}
+
+@keyframes shoot {
+    0%   { transform: rotate(var(--angle)) translate3d(0, 0, 0);                  opacity: 0; }
+    2%   { opacity: 1; }
+    8%   { transform: rotate(var(--angle)) translate3d(var(--dx), var(--dy), 0);  opacity: 0; }
+    100% { transform: rotate(var(--angle)) translate3d(var(--dx), var(--dy), 0);  opacity: 0; }
 }
 
 /* 巨大な土台の炎 (オレンジから消えていく) */
