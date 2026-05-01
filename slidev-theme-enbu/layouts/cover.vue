@@ -21,10 +21,15 @@ const style = computed(() => handleBackground(props.background));
             <div class="stars stars-bright" />
             <div class="shooting-star shooting-star-1" />
         </div>
-        <!-- 闇に纏う炎: 3 層の radial gradient を blur + 揺らがせて立ち昇る炎を表現 -->
-        <div class="flame flame-base" />
-        <div class="flame flame-mid" />
-        <div class="flame flame-top" />
+        <!-- 焚き火: 薪 (3 本の log を井桁状) + 周辺光 + 主炎 + 中心コア -->
+        <div class="firepit">
+            <div class="log log-back" />
+            <div class="log log-left" />
+            <div class="log log-right" />
+        </div>
+        <div class="flame flame-glow" />
+        <div class="flame flame-body" />
+        <div class="flame flame-core" />
         <!-- 上空に漂う火の粉 -->
         <div class="ember ember-1" />
         <div class="ember ember-2" />
@@ -237,67 +242,143 @@ const style = computed(() => handleBackground(props.background));
     100% { transform: rotate(var(--angle)) translate3d(var(--dx), var(--dy), 0);  opacity: 0; }
 }
 
-/* 巨大な土台の炎 (オレンジから消えていく) */
-.flame-base {
+/* 焚き火の薪 (井桁状に組んだ 3 本の log) */
+.firepit {
     position: absolute;
-    bottom: -45%;
+    bottom: 5%;
     left: 50%;
     transform: translateX(-50%);
-    width: 110%;
-    height: 90%;
-    background: radial-gradient(
-        ellipse at 50% 100%,
-        rgba(255, 200, 100, 0.55) 0%,
-        rgba(243, 128, 32, 0.4) 18%,
-        rgba(199, 62, 29, 0.25) 38%,
-        rgba(80, 20, 10, 0.15) 60%,
-        transparent 80%
-    );
-    filter: blur(50px);
-    animation: sway-base 6s ease-in-out infinite;
-    transform-origin: 50% 100%;
+    width: 260px;
+    height: 60px;
     pointer-events: none;
+    z-index: 1; /* 炎より手前に置きたい場合は調整 */
 }
 
-/* 中段の炎 (左寄り) */
-.flame-mid {
+/* log: 細長い丸太。linear-gradient で木目の陰影、border-radius で角を丸める */
+.log {
     position: absolute;
-    bottom: -25%;
-    left: 25%;
-    width: 55%;
-    height: 70%;
-    background: radial-gradient(
-        ellipse at 50% 100%,
-        rgba(255, 230, 150, 0.7) 0%,
-        rgba(251, 173, 65, 0.45) 25%,
-        rgba(243, 128, 32, 0.25) 50%,
-        transparent 75%
+    width: 220px;
+    height: 16px;
+    background: linear-gradient(
+        to bottom,
+        #6b3f22 0%,
+        #4a2a14 45%,
+        #2c1808 100%
     );
-    filter: blur(35px);
-    mix-blend-mode: screen;
-    animation: sway-mid 4.5s ease-in-out infinite;
-    transform-origin: 50% 100%;
-    pointer-events: none;
+    border-radius: 8px;
+    box-shadow:
+        0 2px 6px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(190, 120, 70, 0.45),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.4);
 }
 
-/* 上段の炎 (右寄り、明るめのコア) */
-.flame-top {
+/* 木口 (両端の年輪) */
+.log::before,
+.log::after {
+    content: '';
     position: absolute;
-    bottom: -20%;
+    top: 0;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at 50% 50%,
+            #8b5a2b 0%,
+            #6b3f22 30%,
+            #3a2010 65%,
+            #1a0d05 100%);
+    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.6);
+}
+
+.log::before { left: -3px; }
+.log::after  { right: -3px; }
+
+/* 奥の薪 (横向き、土台) */
+.log-back {
+    bottom: 4px;
+    left: 20px;
+    transform: rotate(-2deg);
+}
+
+/* 手前左の薪 (やや傾いて) */
+.log-left {
+    bottom: 14px;
+    left: 8px;
+    width: 240px;
+    transform: rotate(8deg);
+}
+
+/* 手前右の薪 (反対方向に傾いて、井桁を完成) */
+.log-right {
+    bottom: 14px;
+    left: 12px;
+    width: 240px;
+    transform: rotate(-8deg);
+}
+
+/* 焚き火を包む周辺光 (大きくぼやけた柔らかいオレンジ) */
+.flame-glow {
+    position: absolute;
+    bottom: 5%;
     left: 50%;
-    width: 45%;
-    height: 60%;
+    width: 460px;
+    height: 360px;
     background: radial-gradient(
-        ellipse at 50% 100%,
-        rgba(255, 255, 220, 0.55) 0%,
-        rgba(255, 200, 100, 0.4) 30%,
-        rgba(243, 128, 32, 0.15) 60%,
+        ellipse at 50% 95%,
+        rgba(243, 128, 32, 0.4) 0%,
+        rgba(199, 62, 29, 0.22) 30%,
+        rgba(80, 30, 10, 0.1) 55%,
         transparent 80%
     );
-    filter: blur(28px);
-    mix-blend-mode: screen;
-    animation: sway-top 3.8s ease-in-out infinite;
+    filter: blur(45px);
+    transform: translateX(-50%);
     transform-origin: 50% 100%;
+    animation: sway-glow 6.5s ease-in-out infinite;
+    pointer-events: none;
+}
+
+/* 主炎 (焚き火本体、中央でユラユラ) */
+.flame-body {
+    position: absolute;
+    bottom: 7%;
+    left: 50%;
+    width: 220px;
+    height: 280px;
+    background: radial-gradient(
+        ellipse at 50% 100%,
+        rgba(255, 220, 130, 0.85) 0%,
+        rgba(251, 173, 65, 0.65) 22%,
+        rgba(243, 128, 32, 0.5) 45%,
+        rgba(199, 62, 29, 0.3) 68%,
+        transparent 90%
+    );
+    filter: blur(14px);
+    mix-blend-mode: screen;
+    transform: translateX(-50%);
+    transform-origin: 50% 100%;
+    animation: sway-body 4.5s ease-in-out infinite;
+    pointer-events: none;
+}
+
+/* 中心コア (一番明るい白〜黄、細く立ち昇る) */
+.flame-core {
+    position: absolute;
+    bottom: 8%;
+    left: 50%;
+    width: 110px;
+    height: 200px;
+    background: radial-gradient(
+        ellipse at 50% 100%,
+        rgba(255, 250, 220, 0.95) 0%,
+        rgba(255, 220, 130, 0.7) 30%,
+        rgba(251, 173, 65, 0.35) 60%,
+        transparent 85%
+    );
+    filter: blur(7px);
+    mix-blend-mode: screen;
+    transform: translateX(-50%);
+    transform-origin: 50% 100%;
+    animation: sway-core 3.2s ease-in-out infinite;
     pointer-events: none;
 }
 
@@ -312,42 +393,43 @@ const style = computed(() => handleBackground(props.background));
     pointer-events: none;
 }
 
-.ember-1  { left: 22%; bottom: 18%; animation: rise 7s    ease-in-out infinite; }
-.ember-2  { left: 60%; bottom: 10%; animation: rise 9s    ease-in-out 2s   infinite; }
-.ember-3  { left: 78%; bottom: 22%; animation: rise 8s    ease-in-out 4s   infinite; }
-.ember-4  { left: 35%; bottom: 15%; animation: rise 7.5s  ease-in-out 1s   infinite; }
-.ember-5  { left: 50%; bottom: 20%; animation: rise 8.5s  ease-in-out 3s   infinite; }
-.ember-6  { left: 70%; bottom: 16%; animation: rise 9.5s  ease-in-out 5s   infinite; }
-.ember-7  { left: 15%; bottom: 14%; animation: rise 8s    ease-in-out 0.5s infinite; }
-.ember-8  { left: 30%; bottom: 22%; animation: rise 7.2s  ease-in-out 1.5s infinite; }
-.ember-9  { left: 45%; bottom: 12%; animation: rise 9.2s  ease-in-out 2.5s infinite; }
-.ember-10 { left: 55%; bottom: 18%; animation: rise 7.8s  ease-in-out 3.5s infinite; }
-.ember-11 { left: 65%; bottom: 14%; animation: rise 8.7s  ease-in-out 4.5s infinite; }
-.ember-12 { left: 85%; bottom: 20%; animation: rise 9.7s  ease-in-out 5.5s infinite; }
+/* 焚き火の上から立ち昇る火の粉: 中央 38-62% に集中 */
+.ember-1  { left: 46%; bottom: 12%; animation: rise 7s    ease-in-out infinite; }
+.ember-2  { left: 54%; bottom: 9%;  animation: rise 9s    ease-in-out 2s   infinite; }
+.ember-3  { left: 50%; bottom: 14%; animation: rise 8s    ease-in-out 4s   infinite; }
+.ember-4  { left: 42%; bottom: 10%; animation: rise 7.5s  ease-in-out 1s   infinite; }
+.ember-5  { left: 58%; bottom: 13%; animation: rise 8.5s  ease-in-out 3s   infinite; }
+.ember-6  { left: 48%; bottom: 8%;  animation: rise 9.5s  ease-in-out 5s   infinite; }
+.ember-7  { left: 52%; bottom: 11%; animation: rise 8s    ease-in-out 0.5s infinite; }
+.ember-8  { left: 44%; bottom: 13%; animation: rise 7.2s  ease-in-out 1.5s infinite; }
+.ember-9  { left: 56%; bottom: 10%; animation: rise 9.2s  ease-in-out 2.5s infinite; }
+.ember-10 { left: 38%; bottom: 11%; animation: rise 7.8s  ease-in-out 3.5s infinite; }
+.ember-11 { left: 62%; bottom: 12%; animation: rise 8.7s  ease-in-out 4.5s infinite; }
+.ember-12 { left: 50%; bottom: 9%;  animation: rise 9.7s  ease-in-out 5.5s infinite; }
 
-/* ユラユラ揺らぐ炎: 0 → 100% でぐるりと一周し、シームレスにループ */
-@keyframes sway-base {
-    0%   { transform: translateX(-50%) scale(1)    translateY(0)    skewX(0deg);   opacity: 0.85; }
-    25%  { transform: translateX(-46%) scale(1.03) translateY(-1%)  skewX(3deg);   opacity: 0.95; }
-    50%  { transform: translateX(-50%) scale(1.06) translateY(-2%)  skewX(0deg);   opacity: 1;    }
-    75%  { transform: translateX(-54%) scale(1.03) translateY(-1%)  skewX(-3deg);  opacity: 0.92; }
-    100% { transform: translateX(-50%) scale(1)    translateY(0)    skewX(0deg);   opacity: 0.85; }
+/* 焚き火のユラユラ: 周辺光は緩く、中心ほど大きく揺れる */
+@keyframes sway-glow {
+    0%   { transform: translateX(-50%) scale(1)    skewX(0deg);  opacity: 0.85; }
+    25%  { transform: translateX(-48%) scale(1.04) skewX(2deg);  opacity: 0.95; }
+    50%  { transform: translateX(-50%) scale(1.06) skewX(0deg);  opacity: 1;    }
+    75%  { transform: translateX(-52%) scale(1.04) skewX(-2deg); opacity: 0.9;  }
+    100% { transform: translateX(-50%) scale(1)    skewX(0deg);  opacity: 0.85; }
 }
 
-@keyframes sway-mid {
-    0%   { transform: translateX(0)   scale(1)    translateY(0)   skewX(0deg);  opacity: 0.9; }
-    25%  { transform: translateX(4%)  scale(1.05) translateY(-2%) skewX(5deg);  opacity: 1;   }
-    50%  { transform: translateX(0)   scale(1.08) translateY(-3%) skewX(0deg);  opacity: 1;   }
-    75%  { transform: translateX(-4%) scale(1.05) translateY(-2%) skewX(-5deg); opacity: 1;   }
-    100% { transform: translateX(0)   scale(1)    translateY(0)   skewX(0deg);  opacity: 0.9; }
+@keyframes sway-body {
+    0%   { transform: translateX(-50%) scale(1)    translateY(0)    skewX(0deg);  opacity: 0.9; }
+    25%  { transform: translateX(-46%) scale(1.06) translateY(-2%)  skewX(5deg);  opacity: 1;   }
+    50%  { transform: translateX(-50%) scale(1.1)  translateY(-3%)  skewX(0deg);  opacity: 1;   }
+    75%  { transform: translateX(-54%) scale(1.06) translateY(-2%)  skewX(-5deg); opacity: 1;   }
+    100% { transform: translateX(-50%) scale(1)    translateY(0)    skewX(0deg);  opacity: 0.9; }
 }
 
-@keyframes sway-top {
-    0%   { transform: translateX(-50%) scale(1)    translateY(0)   skewX(0deg);  opacity: 0.95; }
-    25%  { transform: translateX(-44%) scale(1.04) translateY(-2%) skewX(6deg);  opacity: 1;    }
-    50%  { transform: translateX(-50%) scale(1.07) translateY(-4%) skewX(0deg);  opacity: 1;    }
-    75%  { transform: translateX(-56%) scale(1.04) translateY(-2%) skewX(-6deg); opacity: 1;    }
-    100% { transform: translateX(-50%) scale(1)    translateY(0)   skewX(0deg);  opacity: 0.95; }
+@keyframes sway-core {
+    0%   { transform: translateX(-50%) scale(1)    translateY(0)    skewX(0deg);  opacity: 0.95; }
+    25%  { transform: translateX(-44%) scale(1.07) translateY(-3%)  skewX(7deg);  opacity: 1;    }
+    50%  { transform: translateX(-50%) scale(1.12) translateY(-5%)  skewX(0deg);  opacity: 1;    }
+    75%  { transform: translateX(-56%) scale(1.07) translateY(-3%)  skewX(-7deg); opacity: 1;    }
+    100% { transform: translateX(-50%) scale(1)    translateY(0)    skewX(0deg);  opacity: 0.95; }
 }
 
 @keyframes rise {
