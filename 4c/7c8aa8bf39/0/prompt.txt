@@ -1,0 +1,21 @@
+[@01-intro.md#L38:40](file:///Users/ta93abe/Developer/github.com/ta93abe/slides/contents/cloudflare-data-platform/pages/01-intro.md#L38:40)
+ 
+これはスピーカーノートにしたい。
+
+<context ref="file:///Users/ta93abe/Developer/github.com/ta93abe/slides/contents/cloudflare-data-platform/pages/01-intro.md#L38:40">
+2025年12月には Cloudflare for Government が ISMAP 認定を取得しました。<br />
+https://www.ismap.go.jp/csm?id=cloud_service_list_detail&sys_id=e0773ab5837f3610aa68c6a8beaad39e
+
+</context>
+
+---
+
+更新して
+
+---
+
+pr作って。
+
+---
+
+A

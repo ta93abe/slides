@@ -1,0 +1,23 @@
+{
+  "cli_version": "0.5.6",
+  "checkpoint_id": "4c7c8aa8bf39",
+  "strategy": "manual-commit",
+  "branch": "feature/enbu-cover-design",
+  "checkpoints_count": 1,
+  "files_touched": null,
+  "sessions": [
+    {
+      "metadata": "/4c/7c8aa8bf39/0/metadata.json",
+      "transcript": "/4c/7c8aa8bf39/0/full.jsonl",
+      "content_hash": "/4c/7c8aa8bf39/0/content_hash.txt",
+      "prompt": "/4c/7c8aa8bf39/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 141,
+    "cache_creation_tokens": 439730,
+    "cache_read_tokens": 4797673,
+    "output_tokens": 16016,
+    "api_call_count": 38
+  }
+}
