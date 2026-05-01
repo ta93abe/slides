@@ -159,10 +159,9 @@ const style = computed(() => handleBackground(props.background));
 
 /* テキストは装飾せず、素のまま (背景の炎が主役) */
 .cover-content :deep(h1) {
-    font-family: "Yuji Boku", serif;
     font-size: 4rem;
-    font-weight: 400;
-    line-height: 1.25;
+    font-weight: 800;
+    line-height: 1.1;
     margin: 0;
     color: #fff;
 }

@@ -27,7 +27,6 @@
     "defaults": {
       "fonts": {
         "sans": "Noto Sans JP",
-        "serif": "Yuji Boku",
         "mono": "JetBrains Mono",
         "weights": "300,400,500,700,900"
       }
