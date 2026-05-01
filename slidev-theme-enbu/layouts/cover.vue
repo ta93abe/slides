@@ -22,6 +22,9 @@ const style = computed(() => handleBackground(props.background));
         <div class="ember ember-1" />
         <div class="ember ember-2" />
         <div class="ember ember-3" />
+        <div class="ember ember-4" />
+        <div class="ember ember-5" />
+        <div class="ember ember-6" />
         <div class="cover-content">
             <slot />
         </div>
@@ -114,9 +117,12 @@ const style = computed(() => handleBackground(props.background));
     pointer-events: none;
 }
 
-.ember-1 { left: 22%; bottom: 30%; animation: rise 7s ease-in-out infinite; }
-.ember-2 { left: 60%; bottom: 20%; animation: rise 9s ease-in-out 2s infinite; }
-.ember-3 { left: 78%; bottom: 35%; animation: rise 8s ease-in-out 4s infinite; }
+.ember-1 { left: 22%; bottom: 30%; animation: rise 7s   ease-in-out infinite; }
+.ember-2 { left: 60%; bottom: 20%; animation: rise 9s   ease-in-out 2s   infinite; }
+.ember-3 { left: 78%; bottom: 35%; animation: rise 8s   ease-in-out 4s   infinite; }
+.ember-4 { left: 35%; bottom: 25%; animation: rise 7.5s ease-in-out 1s   infinite; }
+.ember-5 { left: 50%; bottom: 32%; animation: rise 8.5s ease-in-out 3s   infinite; }
+.ember-6 { left: 70%; bottom: 28%; animation: rise 9.5s ease-in-out 5s   infinite; }
 
 @keyframes flicker-base {
     0%   { transform: translateX(-50%) scale(1)   translateY(0);   opacity: 0.85; }
@@ -151,46 +157,20 @@ const style = computed(() => handleBackground(props.background));
     max-width: 90%;
 }
 
-/* h1 はゴールド〜白のグラデ + 炎のグロー */
+/* テキストは装飾せず、素のまま (背景の炎が主役) */
 .cover-content :deep(h1) {
     font-size: 5rem;
     font-weight: 800;
     line-height: 1.08;
-    letter-spacing: -0.01em;
     margin: 0;
-    background: linear-gradient(180deg, #ffffff 0%, #ffe7c4 55%, #fbad41 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
-    text-shadow:
-        0 0 40px rgba(243, 128, 32, 0.45),
-        0 0 90px rgba(199, 62, 29, 0.25);
-    /* グラデ × text-shadow を成立させるためのトリック (text-shadow は背後にうっすら) */
-    filter: drop-shadow(0 4px 30px rgba(243, 128, 32, 0.35));
+    color: #fff;
 }
 
-/* h2 は刻印風: スモールキャップ・トラッキング・薄いオレンジ */
 .cover-content :deep(h2) {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     font-weight: 400;
-    letter-spacing: 0.4em;
-    text-transform: uppercase;
-    margin-top: 2.5rem;
-    color: #fbad41;
-    opacity: 0.75;
-    text-shadow: 0 0 12px rgba(251, 173, 65, 0.4);
-}
-
-/* h1 と h2 の間に細い divider (炎オレンジのグロー) */
-.cover-content :deep(h1) + h2::before,
-.cover-content :deep(h2):only-child::before {
-    content: '';
-    display: block;
-    width: 60px;
-    height: 1px;
-    margin: 0 auto 1.5rem;
-    background: linear-gradient(90deg, transparent, #fbad41, transparent);
-    box-shadow: 0 0 8px rgba(251, 173, 65, 0.6);
+    margin-top: 1.5rem;
+    color: #fff;
+    opacity: 0.7;
 }
 </style>
