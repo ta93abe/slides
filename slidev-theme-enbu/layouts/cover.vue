@@ -60,13 +60,13 @@ const style = computed(() => handleBackground(props.background));
     color: #fff;
 }
 
-/* 上 1/4 の星空 — 闇の上層に瞬く星 */
+/* 上 1/3 の星空 — 闇の上層に瞬く星 */
 .starfield {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 25%;
+    height: 33.33%;
     overflow: hidden;
     pointer-events: none;
     /* 下端がフェードして炎側と自然に繋がる */
