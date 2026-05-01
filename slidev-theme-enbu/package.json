@@ -26,8 +26,9 @@
     "colorSchema": "both",
     "defaults": {
       "fonts": {
-        "sans": "Nunito Sans",
-        "mono": "Fira Code"
+        "sans": "Noto Sans JP",
+        "mono": "JetBrains Mono",
+        "weights": "300,400,500,700,900"
       }
     }
   }
