@@ -48,7 +48,7 @@ const style = computed(() => handleBackground(props.background));
 /* 巨大な土台の炎 (オレンジから消えていく) */
 .flame-base {
     position: absolute;
-    bottom: -30%;
+    bottom: -45%;
     left: 50%;
     transform: translateX(-50%);
     width: 110%;
@@ -69,7 +69,7 @@ const style = computed(() => handleBackground(props.background));
 /* 中段の炎 (左寄り) */
 .flame-mid {
     position: absolute;
-    bottom: -10%;
+    bottom: -25%;
     left: 25%;
     width: 55%;
     height: 70%;
@@ -89,7 +89,7 @@ const style = computed(() => handleBackground(props.background));
 /* 上段の炎 (右寄り、明るめのコア) */
 .flame-top {
     position: absolute;
-    bottom: -5%;
+    bottom: -20%;
     left: 50%;
     width: 45%;
     height: 60%;
@@ -117,12 +117,12 @@ const style = computed(() => handleBackground(props.background));
     pointer-events: none;
 }
 
-.ember-1 { left: 22%; bottom: 30%; animation: rise 7s   ease-in-out infinite; }
-.ember-2 { left: 60%; bottom: 20%; animation: rise 9s   ease-in-out 2s   infinite; }
-.ember-3 { left: 78%; bottom: 35%; animation: rise 8s   ease-in-out 4s   infinite; }
-.ember-4 { left: 35%; bottom: 25%; animation: rise 7.5s ease-in-out 1s   infinite; }
-.ember-5 { left: 50%; bottom: 32%; animation: rise 8.5s ease-in-out 3s   infinite; }
-.ember-6 { left: 70%; bottom: 28%; animation: rise 9.5s ease-in-out 5s   infinite; }
+.ember-1 { left: 22%; bottom: 18%; animation: rise 7s   ease-in-out infinite; }
+.ember-2 { left: 60%; bottom: 10%; animation: rise 9s   ease-in-out 2s   infinite; }
+.ember-3 { left: 78%; bottom: 22%; animation: rise 8s   ease-in-out 4s   infinite; }
+.ember-4 { left: 35%; bottom: 15%; animation: rise 7.5s ease-in-out 1s   infinite; }
+.ember-5 { left: 50%; bottom: 20%; animation: rise 8.5s ease-in-out 3s   infinite; }
+.ember-6 { left: 70%; bottom: 16%; animation: rise 9.5s ease-in-out 5s   infinite; }
 
 @keyframes flicker-base {
     0%   { transform: translateX(-50%) scale(1)   translateY(0);   opacity: 0.85; }
