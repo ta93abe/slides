@@ -4,7 +4,7 @@
     --slidev-theme-primary: #F38020;
 }
 
-.slidev-layout.cover,
+/* cover は layouts/cover.vue の scoped style で完結 (闇に纏う炎) */
 .slidev-layout.intro {
     @apply h-full grid;
 
