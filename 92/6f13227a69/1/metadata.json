@@ -1,0 +1,37 @@
+{
+  "cli_version": "0.5.6",
+  "checkpoint_id": "926f13227a69",
+  "session_id": "fbbd0b36-7edf-4bc9-a036-1186c155f909",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-01T09:49:11.572117Z",
+  "branch": "feature/enbu-cover-flame-lower",
+  "checkpoints_count": 0,
+  "files_touched": [],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "b22aa0d7594e",
+  "checkpoint_transcript_start": 1689,
+  "transcript_lines_at_start": 1689,
+  "token_usage": {
+    "input_tokens": 9,
+    "cache_creation_tokens": 4163,
+    "cache_read_tokens": 2326855,
+    "output_tokens": 3486,
+    "api_call_count": 4
+  },
+  "session_metrics": {
+    "turn_count": 48
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 9,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    }
+  ]
+}
