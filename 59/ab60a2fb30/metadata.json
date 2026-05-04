@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.5.6",
+  "checkpoint_id": "59ab60a2fb30",
+  "strategy": "manual-commit",
+  "branch": "feature/enbu-cover-flame-lower",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "slidev-theme-enbu/layouts/cover.vue"
+  ],
+  "sessions": [
+    {
+      "metadata": "/59/ab60a2fb30/0/metadata.json",
+      "transcript": "/59/ab60a2fb30/0/full.jsonl",
+      "content_hash": "/59/ab60a2fb30/0/content_hash.txt",
+      "prompt": "/59/ab60a2fb30/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 11,
+    "cache_creation_tokens": 74371,
+    "cache_read_tokens": 67459,
+    "output_tokens": 498,
+    "api_call_count": 2
+  }
+}
