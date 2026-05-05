@@ -1,0 +1,56 @@
+{
+  "cli_version": "0.5.6",
+  "checkpoint_id": "b0c3bf585140",
+  "session_id": "1c3ba0cc-ad3f-4d21-8e97-279a06edce0a",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-05T06:59:41.630377Z",
+  "branch": "feature/enbu-cover-flame-lower",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/02-workers.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "4a8de748d598",
+  "token_usage": {
+    "input_tokens": 3395,
+    "cache_creation_tokens": 1655907,
+    "cache_read_tokens": 49111862,
+    "output_tokens": 328686,
+    "api_call_count": 190
+  },
+  "session_metrics": {
+    "turn_count": 32
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-05T06:59:41.537922Z",
+    "agent_lines": 0,
+    "agent_removed": 2,
+    "human_added": 105,
+    "human_modified": 18,
+    "human_removed": 0,
+    "total_committed": 107,
+    "total_lines_changed": 145,
+    "agent_percentage": 1.3793103448275863,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0
+    },
+    {
+      "checkpoint_number": 3,
+      "user_lines_added": 9,
+      "user_lines_removed": 0,
+      "agent_lines_added": 13,
+      "agent_lines_removed": 2,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    }
+  ]
+}
