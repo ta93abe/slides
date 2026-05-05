@@ -60,17 +60,21 @@ flowchart LR
 const sandbox = getSandbox(env.Sandbox, `dbt-${runId}`);
 await sandbox.gitCheckout(repo, { depth: 1, targetDir: "/w" });
 const result = await sandbox.exec(
-  "cd /w && pip install -r requirements.txt && dbt build",
+  "cd /w && pip install uv && uv sync --frozen && uv run dbt build",
   { timeout: 30 * 60 * 1000 }
 );
 ```
 
 <!--
 全体像はこの 1 枚で説明できる。Cron Trigger が毎朝 Worker を叩いて、
-Worker が Sandbox を立ち上げ、Sandbox の中で dbt-duckdb を pip install してから
-dbt build。入力データは R2 の raw/ から read_parquet で読んで、
+Worker が Sandbox を立ち上げ、Sandbox の中で uv sync で uv.lock どおりに
+依存を復元してから uv run dbt build。入力データは R2 の raw/ から read_parquet で読んで、
 出力 marts/ も Parquet で R2 に書き戻す。Sandbox は実体は Durable Object + Firecracker
 microVM なので、毎回真っさらの環境が立つ。コードは 10 行ちょっと。
+なお dbt 本体は Workers でも Python Workers でも動かない。subprocess 不可、
+DuckDB のような native binary が Pyodide にない、メモリ 128 MB の壁、の 3 点が
+壁になる。Linux microVM が立つ Sandbox / Containers が必要、というのが
+構成上の判断。
 従来の Airflow + EC2 構成と比べると Wrangler deploy 1 発で完結し、月額 1〜5 ドル。
 -->
 
@@ -100,6 +104,7 @@ flowchart LR
 - **前回 main の `manifest.json`** を R2 の `dbt-artifacts/main/` に保存しておく
 - **Sandbox 3 並列**: test / lint / docs を `Promise.all` で同時実行 — 直列なら 6 分が 2 分に
 - 結果を **PR にコメント + docs プレビュー URL** を貼る
+- **`uv.lock`** を single source of truth に — CI Sandbox と本番 Container image が同じ lockfile を読み、依存ドリフトが構造的に発生しない
 
 <!--
 Slim CI は dbt の標準機能で、PR で変更したモデルだけを test する仕組み。
@@ -110,6 +115,11 @@ Sandbox から事前ダウンロードして --state フラグに渡すだけ。
 さらに Sandbox 3 並列で test/lint/docs を Promise.all すると、直列 6 分が 2 分に縮む。
 GitHub Actions だとジョブ間データ受け渡しがファイル経由で面倒だが、
 Sandbox なら変数で直接 — これが Cloudflare 完結の真価。
+依存管理は uv.lock を single source of truth にしていて、CI Sandbox と
+本番 Container image (将来切り出した場合) が同じ lockfile を読むので、
+CI で通った PR が本番で落ちるというドリフト問題が構造的に発生しない。
+uv は pip 比 10 倍以上速いので、Slim CI の各 Sandbox での依存解決も
+数秒で済む。
 -->
 
 ---
