@@ -133,3 +133,55 @@ dataset (Honeycomb 内の論理区切り) は OTLP の service.name で自動分
 他の宛先（Axiom は X-Axiom-Dataset 必須、Grafana は Basic 認証）と比べて最も簡素。
 Worker 1 行 → OTLP → Honeycomb 1 行で完結する。
 -->
+
+---
+
+# AI Gateway も OTel — LLM スパンが同じトレースに繋がる
+
+AI Gateway 経由の **全 LLM 呼び出し**が **Gen AI セマンティック規約**準拠の span として OTLP エクスポート可能。Workers Observability と組み合わせると、Worker → Gateway → LLM が **1 つのトレース**に束ねられる。
+
+<div class="grid grid-cols-2 gap-4 mt-4 text-sm">
+
+<div class="border border-orange-500/30 rounded p-3">
+
+### 自動付与される span 属性
+
+- `gen_ai.request.model` / `gen_ai.model.provider`
+- `gen_ai.usage.input_tokens` / `output_tokens`
+- `gen_ai.prompt_json` / `gen_ai.completion_json`
+- `cf-aig-metadata` ヘッダの値 (team / user 等)
+
+</div>
+
+<div class="border border-orange-500/30 rounded p-3">
+
+### Trace Context 伝播
+
+Worker から `cf-aig-otel-trace-id` / `cf-aig-otel-parent-span-id` を渡せば、**Worker のトレースに LLM 呼び出しが直接ぶら下がる**
+
+→ レイテンシ / コスト / モデル別使用量を **Worker のスパンと同じ画面で相関**
+
+</div>
+
+</div>
+
+<div class="mt-4 border border-orange-500/30 rounded p-3 text-sm">
+
+**設定**: AI Gateway ダッシュボード → Settings → OTel exporter で OTLP/JSON エンドポイントと認可ヘッダを登録 (Honeycomb など OTLP/JSON 対応バックエンド)
+
+</div>
+
+<!--
+前の枚で Worker 自身のスパンを Honeycomb に流す話をしたが、AI Gateway も
+独自の OTLP エクスポート機能を持っていて、Gen AI セマンティック規約に
+準拠した span を吐ける。属性としては gen_ai.request.model でモデル名、
+gen_ai.usage に input_tokens / output_tokens、それからプロンプト本文と
+レスポンス本文も span に乗る。
+さらに重要なのが trace context 伝播で、Worker 側で cf-aig-otel-trace-id
+ヘッダを渡せば、AI Gateway 側の LLM 呼び出しが Worker のトレースに 1 階層下の
+スパンとしてぶら下がる。これでリクエスト全体のレイテンシ、トークンコスト、
+モデル別使用量を、Worker のログと同じバックエンドで相関分析できる。
+設定は AI Gateway ダッシュボードの Settings タブから OTel exporter を追加するだけ。
+ただし AI Gateway 側は OTLP/JSON のみで protobuf 形式は非対応なので、
+バックエンド選定の際はそこだけ注意。
+-->

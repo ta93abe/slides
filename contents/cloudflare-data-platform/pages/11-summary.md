@@ -27,7 +27,7 @@ Pipelines (取り込み) → R2 + R2 Data Catalog (Iceberg 標準で蓄積) → 
 
 <div class="border border-orange-500/30 rounded p-4">
 
-### ② Worker は **Capability-based な接着剤**
+### ② Worker は **Capability-based な orchestrator**
 
 Binding は「権限 + API」のペア。`wrangler.jsonc` に宣言した時点でアクセス経路が確定し、**触れない手段が静的に保証される**。データ基盤の取り込み・変換・配信が 1 ファイルに収まる
 

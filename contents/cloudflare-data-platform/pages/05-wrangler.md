@@ -49,7 +49,7 @@ Wrangler と並行して Cloudflare が公開した新 CLI (technology preview)�
 <!--
 cf CLI は 2026 年 4 月 13 日 に technology preview として公開された新しい統合 CLI。
 Wrangler が「開発者の相棒」として成熟しているのに対し、cf CLI は 3,000 近い
-Cloudflare REST API 操作を全カバーする「プラットフォーム API 窓口」。
+Cloudflare REST API 操作を全カバーする「プラットフォーム API 統合 CLI」。
 TypeScript スキーマから CLI / バインディング型 / ドキュメント / AI エージェント用
 Skill を同時生成する点が新しく、AI エージェント駆動運用を前提に設計されている。
 Wrangler を置き換えるのではなく住み分け。
@@ -59,7 +59,7 @@ Wrangler を置き換えるのではなく住み分け。
 
 | | Wrangler | cf CLI |
 |---|---|---|
-| **立ち位置** | 開発者の相棒（成熟） | プラットフォーム API 窓口 |
+| **立ち位置** | 開発者の相棒（成熟） | プラットフォーム API 統合 CLI |
 | **強み** | ローカル開発・デプロイ | API 全カバレッジ・AI 連携 |
 | **主なユーザー** | Workers 開発者 | 運用・AI エージェント |
 

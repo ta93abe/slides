@@ -6,8 +6,8 @@ layout: section
 
 <!--
 AI ツール / モデル / エージェントが組織内で散らばる sprawl 問題に対し、
-Cloudflare の AI Gateway と MCP Portals が「LLM の喉輪」と「ツールの喉輪」
-の二重喉輪を提供する、という構図を 3 枚で見せる。
+Cloudflare の AI Gateway と MCP Portals が「LLM の統制点」と「ツールの統制点」
+の二重統制点を提供する、という構図を 3 枚で見せる。
 クラウドスプロール史の再演として位置づけ、構造で発生不能にする思想を強調。
 -->
 
@@ -69,7 +69,7 @@ AI スプロールは新しい問題ではなく、クラウドスプロール�
 
 ---
 
-# Cloudflare の二重喉輪 — LLM 層 + ツール層
+# Cloudflare の二重統制点 — LLM 層 + ツール層
 
 LLM 呼び出しは **AI Gateway**、ツール呼び出しは **MCP Portals**。両方の経路が **強制**されることで初めてスプロールが構造的に止まる。
 
@@ -77,9 +77,9 @@ LLM 呼び出しは **AI Gateway**、ツール呼び出しは **MCP Portals**。
 graph TB
     USER[ユーザー / アプリ / エージェント]
 
-    subgraph CTRL["二重喉輪"]
-      AIGW["AI Gateway<br/>=== LLM 喉輪 ===<br/>DLP / cache / fallback"]
-      MCPP["MCP Portals<br/>=== ツール喉輪 ===<br/>per-tool ACL / Code Mode"]
+    subgraph CTRL["二重統制点"]
+      AIGW["AI Gateway<br/>=== LLM 統制点 ===<br/>DLP / cache / fallback"]
+      MCPP["MCP Portals<br/>=== ツール統制点 ===<br/>per-tool ACL / Code Mode"]
     end
 
     subgraph BACKEND["バックエンド"]
@@ -104,7 +104,7 @@ graph TB
 
 <div class="border border-orange-500/30 rounded p-3">
 
-**LLM 喉輪**: AI Gateway
+**LLM 統制点**: AI Gateway
 
 DLP / セマンティックキャッシュ / モデルフォールバック / メタデータタグ
 
@@ -112,7 +112,7 @@ DLP / セマンティックキャッシュ / モデルフォールバック / �
 
 <div class="border border-orange-500/30 rounded p-3">
 
-**ツール喉輪**: MCP Portals
+**ツール統制点**: MCP Portals
 
 per-tool ACL / Code Mode で ~94% トークン削減 / SIEM 連携
 
@@ -129,7 +129,7 @@ per-tool ACL / Code Mode で ~94% トークン削減 / SIEM 連携
 </div>
 
 <!--
-Cloudflare は LLM 層とツール層に二重の喉輪を置いている。
+Cloudflare は LLM 層とツール層に二重の統制点を置いている。
 LLM 側は AI Gateway で全プロバイダーの呼び出しを 1 経路に集約し、
 DLP・キャッシュ・フォールバック・メタデータを統一管理。
 ツール側は MCP Portals でツール単位の Access ポリシー、
@@ -138,7 +138,7 @@ Code Mode による大幅なトークン圧縮、SIEM 連携が一発で組め�
 できる点。これで SDK 直叩きを規約ではなく構造で禁止できる。
 全層が同じ request_id で Logpush に流れて、R2 Iceberg に SQL 監査として
 落ちる。事故時に「何を根拠にどう答えたか」を 1 クエリで再現できる、
-というのが二重喉輪 + 全層 audit の効き目。
+というのが二重統制点 + 全層 audit の効き目。
 -->
 
 ---

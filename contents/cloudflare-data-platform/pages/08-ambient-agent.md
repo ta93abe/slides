@@ -8,7 +8,7 @@ layout: section
 ここまで前半で見せた DO の 5 点セット (単一インスタンス / SQLite / alarm /
 WebSocket Hibernation / RPC) が、実は全部 Ambient Agent のための部品だった、
 という伏線回収を 2 枚で見せる。対話型ではなく、常駐して自律的に動く
-エージェントが商用に乗る分水嶺が来ている、という流れを作る。
+エージェントが商用に乗る条件が揃ってきている、という流れを作る。
 -->
 
 ---
@@ -58,7 +58,7 @@ Ambient Agent は対話型のチャットボットとは別の UX で、ユー�
 背景で常時稼働してメールや Webhook、定期トリガーに反応する。
 本質は 99 パーセント idle、1 パーセント burst。
 1 万ユーザー分の常駐 Agent を立てても、同時に動いているのは大体 100 ぐらいで、
-待機コストを払えるかどうかが商用化の分水嶺になる。
+待機コストを払えるかどうかが商用化の成立条件になる。
 Cloudflare は前半で説明した DO + Alarm + WebSocket Hibernation + SQLite で、
 この経済性をプリミティブとして提供している。常駐費を払わない常駐エージェント、
 というのが Cloudflare で Ambient を組む最大のメリット。
@@ -110,7 +110,7 @@ callable は DO の RPC を型安全に公開する仕組み。
 state に積む典型形。承認を待っている間、DO は hibernation で寝て、
 課金はストレージとリクエストだけ。10 行ちょっとで Ambient の骨格が書ける、
 というのが「DO は最初から Ambient のための primitive だった」の意味。
-2020 年の DO ベータの stateful serverless 宣言から 6 年、ピースが揃った形。
+2020 年の DO ベータの stateful serverless 宣言から 6 年、必要な要素が揃った形。
 -->
 
 ---
