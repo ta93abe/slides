@@ -1,0 +1,10 @@
+/pr
+
+---
+
+マージして
+
+---
+
+intro と workers の間にdata-platform.md を作って。3つのコンポーネントをそれぞれ説明したい。
+pipeline, r2(ふぁいるを移動してくる), r2 data catalog, r2 sql のページを作りたい。
