@@ -1,0 +1,5 @@
+Workers Secretsでdbt の環境変数定義できる？
+
+---
+
+Sandbox じゃなくて、Containersだけで説明する。10分しかないから。

@@ -1,0 +1,75 @@
+{
+  "cli_version": "0.5.6",
+  "checkpoint_id": "3f91ca0fa68e",
+  "session_id": "1c3ba0cc-ad3f-4d21-8e97-279a06edce0a",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-05T12:33:21.481321Z",
+  "branch": "tweak/cfdp-dbt-present-tense",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/07-dbt.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "1c420022acd2",
+  "checkpoint_transcript_start": 1572,
+  "transcript_lines_at_start": 1572,
+  "token_usage": {
+    "input_tokens": 21,
+    "cache_creation_tokens": 31509,
+    "cache_read_tokens": 2778002,
+    "output_tokens": 26466,
+    "api_call_count": 6
+  },
+  "session_metrics": {
+    "turn_count": 46
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-05T12:33:21.179066Z",
+    "agent_lines": 0,
+    "agent_removed": 0,
+    "human_added": 0,
+    "human_modified": 28,
+    "human_removed": 45,
+    "total_committed": 0,
+    "total_lines_changed": 73,
+    "agent_percentage": 0,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 13,
+      "user_lines_removed": 4,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        "contents/cloudflare-data-platform/pages/07-dbt.md": 4,
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      },
+      "user_removed_per_file": {
+        "contents/cloudflare-data-platform/pages/07-dbt.md": 4
+      }
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 9,
+      "user_lines_removed": 0,
+      "agent_lines_added": 4,
+      "agent_lines_removed": 4,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    },
+    {
+      "checkpoint_number": 3,
+      "user_lines_added": 9,
+      "user_lines_removed": 0,
+      "agent_lines_added": 4,
+      "agent_lines_removed": 4,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.5.6",
+  "checkpoint_id": "3f91ca0fa68e",
+  "strategy": "manual-commit",
+  "branch": "tweak/cfdp-dbt-present-tense",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/07-dbt.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/3f/91ca0fa68e/0/metadata.json",
+      "transcript": "/3f/91ca0fa68e/0/full.jsonl",
+      "content_hash": "/3f/91ca0fa68e/0/content_hash.txt",
+      "prompt": "/3f/91ca0fa68e/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 21,
+    "cache_creation_tokens": 31509,
+    "cache_read_tokens": 2778002,
+    "output_tokens": 26466,
+    "api_call_count": 6
+  }
+}
