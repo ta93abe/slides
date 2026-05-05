@@ -3,7 +3,7 @@
   "checkpoint_id": "d757c0a9ed6f",
   "strategy": "manual-commit",
   "branch": "feature/enbu-cover-flame-lower",
-  "checkpoints_count": 1,
+  "checkpoints_count": 2,
   "files_touched": [
     ".serena/project.yml"
   ],
@@ -13,13 +13,19 @@
       "transcript": "/d7/57c0a9ed6f/0/full.jsonl",
       "content_hash": "/d7/57c0a9ed6f/0/content_hash.txt",
       "prompt": "/d7/57c0a9ed6f/0/prompt.txt"
+    },
+    {
+      "metadata": "/d7/57c0a9ed6f/1/metadata.json",
+      "transcript": "/d7/57c0a9ed6f/1/full.jsonl",
+      "content_hash": "/d7/57c0a9ed6f/1/content_hash.txt",
+      "prompt": "/d7/57c0a9ed6f/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 3396,
-    "cache_creation_tokens": 1656287,
-    "cache_read_tokens": 49410537,
-    "output_tokens": 328861,
-    "api_call_count": 191
+    "input_tokens": 3537,
+    "cache_creation_tokens": 2096017,
+    "cache_read_tokens": 54208210,
+    "output_tokens": 344877,
+    "api_call_count": 229
   }
 }
