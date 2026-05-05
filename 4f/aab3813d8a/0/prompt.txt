@@ -1,0 +1,22 @@
+AI Gateway ってどうやってBindingするの？
+
+---
+
+dbt は Workers、Containers、Sandboxのどれで動かすのがいいの？
+
+---
+
+Python Workers でもだめ？
+
+---
+
+F-1
+ContainersとSandboxを客観的に比較してほしい
+
+---
+
+CIはSandbox、本番ビルドはContainersとかはどう？
+
+---
+
+uv 使う。
