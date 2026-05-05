@@ -6,34 +6,66 @@ layout: section
 
 <!--
 データ変換のデファクト dbt を、外部 DWH や dbt Cloud 無しで Cloudflare 一社で
-回せるようになったのが 2026 年。詰まっていた点が解消した理由と、嬉しさを 4 枚で見せる。
+回す構成。Workers では動かないので Containers が必要、という前提から始めて、
+GitHub Actions と比べた Cloudflare 完結の強みを 4 枚で見せる。
 -->
 
 ---
 
-# 詰まっていた 3 点が解消した
+# dbt を Cloudflare で動かす
 
-dbt を Cloudflare で動かす上で **長年詰まっていた 3 点**が、最近一気に解消した。
+dbt は Python の CLI ツール。**Workers / Python Workers では subprocess も DuckDB native binary も足りない**ので、**Containers が現実解**。
 
-- **Outbound Workers** — Container から R2 へ **API トークン無し** で読み書き可能に
-- **Sandbox / Containers GA** — `gitCheckout` 1 行で dbt project を持ってきて `pip install dbt-duckdb && dbt build`
-- **R2 Data Catalog** (Iceberg) — Pipelines で書き込んだ raw を dbt の source として参照
+<div class="grid grid-cols-2 gap-4 mt-4 text-sm">
 
-<div class="mt-6 border border-orange-500/30 rounded p-3 text-sm">
+<div class="border border-zinc-500/30 rounded p-3">
 
-**核**: dbt の T を **Cloudflare 完結** で回せるようになった。L (load) は Pipelines / dlt、保存は R2 + Iceberg、変換は Sandbox + dbt-duckdb、配信は Workers Static Assets。**外部 DWH 不要、`$100/月` のマネージド SaaS 不要**。
+### Workers では厳しい
+
+- Pyodide ベースで `subprocess` 不可
+- DuckDB の native binary が無い
+- メモリ 128 MB の壁
+- ファイル書き込みも限定的
+
+</div>
+
+<div class="border border-orange-500/30 rounded p-3">
+
+### Containers なら動く
+
+- 任意の Docker image (Python フル)
+- メモリ最大 12 GiB / CPU 制限なし
+- Linux microVM (Firecracker)
+- `sleepAfter` で idle 課金ゼロ
+
+</div>
+
+</div>
+
+<div class="mt-4 border border-orange-500/30 rounded p-4 text-sm">
+
+### GitHub Actions と比べた Containers の強み
+
+- **アーティファクト保存**: GHA Artifacts (90 日上限) → **R2 に binding 経由でキー無し永続** (Outbound Workers)
+- **dbt docs ホスティング**: 別途 GitHub Pages 設定 → **Workers Static Assets が R2 をプロキシ配信** + Cloudflare Access で社内限定
+- **secrets / 設定の集約**: GHA secrets → **Workers Secrets + binding** を `wrangler.jsonc` 1 つに
 
 </div>
 
 <!--
-dbt を Cloudflare で動かす構想は前からあったものの、3 つの障害で本番には載せられなかった。
-1 つは Container から R2 を叩くのに API トークンが必要だった点。
-2 つは dbt の起動コスト 30 秒問題、3 つは Iceberg 標準のマネージド Catalog がなかった点。
-それぞれ 2026-03-26 Outbound Workers GA、2026-04-13 Sandbox/Containers GA、
-R2 Data Catalog (2025-09 GA + 自動コンパクション) が出揃って解決された。
-Outbound Workers でキー無し R2、Sandbox の snapshot で起動 2 秒、
-R2 Data Catalog で Iceberg 標準。これで dbt の T を全部 Cloudflare で完結できるように
-なった、という瞬間。
+dbt は Python の CLI ツールなので、Workers / Python Workers では動かない。
+subprocess が呼べない、DuckDB のような native binary が Pyodide にない、
+メモリ 128 MB の壁。これらを全部解決するのが Containers。
+任意の Docker image を持ち込めて、メモリ最大 12 GiB、CPU 制限なし、
+Linux microVM 上で実行され、sleepAfter で idle なら課金ゼロ。
+GitHub Actions でも dbt は動かせるが、Containers だとアーティファクトを
+R2 に binding 経由で保存できる点が大きい。manifest.json や dbt docs の
+出力を Outbound Workers 経由でキー無しに R2 へ送れる。
+さらに Workers Static Assets で R2 のオブジェクトをプロキシ配信し、
+Cloudflare Access で社内限定の dbt docs サイトが 30 秒で組める。
+GHA だと artifact は 90 日で消える、docs は別途 Pages 設定が必要、
+secrets も別管理、というところを Cloudflare 完結なら wrangler.jsonc 1 つに
+集約できる。
 -->
 
 ---
