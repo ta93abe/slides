@@ -1,0 +1,55 @@
+{
+  "cli_version": "0.5.6",
+  "checkpoint_id": "d757c0a9ed6f",
+  "session_id": "fbbd0b36-7edf-4bc9-a036-1186c155f909",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-05T06:59:51.840879Z",
+  "branch": "feature/enbu-cover-flame-lower",
+  "checkpoints_count": 0,
+  "files_touched": [
+    ".serena/project.yml"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "2313c54d9de9",
+  "checkpoint_transcript_start": 1707,
+  "transcript_lines_at_start": 1707,
+  "token_usage": {
+    "input_tokens": 18,
+    "cache_creation_tokens": 7758,
+    "cache_read_tokens": 4693236,
+    "output_tokens": 5220,
+    "api_call_count": 9
+  },
+  "session_metrics": {
+    "turn_count": 50
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-05T06:59:51.77916Z",
+    "agent_lines": 11,
+    "agent_removed": 0,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 11,
+    "total_lines_changed": 11,
+    "agent_percentage": 100,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 15,
+      "user_lines_removed": 4,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9,
+        "slidev-theme-enbu/layouts/cover.vue": 6
+      },
+      "user_removed_per_file": {
+        "slidev-theme-enbu/layouts/cover.vue": 4
+      }
+    }
+  ]
+}
