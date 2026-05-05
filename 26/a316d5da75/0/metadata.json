@@ -1,0 +1,40 @@
+{
+  "cli_version": "0.5.6",
+  "checkpoint_id": "26a316d5da75",
+  "session_id": "1c3ba0cc-ad3f-4d21-8e97-279a06edce0a",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-05T06:22:34.242203Z",
+  "branch": "feature/enbu-cover-flame-lower",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/07-dbt.md",
+    "contents/cloudflare-data-platform/pages/08-ambient-agent.md",
+    "contents/cloudflare-data-platform/pages/10-ai-sprawl.md",
+    "contents/cloudflare-data-platform/pages/11-summary.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "57e76c8f56c4",
+  "token_usage": {
+    "input_tokens": 3352,
+    "cache_creation_tokens": 1346711,
+    "cache_read_tokens": 40563975,
+    "output_tokens": 272673,
+    "api_call_count": 157
+  },
+  "session_metrics": {
+    "turn_count": 31
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-05T06:22:34.162459Z",
+    "agent_lines": 636,
+    "agent_removed": 12,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 636,
+    "total_lines_changed": 648,
+    "agent_percentage": 100,
+    "metric_version": 2
+  }
+}
