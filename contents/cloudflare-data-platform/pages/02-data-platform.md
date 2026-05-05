@@ -13,12 +13,70 @@ R2 SQL (分散クエリ) の 3 コンポーネントが乗る。この章では�
 
 ---
 
+# Pipelines — ストリーミング ingest
+
+データを **集める** レイヤー。R2 の Iceberg テーブルへ自動書き込みするサーバーレス取り込みサービス。
+
+```bash
+wrangler pipelines create my-pipeline --r2-bucket my-bucket
+```
+
+<div class="grid grid-cols-2 gap-6 mt-4">
+<div>
+
+### 入力 3 種
+
+- **HTTP エンドポイント** — Webhook / アプリから POST
+- **Workers Binding** — `env.STREAM.send([events])`
+- **Logpush 連携** — Cloudflare 全プロダクトのログを直送
+
+</div>
+<div>
+
+### 内部処理
+
+- **SQL 変換** — 取り込み時に WHERE / マスキング
+- **exactly-once** 配信保証
+- **自動バッチ化** — 50–100 MB で R2 に書き出し
+- 内部エンジン: **Arroyo** — Cloudflare が買収した Rust 製ストリーム処理エンジン (Arrow + DataFusion)
+
+</div>
+</div>
+
+```sql
+-- PII をマスクしながら Iceberg に書き出す
+INSERT INTO events_sink
+SELECT user_id, event_type,
+  REGEXP_REPLACE(email, '(.).*@', '$1***@') AS masked_email,
+  now() AS loaded_at
+FROM events_stream
+WHERE event_type != 'healthcheck'
+```
+
+<!--
+Pipelines は ETL の E (extract) と L (load) を担当するサーバーレスサービス。
+入力は HTTP / Workers Binding / Logpush の 3 つ。Workers Binding 経由なら
+ctx.waitUntil(env.STREAM.send(events)) で fire-and-forget。
+内部で SQL 変換ができるので、PII マスクや簡単なフィルタを ingest 段階で
+適用できる。出力は R2 Data Catalog の Iceberg テーブルに自動書き込み、
+exactly-once 配信保証付き。50-100 MB に自動バッチ化されてから R2 に
+書き込まれるので、Class A 操作の課金が抑えられる。
+Kafka + Flink を自前で組むのと比べて、インフラ運用がゼロ。
+内部エンジンは Cloudflare が買収した Arroyo で、Rust 製のストリーム処理
+エンジン。基盤は Apache Arrow + DataFusion。R2 SQL も同じ DataFusion を
+使っているので、ingest 段階の SQL 変換と R2 SQL の分析クエリで同じ SQL
+方言が使える、というのが Arroyo 採用の効き目。
+日次 100 万件規模で月 1 ドル程度。
+-->
+
+---
+
 # R2 — オブジェクトストレージ
 
 データを **置く場所**。Parquet / Iceberg のデータファイルがすべてここに入る。
 
 ```bash
-wrangler r2 bucket create <bucket-name>
+wrangler r2 bucket create < bucket-name >
 ```
 
 <div class="grid grid-cols-2 gap-6 mt-4">
@@ -46,67 +104,12 @@ env.BUCKET.put でキー無しに書き込める。
 
 ---
 
-# Pipelines — ストリーミング ingest
-
-データを **集める** レイヤー。R2 の Iceberg テーブルへ自動書き込みするサーバーレス取り込みサービス。
-
-```bash
-wrangler pipelines create my-pipeline --r2-bucket my-bucket
-```
-
-<div class="grid grid-cols-2 gap-6 mt-4">
-<div>
-
-### 入力 3 種
-
-- **HTTP エンドポイント** — Webhook / アプリから POST
-- **Workers Binding** — `env.STREAM.send([events])`
-- **Logpush 連携** — Cloudflare 全プロダクトのログを直送
-
-</div>
-<div>
-
-### 内部処理
-
-- **SQL 変換** — 取り込み時に WHERE / マスキング
-- **exactly-once** 配信保証
-- **自動バッチ化** — 50–100 MB で R2 に書き出し
-- 内部エンジン: Arroyo (Rust + DataFusion)
-
-</div>
-</div>
-
-```sql
--- PII をマスクしながら Iceberg に書き出す
-INSERT INTO events_sink
-SELECT user_id, event_type,
-  REGEXP_REPLACE(email, '(.).*@', '$1***@') AS masked_email,
-  now() AS loaded_at
-FROM events_stream
-WHERE event_type != 'healthcheck'
-```
-
-<!--
-Pipelines は ETL の E (extract) と L (load) を担当するサーバーレスサービス。
-入力は HTTP / Workers Binding / Logpush の 3 つ。Workers Binding 経由なら
-ctx.waitUntil(env.STREAM.send(events)) で fire-and-forget。
-内部で SQL 変換ができるので、PII マスクや簡単なフィルタを ingest 段階で
-適用できる。出力は R2 Data Catalog の Iceberg テーブルに自動書き込み、
-exactly-once 配信保証付き。50-100 MB に自動バッチ化されてから R2 に
-書き込まれるので、Class A 操作の課金が抑えられる。
-Kafka + Flink を自前で組むのと比べて、インフラ運用がゼロ。
-内部エンジンは Cloudflare が買収した Arroyo で、Rust の DataFusion ベース。
-日次 100 万件規模で月 1 ドル程度。
--->
-
----
-
 # R2 Data Catalog — Iceberg メタデータ
 
 データを **構造化する** レイヤー。R2 上の Apache Iceberg テーブルをマネージドで管理。
 
 ```bash
-wrangler r2 bucket catalog enable <bucket-name>
+wrangler r2 bucket catalog enable < bucket-name >
 ```
 
 - 標準の **Iceberg REST Catalog API** を公開

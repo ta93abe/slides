@@ -22,11 +22,11 @@ src: ./pages/02-data-platform.md
 ---
 
 ---
-src: ./pages/02-workers.md
+src: ./pages/03-workers.md
 ---
 
 ---
-src: ./pages/03-durable-objects.md
+src: ./pages/04-durable-objects.md
 ---
 
 ---
