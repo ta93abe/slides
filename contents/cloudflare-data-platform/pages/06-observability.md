@@ -16,15 +16,11 @@ Cloudflare の Workers Observability は OpenTelemetry 互換で、コード変�
 
 全ての操作に**自動でスパンが生成**（OpenTelemetry 互換）。
 
-<v-clicks>
-
 - R2 読み書き・D1 クエリ・外部 fetch・Queue 送信・AI 推論を**自動計装**
 - コードに手を加えず、パイプラインのボトルネックを可視化
 - `observability.traces.enabled = true` の **1 行だけで有効化**
 
-</v-clicks>
-
-<div v-click>
+<div>
 
 ```jsonc
 // wrangler.jsonc
@@ -49,26 +45,76 @@ R2 / D1 / fetch / Queue / Workers AI など、Worker 内の主要な操作が
 
 ---
 
+# なぜ外部 OTLP バックエンドへ流すのか
+
+Workers Observability は **取れる**ところまで素晴らしい。が、**取った後の運用** (見る / 気づく / 追える) は専用バックエンドに任せる方が OTel ピュアな現代的設計。
+
+<div class="grid grid-cols-2 gap-4 mt-4 text-sm">
+
+<div class="border border-zinc-500/30 rounded p-3">
+
+### Workers Observability で取れる
+
+- 自動計装 (R2 / D1 / fetch / AI のスパン全部)
+- `enabled: true` 1 行で有効化
+- 構造化クエリで検索
+- Workers Paid 込み (10M events / 月)
+
+</div>
+
+<div class="border border-orange-500/30 rounded p-3">
+
+### 運用バックエンドに欲しいもの
+
+- **保持期間** — Logs **7 日** vs 専用バックエンドは **60 日〜数年**
+- **異常因子の自動発見** — high-cardinality 属性 (`user_id` / `tenant` / `release`) でドリルダウン
+- **SLO + Burn Alerts** — エラーバジェット消費レートで早期警告
+- **on-call 連携** — エスカレーション / 電話 / Status Page
+
+</div>
+
+</div>
+
+<div class="mt-4 border border-orange-500/30 rounded p-3 text-sm">
+
+**OTel 標準だから分業できる** — `destinations: [...]` を 1 行足すだけ。**いつでも他のバックエンドに乗り換えられる** = ベンダーロックインを **構造で回避**
+
+</div>
+
+<!--
+取れるかどうかと、取った後どう運用するかは別の問題。
+Workers Observability は計装と収集の苦労を消してくれる素晴らしい仕組みで、
+1 行で全操作のスパンが取れる。ただ運用の現場では別の機能が欲しくなる。
+保持期間が 7 日固定なので、規制要件のある業界や、先月の挙動を再現したい
+ケースで詰まる。それから高カーディナリティ分析、つまり user_id や tenant の
+ような無数の値を持つ属性で異常因子を自動発見する機能。
+SLO とバーンアラートでエラーバジェットの消費レートを監視する機能。
+さらに on-call ツールとの統合で、夜中の電話エスカレーションまで繋ぐ機能。
+これらは OTel 標準で外部に流す前提で作られているので、Workers Observability
+に全部内蔵するより、分業した方が機能が深く育つという業界構造。
+OTel ピュアなので、destinations を 1 行足すだけで、いつでも他のバックエンドに
+乗り換えられる、という安心感もある。Cloudflare 完結と中立性の両立、
+という難しい論点への構造的な答え。
+-->
+
+---
+
 # OTLP で Honeycomb へ送る
 
 Workers Observability は **OTLP HTTP** で外部バックエンドにそのまま送れる。
 
-```mermaid {scale: 0.85}
+```mermaid
 flowchart LR
     W["Worker<br/>r2.get / fetch / d1.exec"] -->|自動計装| D["Workers Observability<br/>Destinations"]
     D -->|OTLP HTTP<br/>x-honeycomb-team| HC["Honeycomb<br/>traces + logs"]
 ```
-
-<v-clicks>
 
 - **Honeycomb** は OpenTelemetry リファレンスバックエンド（"observability" の伝道元）
 - Cloudflare Workers Observability の **Day 1 サポート対象**（Grafana / Honeycomb / Sentry / Axiom）
 - destination は API キー 1 個で完結（`x-honeycomb-team` ヘッダ）
 - dataset は OTLP の `service.name` 属性で**自動分離**（追加ヘッダ不要）
 
-</v-clicks>
-
-<div v-click class="text-sm op-80 mt-3">
+<div class="text-sm op-80 mt-3">
 
 ```
 OTLP Endpoint: https://api.honeycomb.io/v1/traces
@@ -86,4 +132,56 @@ Cloudflare 公式の Day 1 サポート対象なのでドキュメントも揃�
 dataset (Honeycomb 内の論理区切り) は OTLP の service.name で自動分離されるので、
 他の宛先（Axiom は X-Axiom-Dataset 必須、Grafana は Basic 認証）と比べて最も簡素。
 Worker 1 行 → OTLP → Honeycomb 1 行で完結する。
+-->
+
+---
+
+# AI Gateway も OTel — LLM スパンが同じトレースに繋がる
+
+AI Gateway 経由の **全 LLM 呼び出し**が **Gen AI セマンティック規約**準拠の span として OTLP エクスポート可能。Workers Observability と組み合わせると、Worker → Gateway → LLM が **1 つのトレース**に束ねられる。
+
+<div class="grid grid-cols-2 gap-4 mt-4 text-sm">
+
+<div class="border border-orange-500/30 rounded p-3">
+
+### 自動付与される span 属性
+
+- `gen_ai.request.model` / `gen_ai.model.provider`
+- `gen_ai.usage.input_tokens` / `output_tokens`
+- `gen_ai.prompt_json` / `gen_ai.completion_json`
+- `cf-aig-metadata` ヘッダの値 (team / user 等)
+
+</div>
+
+<div class="border border-orange-500/30 rounded p-3">
+
+### Trace Context 伝播
+
+Worker から `cf-aig-otel-trace-id` / `cf-aig-otel-parent-span-id` を渡せば、**Worker のトレースに LLM 呼び出しが直接ぶら下がる**
+
+→ レイテンシ / コスト / モデル別使用量を **Worker のスパンと同じ画面で相関**
+
+</div>
+
+</div>
+
+<div class="mt-4 border border-orange-500/30 rounded p-3 text-sm">
+
+**設定**: AI Gateway ダッシュボード → Settings → OTel exporter で OTLP/JSON エンドポイントと認可ヘッダを登録 (Honeycomb など OTLP/JSON 対応バックエンド)
+
+</div>
+
+<!--
+前の枚で Worker 自身のスパンを Honeycomb に流す話をしたが、AI Gateway も
+独自の OTLP エクスポート機能を持っていて、Gen AI セマンティック規約に
+準拠した span を吐ける。属性としては gen_ai.request.model でモデル名、
+gen_ai.usage に input_tokens / output_tokens、それからプロンプト本文と
+レスポンス本文も span に乗る。
+さらに重要なのが trace context 伝播で、Worker 側で cf-aig-otel-trace-id
+ヘッダを渡せば、AI Gateway 側の LLM 呼び出しが Worker のトレースに 1 階層下の
+スパンとしてぶら下がる。これでリクエスト全体のレイテンシ、トークンコスト、
+モデル別使用量を、Worker のログと同じバックエンドで相関分析できる。
+設定は AI Gateway ダッシュボードの Settings タブから OTel exporter を追加するだけ。
+ただし AI Gateway 側は OTLP/JSON のみで protobuf 形式は非対応なので、
+バックエンド選定の際はそこだけ注意。
 -->
