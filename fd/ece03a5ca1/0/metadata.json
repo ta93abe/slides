@@ -1,0 +1,41 @@
+{
+  "cli_version": "0.5.6",
+  "checkpoint_id": "fdece03a5ca1",
+  "session_id": "1c3ba0cc-ad3f-4d21-8e97-279a06edce0a",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-05T06:22:50.921149Z",
+  "branch": "feature/enbu-cover-flame-lower",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/01-intro.md",
+    "contents/cloudflare-data-platform/pages/03-durable-objects.md",
+    "contents/cloudflare-data-platform/pages/04-r2.md",
+    "contents/cloudflare-data-platform/pages/05-wrangler.md",
+    "contents/cloudflare-data-platform/pages/09-durability.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "57e76c8f56c4",
+  "token_usage": {
+    "input_tokens": 3353,
+    "cache_creation_tokens": 1348060,
+    "cache_read_tokens": 40791461,
+    "output_tokens": 273355,
+    "api_call_count": 158
+  },
+  "session_metrics": {
+    "turn_count": 31
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-05T06:22:50.837825Z",
+    "agent_lines": 40,
+    "agent_removed": 127,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 40,
+    "total_lines_changed": 167,
+    "agent_percentage": 100,
+    "metric_version": 2
+  }
+}
