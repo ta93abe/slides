@@ -27,8 +27,6 @@ Pipelines SQL は DataFusion をベースにしている。ドキュメントに
 
 # R2 — オブジェクトストレージ
 
-データを **置く場所**。Parquet / Iceberg のデータファイルがすべてここに入る。
-
 ```bash
 wrangler r2 bucket create < bucket-name >
 ```
@@ -58,7 +56,7 @@ env.BUCKET.put でキー無しに書き込める。
 
 ---
 
-# R2 Data Catalog — Iceberg メタデータ
+# R2 Data Catalog
 
 データを **構造化する** レイヤー。R2 上の Apache Iceberg テーブルをマネージドで管理。
 
@@ -66,10 +64,25 @@ env.BUCKET.put でキー無しに書き込める。
 wrangler r2 bucket catalog enable < bucket-name >
 ```
 
+<div class="grid grid-cols-[3fr_2fr] gap-6 mt-4">
+<div>
+
 - 標準の **Iceberg REST Catalog API** を公開
-- Trino / DuckDB / PyIceberg / Spark / StarRocks などのクライアントから直接クエリ可能
 - **ACID トランザクション** / **スキーマ進化** / **タイムトラベル**
-- **自動コンパクション** 内蔵 — 小さな Parquet ファイルを背景で集約してクエリ性能を維持
+- Trino / DuckDB / PyIceberg / Spark / StarRocks などのクライアントから直接クエリ可能
+- テーブルメンテナンス
+  - **Compaction**: `--target-size` で指定したサイズに合わせて Parquet ファイルを集約
+  - **Snapshot expiration**: `--older-than-days` と `--retain-last` で古くなったものの削除と最低残すスナップショットを指定
+
+</div>
+<div>
+
+<img src="/check-iceberg-version.png" alt="iceberg_table_format_version=2" class="w-full rounded border border-zinc-700/60 shadow-lg" />
+
+<p class="text-xs op-60 mt-2 text-center">実際の table を SQL で確認 → <code>iceberg_table_format_version = 2</code></p>
+
+</div>
+</div>
 
 <!--
 R2 Data Catalog は Apache Iceberg のメタデータマネージドサービス。
@@ -79,69 +92,70 @@ Spark / StarRocks 等のクライアントから直接クエリできる = ベ�
 読み書きする構成も組める。
 自動コンパクションは小さな Parquet ファイルをバックグラウンドで集約して
 クエリ性能を維持する仕組み。手動でコンパクションを書かずに済む。
-他の Open Table Format (Delta Lake / Hudi) は未対応。Iceberg 一択。
+
+R2 Data Catalog は Iceberg format-version 2 (V2) ベース。public beta blog の
+メタデータ例に "format-version": 2 と明示されている。
+
+【未対応 / 制限事項 (Open Beta 時点で公式 docs に記載のあるもの)】
+- Open Table Format は Iceberg 一択。Delta Lake / Hudi は未対応。
+- Iceberg V3 機能はテーブル仕様自体が V2 のため対象外:
+  - deletion vectors (V2 の position delete files より効率的な行削除)
+  - row lineage (行レベルの来歴追跡)
+  - column-level default values (データファイル書き換え不要のデフォルト値)
+  - VARIANT 型 / Geometry 型などの新規型
+- 非デフォルト jurisdiction の R2 バケット (EU / FedRAMP 等) は未対応。
+- Pipelines Sink は新規テーブル作成のみ。既存 Iceberg テーブルへの書き込みは不可。
+  Sink は作成後の設定変更不可 (削除 → 再作成が必要)。Sink 出力フォーマットは Parquet のみ。
+- 自動 compaction の制約: Parquet のみ / 1 テーブル 1 時間あたり 2 GB まで /
+  target file size は 64 MB-512 MB の範囲 / snapshot に一度も参照されなかった
+  orphan files は対象外 (cleanup には別途エンジン経由の remove_orphan_files が必要)。
+
+【V2 仕様内ではあるが、R2 Data Catalog 側のサポート言及がなく要確認なもの】
+- Iceberg Views (CREATE VIEW via REST catalog): 公式に対応の言及なし。外部エンジン
+  経由でも動くか保証なし。
+- Branches / Tags (V2 の named snapshot refs / parallel branches): REST 仕様上は
+  乗るはずだが Cloudflare 側の動作確認情報なし。
+- Equality deletes (Flink CDC 系の row-level delete): Position deletes は Spark / Trino
+  で動くが、Equality は engine 側依存。
+- Materialized views: Iceberg 仕様外 (個別エンジン拡張)。R2 Data Catalog では概念自体が無い。
 -->
 
 ---
 
 # R2 SQL — 分散クエリエンジン
 
-データに **問い合わせる** レイヤー。R2 Data Catalog の Iceberg テーブルに標準 SQL を実行。
+R2 Data Catalog の Iceberg テーブルに標準 SQL を実行できる、Cloudflare ネイティブの分散クエリエンジン。
 
-基盤技術: **Apache DataFusion** (Rust) + **Arrow** (列指向インメモリ) + **datafusion-distributed** (分散実行)
+現在は
+- Wrangler
+- HTTP API
+経由で実行できる。
 
 ```bash
-# WRANGLER_R2_SQL_AUTH_TOKEN を設定したうえで Iceberg テーブルに直接 SQL
+# WRANGLER_R2_SQL_AUTH_TOKEN を設定して warehouse 名 + SQL を渡すだけ
 npx wrangler r2 sql query "$WAREHOUSE" \
-  "SELECT user_id, COUNT(*) AS n
-   FROM default.events
-   WHERE __ingest_ts > '2026-05-01'
-   GROUP BY user_id ORDER BY n DESC LIMIT 10"
+  "SELECT user_id, COUNT(*) AS n FROM default.events
+   WHERE __ingest_ts > '2026-05-01' GROUP BY user_id LIMIT 10"
 ```
 
-<div class="grid grid-cols-2 gap-6 mt-4">
-<div>
-
-### 対応済み
-
-- SELECT / WHERE / ORDER BY / LIMIT
-- GROUP BY / 集約関数
-- CTE (WITH ... AS)
-- スカラー関数 190+ 種
-- 複合型 (struct / array / map)
-- EXPLAIN
-
-</div>
-<div>
-
-### 未対応 (2026 H1 予定)
-
-- **JOIN (全種類)**
-- WINDOW 関数
-- UNION / サブクエリ / SELECT DISTINCT
-
-<div class="mt-6 border border-yellow-500/30 rounded p-3 text-sm">
-
-**vs Athena**: Athena は JOIN / WINDOW / サブクエリ全対応の完成されたエンジン。R2 SQL は Beta で JOIN すら未対応。<br>
-ただし Athena はスキャン量課金 (`$5/TB`) + S3 エグレス。R2 SQL は Beta 中無料。
-
-</div>
-
-</div>
-</div>
+基本的な分析 SQL (フィルタ・集約・CTE) は対応済み。JOIN / WINDOW はまだ
 
 <!--
+AWS Athena みたいなサービス
+
 R2 SQL は R2 Data Catalog の Iceberg テーブルに対して標準 SQL でクエリを
-実行できる Cloudflare ネイティブのクエリエンジン。DataFusion + Arrow +
-datafusion-distributed で、エッジで分散クエリが走る。
+実行できる Cloudflare ネイティブのクエリエンジン。基盤技術は Apache DataFusion
+(Rust) + Arrow (列指向インメモリ) + datafusion-distributed (分散実行) で、
+エッジで分散クエリが走る。
 スライドのコマンドは wrangler r2 sql query で、WRANGLER_R2_SQL_AUTH_TOKEN を
 設定すれば warehouse 名と SQL 文字列を渡すだけで実行できる。Iceberg 側の
 __ingest_ts は Pipelines が付与する取り込みタイムスタンプで、時間範囲の
 枝刈りに使えるカラム。
-2026 年のアップデートで 190 種以上のスカラー関数、CTE、複合型対応。
-ただし JOIN / WINDOW / サブクエリは未対応で、これらは 2026 年 H1 に予定。
-Athena と比べると機能網羅性は低いが、Beta 中は無料、しかも R2 エグレス無料
-なので、シンプルなフィルタや集約なら現実解になる。
-JOIN が要る重いクエリは Snowflake or DuckDB on Containers にオフロード
-するハイブリッド構成が現実的。
+対応済み: SELECT / WHERE / ORDER BY / LIMIT / GROUP BY / 集約関数 / CTE /
+スカラー関数 190+ 種 / 複合型 (struct / array / map) / EXPLAIN。
+未対応 (2026 H1 予定): JOIN 全種類 / WINDOW / UNION / サブクエリ / SELECT DISTINCT。
+比較対象として Athena は JOIN / WINDOW / サブクエリ全対応の完成されたエンジンで
+スキャン量課金 (USD 5/TB) + S3 エグレスがかかる。R2 SQL は Beta 中無料 + R2 エグレス
+無料なので、シンプルなフィルタや集約なら現実解。JOIN が要る重いクエリは Snowflake
+や DuckDB on Containers にオフロードするハイブリッド構成が現実的。
 -->
