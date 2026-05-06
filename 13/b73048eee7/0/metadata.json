@@ -1,0 +1,37 @@
+{
+  "cli_version": "0.6.0",
+  "checkpoint_id": "13b73048eee7",
+  "session_id": "e12f3198-9311-49b8-a183-d042931d3696",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-06T14:06:05.594953Z",
+  "branch": "codex/configure-slidev-metadata",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/observability.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "459ba98ee9e7",
+  "token_usage": {
+    "input_tokens": 904,
+    "cache_creation_tokens": 1641020,
+    "cache_read_tokens": 202494691,
+    "output_tokens": 516352,
+    "api_call_count": 476
+  },
+  "session_metrics": {
+    "turn_count": 79
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-06T14:06:05.486584Z",
+    "agent_lines": 137,
+    "agent_removed": 86,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 137,
+    "total_lines_changed": 223,
+    "agent_percentage": 100,
+    "metric_version": 2
+  }
+}
