@@ -1,0 +1,60 @@
+{
+  "cli_version": "0.6.0",
+  "checkpoint_id": "60ae202c1dbe",
+  "session_id": "1c3ba0cc-ad3f-4d21-8e97-279a06edce0a",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-06T08:58:25.783156Z",
+  "branch": "main",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "contents/cloudflare-data-platform/demo.md",
+    "contents/cloudflare-data-platform/pages/01-intro.md",
+    "contents/cloudflare-data-platform/pages/02-data-platform.md",
+    "contents/cloudflare-data-platform/pages/03-workers.md",
+    "contents/cloudflare-data-platform/pages/04-durable-objects.md",
+    "contents/cloudflare-data-platform/pages/05-dbt.md",
+    "contents/cloudflare-data-platform/pages/06-ambient-agent.md",
+    "contents/cloudflare-data-platform/pages/07-durability.md",
+    "contents/cloudflare-data-platform/pages/08-ai-sprawl.md",
+    "contents/cloudflare-data-platform/pages/09-wrangler.md",
+    "contents/cloudflare-data-platform/pages/10-observability.md",
+    "contents/cloudflare-data-platform/pages/11-summary.md",
+    "contents/cloudflare-data-platform/pages/ai-sprawl.md",
+    "contents/cloudflare-data-platform/pages/ambient-agent.md",
+    "contents/cloudflare-data-platform/pages/data-platform.md",
+    "contents/cloudflare-data-platform/pages/dbt.md",
+    "contents/cloudflare-data-platform/pages/durability.md",
+    "contents/cloudflare-data-platform/pages/observability.md",
+    "contents/cloudflare-data-platform/pages/summary.md",
+    "contents/cloudflare-data-platform/pages/workers.md",
+    "contents/cloudflare-data-platform/pages/wrangler.md",
+    "contents/cloudflare-data-platform/slides.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "005940504716",
+  "checkpoint_transcript_start": 2049,
+  "transcript_lines_at_start": 2049,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "session_metrics": {
+    "turn_count": 49
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-06T08:58:25.664095Z",
+    "agent_lines": 1275,
+    "agent_removed": 1384,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 1275,
+    "total_lines_changed": 2659,
+    "agent_percentage": 100,
+    "metric_version": 2
+  }
+}
