@@ -1,0 +1,5 @@
+PR #21 の CI を確認 (claude-review / Workers Builds / GitGuardian)。全て SUCCESS なら gh pr merge 21 --squash --delete-branch でマージ。失敗があれば内容を報告。
+
+---
+
+PR #21 の CI を再確認。全 SUCCESS なら gh pr merge 21 --squash --delete-branch でマージ。失敗時は内容報告。

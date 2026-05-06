@@ -1,0 +1,62 @@
+{
+  "cli_version": "0.6.0",
+  "checkpoint_id": "047b0e24da4a",
+  "session_id": "e12f3198-9311-49b8-a183-d042931d3696",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-06T10:11:33.112534Z",
+  "branch": "codex/configure-slidev-metadata",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "contents/cloudflare-data-platform/slides.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "8fee57338cf6",
+  "checkpoint_transcript_start": 1322,
+  "transcript_lines_at_start": 1322,
+  "token_usage": {
+    "input_tokens": 19,
+    "cache_creation_tokens": 6365,
+    "cache_read_tokens": 4501630,
+    "output_tokens": 3885,
+    "api_call_count": 9
+  },
+  "session_metrics": {
+    "turn_count": 44
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-06T10:11:33.061144Z",
+    "agent_lines": 0,
+    "agent_removed": 0,
+    "human_added": 1,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 1,
+    "total_lines_changed": 3,
+    "agent_percentage": 0,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 19,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        "contents/cloudflare-data-platform/slides.md": 10,
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 9,
+      "user_lines_removed": 0,
+      "agent_lines_added": 10,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    }
+  ]
+}
