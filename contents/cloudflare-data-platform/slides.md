@@ -14,45 +14,37 @@ layout: cover
 ## 阿部拓海
 
 ---
-src: ./pages/01-intro.md
+src: ./pages/data-platform.md
 ---
 
 ---
-src: ./pages/02-data-platform.md
+src: ./pages/workers.md
 ---
 
 ---
-src: ./pages/03-workers.md
+src: ./pages/dbt.md
 ---
 
 ---
-src: ./pages/04-durable-objects.md
+src: ./pages/ambient-agent.md
 ---
 
 ---
-src: ./pages/05-dbt.md
+src: ./pages/durability.md
 ---
 
 ---
-src: ./pages/06-ambient-agent.md
+src: ./pages/ai-sprawl.md
 ---
 
 ---
-src: ./pages/07-durability.md
+src: ./pages/observability.md
 ---
 
 ---
-src: ./pages/08-ai-sprawl.md
+src: ./pages/wrangler.md
 ---
 
 ---
-src: ./pages/09-wrangler.md
----
-
----
-src: ./pages/10-observability.md
----
-
----
-src: ./pages/11-summary.md
+src: ./pages/summary.md
 ---
