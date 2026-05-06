@@ -18,15 +18,15 @@ src: ./pages/01-intro.md
 ---
 
 ---
-src: ./pages/02-workers.md
+src: ./pages/02-data-platform.md
 ---
 
 ---
-src: ./pages/03-durable-objects.md
+src: ./pages/03-workers.md
 ---
 
 ---
-src: ./pages/04-r2.md
+src: ./pages/04-durable-objects.md
 ---
 
 ---
