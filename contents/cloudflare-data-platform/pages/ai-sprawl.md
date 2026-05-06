@@ -4,215 +4,169 @@ layout: section
 
 # AI スプロールをどうにかする
 
+組織内で **AI モデル / エージェント / ツール / プロンプト** が無秩序に増殖し統制不能になる状態。
+
 <!--
-AI ツール / モデル / エージェントが組織内で散らばる sprawl 問題に対し、
-Cloudflare の AI Gateway と MCP Portals が「LLM の統制点」と「ツールの統制点」
-の二重統制点を提供する、という構図を 3 枚で見せる。
-クラウドスプロール史の再演として位置づけ、構造で発生不能にする思想を強調。
+LLM 呼び出しとツール呼び出しが社内に散らばる sprawl 問題に対し、Cloudflare は
+LLM 層を AI Gateway、ツール層を MCP Server Portal で集約・統制する 2 つの portal を
+提供する。前章の observability で AI Gateway の OTel エクスポート (LLM span 化) は
+扱ったので、本章では governance 側 (DLP / Cache / Fallback / Metadata) に焦点を当てる。
 -->
 
 ---
 
-# AI スプロール — クラウドスプロールの再演
+# AI Gateway — LLM 呼び出しの統制点
 
-組織内で **AI モデル / エージェント / ツール / プロンプト**が無秩序に増殖し統制不能になる状態。
+**Universal Endpoint** で全 LLM プロバイダーを 1 経路に集約。**Fallback / Retry** で信頼性を担保しつつ、以下 3 カテゴリ・11 機能で観測 / 制御 / 最適化を一括導入。
 
-<div class="text-sm mt-4">
-
-| 時代 | 散らばる対象 | 防衛機構 |
-|---|---|---|
-| 2000 年代後半 | SaaS スプロール | SaaS 管理プラットフォーム |
-| 2010 年代 | クラウドスプロール (EC2 / S3 氾濫) | FinOps / CMDB |
-| 2020 年代前半 | ツールスプロール | プラットフォームエンジニアリング |
-| **2020 年代後半** | **AI スプロール** | **AI Gateway / NHI / MCP Portals** |
-
-</div>
-
-<div class="mt-4 grid grid-cols-3 gap-3 text-sm">
+<div class="grid grid-cols-3 gap-3 mt-3 text-xs">
 
 <div class="border border-orange-500/30 rounded p-3">
 
-### コスト不透明
+### Performance & Cost
 
-トークンと GPU 秒が **FinOps 対象外** で運用。同一プロンプトが 5–10 回重複呼び出し
+- **Caching** — 同一リクエストをキャッシュ (latency 最大 90% 減)
+- **Rate Limiting** — 時間枠ごとのリクエスト数上限
+- **Dynamic Routing** — segment / geo / content で振り分け
+- **Custom Costs** — 交渉済みレートでコスト計算を上書き
 
 </div>
 
 <div class="border border-orange-500/30 rounded p-3">
 
-### Shadow AI
+### Security & Safety
 
-調査では **従業員の 11.6%** が機密データを外部 LLM に貼付 (Cyberhaven, 2024)
+- **Guardrails** — 有害コンテンツの検出 / ブロック
+- **DLP** — PII / 財務情報をパターン検出 (`FLAG` / `BLOCK`)
+- **Authentication** — Gateway へのトークンベースアクセス制御
+- **BYOK** — provider API キーを集中暗号化管理 (20+ providers)
 
 </div>
 
 <div class="border border-orange-500/30 rounded p-3">
 
-### 責任追跡 不能
+### Observability & Analytics
 
-「**どの根拠で何を答えたか**」を後から再構成できず、誤回答時の説明責任が果たせない
+- **Analytics** — トークン / コスト / エラーを集計
+- **Logging** — 全 request / response の詳細ログ
+- **Custom Metadata** — `cf-aig-metadata` で user / team タグ
 
 </div>
+
+</div>
+
+<div class="mt-3 text-sm op-80">
+
+→ 「LLM SDK を直接叩く」をやめて Gateway 経由を強制すれば、観測 / 統制 / コスト管理が後付け不要。
 
 </div>
 
 <!--
-AI スプロールは新しい問題ではなく、クラウドスプロールやツールスプロールの
-系譜にある。2010 年代に EC2 や S3 が氾濫して FinOps が生まれたのと同じ構造で、
-今はトークンと GPU 秒が新しい単位経済性の対象。代表的な実害は 3 つ。
-コストが見えない、Shadow AI で機密が外に漏れる、誤回答時に何を根拠にしたかが
-追えない。Cyberhaven の 2024 年調査では従業員の 11.6 パーセントが機密データを
-外部 LLM に貼り付けている、という数字が出ている。
-試しやすさの罠と、エージェントの自己増殖、評価基準の未整備が重なって、
-監視で検知だけでは追いつかなくなる。次の枚で構造で発生不能にする話に行く。
+AI Gateway は LLM 呼び出しの reverse proxy。Universal Endpoint で全プロバイダー
+(OpenAI / Anthropic / Workers AI / Google Vertex / DeepSeek / Azure OpenAI /
+Perplexity 等 20+) を 1 URL に集約する。本文には他社名を出さず「全 LLM
+プロバイダー」の表現に留める。
+
+基盤メカニズム (intro 行に集約):
+- Universal Endpoint: 全 provider を 1 URL でルーティング
+- Fallback: provider / model 障害時の自動切替 (cf-aig-step で経路追跡)
+- Retry: タイムアウト / 失敗時の再試行ポリシー
+
+公式 Features ページに従って 3 カテゴリ・11 機能:
+
+(1) Performance & Cost Optimization
+- Caching: 意味的に同じリクエストをキャッシュしてレイテンシ最大 90% 削減 + コスト削減
+- Rate Limiting: 時間枠ごとのリクエスト上限。API クォータ枯渇を構造で防止
+- Dynamic Routing: ユーザーセグメント / 地理 / コンテンツ分析でリクエストを
+  ルーティング。A/B テストやリージョナル振り分けが宣言的に書ける
+- Custom Costs: 交渉済みレートやカスタムコストモデルで集計上の料金を上書き、
+  正確な部署別 / 顧客別の課金ロジックが組める
+
+(2) Security & Safety
+- Guardrails: プロンプトと応答の有害コンテンツをリアルタイム検出 / ブロック。
+  Hallucination / プロンプトインジェクション / 不適切発言の対策
+- DLP: PII / 財務データなどの機密情報をパターンマッチで FLAG / BLOCK。
+  GDPR / HIPAA 等のコンプライアンス文脈で使う
+- Authentication: Gateway 自体へのトークンベースアクセス制御
+- BYOK: provider API キーを Cloudflare の暗号化インフラで集中管理。アプリ側の
+  secrets に API キーを置かなくて済む (Workers Secrets と二重で守れる)
+
+(3) Observability & Analytics
+- Analytics: リクエスト数 / トークン / コスト / エラーをダッシュボードで集計
+- Logging: 全リクエスト / レスポンスの詳細ログ。デバッグ / 監査 / 分析に
+- Custom Metadata: cf-aig-metadata ヘッダで user_id / team / version 等を付与、
+  「どの部署のどのユーザーが何モデルをいくら使ったか」を後追いできる
+
+前章 (observability) で扱った OTel エクスポートはこれらの監査ログ・Analytics を
+Honeycomb 等に流す経路として組合せる。BYOK + Custom Costs + Guardrails の 3 つは
+今回新たに追加で、特に Guardrails (有害コンテンツ検出) は DLP (機密情報) と並ぶ
+統制の柱として強調できる。
 -->
 
 ---
 
-# Cloudflare の二重統制点 — LLM 層 + ツール層
+# MCP Server Portal — ツールの統制点
 
-LLM 呼び出しは **AI Gateway**、ツール呼び出しは **MCP Portals**。両方の経路が **強制**されることで初めてスプロールが構造的に止まる。
-
-```mermaid
-graph TB
-    USER[ユーザー / アプリ / エージェント]
-
-    subgraph CTRL["二重統制点"]
-      AIGW["AI Gateway<br/>=== LLM 統制点 ===<br/>DLP / cache / fallback"]
-      MCPP["MCP Portals<br/>=== ツール統制点 ===<br/>per-tool ACL / Code Mode"]
-    end
-
-    subgraph BACKEND["バックエンド"]
-      LLM[Workers AI / 外部 LLM]
-      TOOLS[MCP サーバー / ツール群]
-      SBX[Sandbox<br/>egress allowlist]
-    end
-
-    AUDIT[(全層 Correlated Audit<br/>Logpush → R2 Iceberg)]
-
-    USER -->|scoped token / NHI| CTRL
-    AIGW --> LLM
-    MCPP --> TOOLS
-    USER -.code path.-> SBX
-    SBX -->|gateway only| AIGW
-    AIGW -.req_id.-> AUDIT
-    MCPP -.req_id.-> AUDIT
-    SBX -.req_id.-> AUDIT
-```
-
-<div class="grid grid-cols-3 gap-3 mt-4 text-sm">
-
-<div class="border border-orange-500/30 rounded p-3">
-
-**LLM 統制点**: AI Gateway
-
-DLP / セマンティックキャッシュ / モデルフォールバック / メタデータタグ
-
-</div>
-
-<div class="border border-orange-500/30 rounded p-3">
-
-**ツール統制点**: MCP Portals
-
-per-tool ACL / Code Mode で ~94% トークン削減 / SIEM 連携
-
-</div>
-
-<div class="border border-orange-500/30 rounded p-3">
-
-**全層 Audit**: 5 層 Correlated Logs
-
-`request_id` で AI Gateway / MCP / Worker / DO / Sandbox を串刺し
-
-</div>
-
-</div>
-
-<!--
-Cloudflare は LLM 層とツール層に二重の統制点を置いている。
-LLM 側は AI Gateway で全プロバイダーの呼び出しを 1 経路に集約し、
-DLP・キャッシュ・フォールバック・メタデータを統一管理。
-ツール側は MCP Portals でツール単位の Access ポリシー、
-Code Mode による大幅なトークン圧縮、SIEM 連携が一発で組める。
-さらに重要なのが、Sandbox の egress allowlist で Gateway 以外を物理封鎖
-できる点。これで SDK 直叩きを規約ではなく構造で禁止できる。
-全層が同じ request_id で Logpush に流れて、R2 Iceberg に SQL 監査として
-落ちる。事故時に「何を根拠にどう答えたか」を 1 クエリで再現できる、
-というのが二重統制点 + 全層 audit の効き目。
--->
-
----
-
-# 事例 → 対処 → 効果 — 構造で発生不能にする
-
-<div class="border border-red-500/40 rounded p-3 mt-4 text-sm">
-
-### 事例: **IDE エージェントが本番 DB を `DROP TABLE` した**
-
-エージェントに本番リソースの破壊的 binding が渡されており、承認ゲートも無かった
-
-</div>
+組織内で乱立する MCP server (= LLM が叩く外部ツール群) を **中央集約してアクセス制御** する portal。**Cloudflare Access** が認証 / 認可 / 監査を担当。
 
 <div class="grid grid-cols-2 gap-4 mt-4 text-sm">
 
 <div class="border border-orange-500/30 rounded p-3">
 
-### 対処 ① — Capability で縛る
+### 集約 / 認証
 
-Workers Binding は **渡してない = 触る手段が存在しない**
-
-```jsonc
-"services": [
-  { "binding": "READ_DB", "service": "db-reader" }
-  // 破壊用 binding は意図的に渡さない
-]
-```
+- **1 つの portal URL に複数 MCP server を集約** (内部 + サードパーティ + SaaS 系)
+- **OAuth 2.0** (managed OAuth) で MCP クライアントを認証
+- **SSO / MFA** を前段に挟める (Access 経由)
 
 </div>
 
 <div class="border border-orange-500/30 rounded p-3">
 
-### 対処 ② — 承認 step を挟む
+### 統制 / 最適化
 
-破壊的操作は Workflows の `waitForEvent` で人間に渡す
-
-```typescript
-const ok = await step.waitForEvent(
-  "human-approval", { timeout: "1 hour" }
-);
-if (!ok.approved) return;
-await step.do("delete", () =>
-  env.DB.prepare(sql).run()
-);
-```
+- **3 軸ポリシー**: Identity (誰が) / Conditions (どの条件で) / Scope (どの tool まで)
+- **Code Mode**: 全 tool 定義を 1 つの `code` tool に圧縮 → context window 削減
+- **監査ログ**: 全 tool 実行を Access logs に記録 → SIEM / Logpush 連携
 
 </div>
 
 </div>
 
-<div class="mt-4 border border-orange-500/30 rounded p-4">
+<div class="mt-4 text-sm op-80">
 
-### 共通する 3 つの設計原則
-
-1. **強制経路を作る** — AI Gateway / MCP Portals を通る以外の選択肢を消す
-2. **Capability で縛る** — 触れる手段そのものを binding で限定
-3. **`request_id` で全層を紐付ける** — 後追い可能性を構造で担保
-
-**監視で検知ではなく、構造で発生不能にする**
+→ "**Shadow MCP**" (社員が勝手にローカルで MCP server を立てて社内データに繋ぐ) を **構造で防ぐ**。観測対象を一元化することで、AI Gateway と合わせて 「LLM 層 + ツール層」の二重統制が成立する。
 
 </div>
 
 <!--
-具体例で見せる。IDE 統合のエージェントが暴走して、本番 DB を DROP TABLE で
-吹き飛ばした、という事故。原因は破壊的操作の binding をエージェントに
-渡していたこと、と承認ゲートが無かったこと。
-Cloudflare では Workers の binding が capability-based なので、渡していない
-binding は触る手段そのものが存在しない。これが対処 1。
-さらに破壊的な操作は Workflows の waitForEvent で人間の承認を待つ step を
-挟むことで、承認されない限り永久に保留される。
-事例ごとに primitive は違うが、共通するのは 3 つの設計原則。
-強制経路を作る、capability で縛る、request_id で全層を紐付ける。
-監視で検知するのではなく、構造的に発生不能にする思想で組むのが Cloudflare 的。
--->
+MCP server portal は Cloudflare Access の AI controls 配下に提供されている機能で、
+組織内の MCP server を中央管理するための portal。Shadow MCP (社員が勝手にローカル
+で MCP server を立てて社内 DB / Notion / GitHub 等に繋ぐ) を、Access 経由の
+gateway を強制することで構造的に止める設計。
 
----
+(1) 集約: 内部 (self-hosted)、SaaS (Access for SaaS 経由)、サードパーティ
+(OAuth 連携) の 3 種類の MCP server を 1 つの portal URL に束ねられる。MCP
+クライアント (LLM 側) は portal URL 1 つだけ知っていればよい。
+
+(2) 認証: OAuth 2.0 の authorization code flow (managed OAuth) で MCP クライアントを
+認証。非ブラウザクライアントには 401 + WWW-Authenticate ヘッダで Access の OAuth
+discovery エンドポイントを案内する仕様。
+
+(3) ポリシー: Access の標準ポリシーが効くので、Identity / Conditions / Scope の
+3 軸で粒度の細かい制御が可能。「特定 tool だけ許可」「device posture が OK
+なときのみ許可」など。
+
+(4) Code Mode: portal の機能で、複数 MCP server の全 tool 定義を 1 つの code tool に
+畳み込み、LLM の context window 使用量を抑える。tool 定義が肥大化したときの
+解。code path を経由する以上、AI Gateway との二重ゲートが取れる。
+
+(5) 監査: Access logs に「どのユーザーがどの tool をいつ実行したか」が記録される。
+Logpush で R2 / Iceberg / Honeycomb に流せば、AI Gateway logs と組み合わせて
+LLM 層 + ツール層の Correlated audit が成立する。
+
+事故シナリオ (IDE エージェントが本番 DB を DROP) → 対処は MCP Portal で破壊的
+tool を Scope から外す + AI Gateway で DLP に「DROP TABLE 等の SQL パターン」を
+ブロックリストに追加 + Workflows の waitForEvent で人間承認を挟む、の組合せで
+構造的に発生不能にできる。
+-->
