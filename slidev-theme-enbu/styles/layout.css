@@ -4,6 +4,36 @@
     --slidev-theme-primary: #F38020;
 }
 
+/* Dank Mono — locally-hosted code font.
+   public/fonts/ に Regular / Bold / Italic を置く前提。dmvendor.css は base64
+   埋め込み版だが、サイズが大きいので別 .woff2 を直接参照する。 */
+@font-face {
+    font-family: 'dm';
+    src: url('/fonts/DankMono-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'dm';
+    src: url('/fonts/DankMono-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'dm';
+    src: url('/fonts/DankMono-Italic.woff2') format('woff2');
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* コードブロック / inline code に Dank Mono を適用 */
+pre, code, .shiki, .shiki * {
+    font-family: 'dm', ui-monospace, 'SF Mono', Menlo, Consolas, monospace !important;
+}
+
 /* Hand-drawn wavy underline for h1 slide titles.
    Two SVG waves are layered with different phases / amplitudes / opacities to
    simulate a hand-drawn, irregular squiggle. The stroke uses the theme primary. */
@@ -31,6 +61,27 @@
         rgba(243, 128, 32, 0.32) 38%,
         transparent 38%
     );
+}
+
+/* Status badges for slide titles (Beta / preview / GA など).
+   Use as: `# Title <span class="badge badge-beta">BETA</span>` */
+.badge {
+    display: inline-block;
+    font-size: 0.5em;
+    vertical-align: middle;
+    padding: 0.2em 0.7em;
+    margin-left: 0.45em;
+    border-radius: 999px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    line-height: 1;
+    background-image: none !important;
+    background: rgba(243, 128, 32, 0.18);
+    color: var(--slidev-theme-primary);
+}
+.badge-preview {
+    background: rgba(168, 168, 168, 0.18);
+    color: #c5c5c5;
 }
 
 /* cover は layouts/cover.vue の scoped style で完結 (闇に纏う炎) */
