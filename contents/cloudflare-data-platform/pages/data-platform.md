@@ -180,8 +180,7 @@ R2 Data Catalog の Iceberg テーブルに標準 SQL を実行できる、Cloud
 経由で実行できる。
 
 ```bash
-# WRANGLER_R2_SQL_AUTH_TOKEN を設定して warehouse 名 + SQL を渡すだけ
-npx wrangler r2 sql query "$WAREHOUSE" \
+wrangler r2 sql query "$WAREHOUSE" \
   "SELECT user_id, COUNT(*) AS n FROM default.events
    WHERE __ingest_ts > '2026-05-01' GROUP BY user_id LIMIT 10"
 ```

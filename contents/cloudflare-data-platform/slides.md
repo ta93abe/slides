@@ -2,8 +2,18 @@
 theme: enbu
 favicon: /favicon.png
 title: Cloudflare Data Platform
+titleTemplate: "%s"
+info: |
+  ## Cloudflare Data Platform
+
+  Cloudflare Data Platform の紹介
+author: 阿部拓海
+keywords: Cloudflare,Data Platform,Pipelines,R2,R2 Data Catalog,R2 SQL,Workers,wrangler,observability
+exportFilename: cloudflare-data-platform
 drawings:
   persist: false
+htmlAttrs:
+  lang: ja
 transition: slide-left
 comark: true
 layout: cover
