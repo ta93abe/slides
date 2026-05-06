@@ -136,6 +136,14 @@ Spark / StarRocks 等のクライアントから直接クエリできる = ベ�
 
 基盤技術: **Apache DataFusion** (Rust) + **Arrow** (列指向インメモリ) + **datafusion-distributed** (分散実行)
 
+```bash
+# WRANGLER_R2_SQL_AUTH_TOKEN を設定したうえで Iceberg テーブルに直接 SQL
+$ npx wrangler r2 sql query "$WAREHOUSE" \
+    "SELECT user_id, COUNT(*) AS n FROM default.events
+     WHERE __ingest_ts > '2026-05-01'
+     GROUP BY user_id ORDER BY n DESC LIMIT 10"
+```
+
 <div class="grid grid-cols-2 gap-6 mt-4">
 <div>
 
@@ -171,6 +179,10 @@ Spark / StarRocks 等のクライアントから直接クエリできる = ベ�
 R2 SQL は R2 Data Catalog の Iceberg テーブルに対して標準 SQL でクエリを
 実行できる Cloudflare ネイティブのクエリエンジン。DataFusion + Arrow +
 datafusion-distributed で、エッジで分散クエリが走る。
+スライドのコマンドは wrangler r2 sql query で、WRANGLER_R2_SQL_AUTH_TOKEN を
+設定すれば warehouse 名と SQL 文字列を渡すだけで実行できる。Iceberg 側の
+__ingest_ts は Pipelines が付与する取り込みタイムスタンプで、時間範囲の
+枝刈りに使えるカラム。
 2026 年のアップデートで 190 種以上のスカラー関数、CTE、複合型対応。
 ただし JOIN / WINDOW / サブクエリは未対応で、これらは 2026 年 H1 に予定。
 Athena と比べると機能網羅性は低いが、Beta 中は無料、しかも R2 エグレス無料

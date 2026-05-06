@@ -102,4 +102,3 @@ Wrangler を置き換えるのではなく住み分け。
 <div class="mt-4 text-sm op-70">
 <strong>vs AWS</strong>: AWS は CLI・SAM・CDK・CloudFormation と選択肢が多いが分散。Cloudflare は Wrangler + cf + IaC が一貫して同じ API スキーマから生成される。
 </div>
-
