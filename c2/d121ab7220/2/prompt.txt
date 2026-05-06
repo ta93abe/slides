@@ -1,0 +1,14 @@
+03-workers.md のBindingの説明はもっと簡潔にしたい。数行で簡単にサービス連携できると思ってもらえるようなコード例、説明にしてほしい。
+
+---
+
+fire-and-forgetって？
+
+---
+
+# R2 SQL — 分散クエリエンジン
+wrangler r2 query のサンプルコマンド挿入して
+
+---
+
+/pr review
