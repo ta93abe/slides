@@ -89,7 +89,14 @@ wrangler r2 bucket create < bucket-name >
 
 </div>
 
-<Tweet id="1442879872154566658" />
+<div
+  v-click
+  v-motion
+  :initial="{ y: 60, opacity: 0 }"
+  :enter="{ y: 0, opacity: 1, transition: { duration: 600, ease: [0.16, 1, 0.3, 1] } }"
+>
+  <Tweet id="1442879872154566658" />
+</div>
 
 </div>
 

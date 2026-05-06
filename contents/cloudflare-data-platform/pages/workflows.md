@@ -133,6 +133,8 @@ decorator-based DAG を解析する実装がまだ追いついていない、と
 -->
 
 ---
+layout: two-cols-header
+---
 
 ## Python SDK
 
@@ -140,7 +142,7 @@ decorator-based DAG を解析する実装がまだ追いついていない、と
 
 <div class="agent-example">
 
-```python {5-7|9-11|13-15|17|all}
+```python {all|5-7|9-11|13-15|17|all}
 from workers import WorkflowEntrypoint
 
 class IngestWorkflow(WorkflowEntrypoint):
@@ -162,13 +164,13 @@ class IngestWorkflow(WorkflowEntrypoint):
 
 </div>
 
-<div class="text-sm text-center mt-3 min-h-[1.6em]">
-  <span v-click.hide="1">▸ <strong>Step 1</strong>: `fetch_a` を `@step.do()` で定義</span>
-  <span v-click="1" v-click.hide="2">▸ <strong>Step 2</strong>: `fetch_b` を独立した step として定義</span>
-  <span v-click="2" v-click.hide="3">▸ <strong>Step 3</strong>: `merge` を `concurrent=True` + 引数名 `fetch_a` / `fetch_b` で依存宣言</span>
-  <span v-click="3" v-click.hide="4">▸ <strong>Step 4</strong>: `await merge()` 実行 — 依存先が並列起動 (diamond DAG)</span>
-  <span v-click="4">▸ 引数名による暗黙的依存解決で DAG が宣言的に書ける</span>
-</div>
+::right::
+
+- <span v-click.hide="1">▸ <strong>Step 1</strong>: `fetch_a` を `@step.do()` で定義</span>
+- <span v-click="1" v-click.hide="2">▸ <strong>Step 2</strong>: `fetch_b` を独立した step として定義</span>
+- <span v-click="2" v-click.hide="3">▸ <strong>Step 3</strong>: `merge` を `concurrent=True` + 引数名 `fetch_a` / `fetch_b` で依存宣言</span>
+- <span v-click="3" v-click.hide="4">▸ <strong>Step 4</strong>: `await merge()` 実行 — 依存先が並列起動 (diamond DAG)</span>
+- <span v-click="4">▸ 引数名による暗黙的依存解決で DAG が宣言的に書ける</span>
 
 <style>
 .agent-example pre,

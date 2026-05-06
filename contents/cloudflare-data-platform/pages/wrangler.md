@@ -38,9 +38,9 @@ layout: section
 
 ---
 
-# cf CLI — プラットフォーム全体の統合 CLI
+# cf CLI — プラットフォーム全体の統合 CLI<span class="badge badge-preview">PREVIEW</span>
 
-Wrangler と並行して Cloudflare が公開した新 CLI (technology preview)。
+Wrangler と並行して Cloudflare が公開した新 CLI。
 
 - **約 3,000 API 操作**を 1 CLI に（Cloudflare REST API のほぼ全域をカバー）
 - TypeScript スキーマから **CLI / バインディング / ドキュメント / AI エージェント用 Skill を同時生成**
