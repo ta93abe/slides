@@ -140,6 +140,8 @@ layout: two-cols-header
 
 `WorkflowEntrypoint` を Python で継承。**関数パラメータ名で依存を暗黙解決** する DAG 表現が特徴。
 
+::left::
+
 <div class="agent-example">
 
 ```python {all|5-7|9-11|13-15|17|all}
@@ -166,11 +168,11 @@ class IngestWorkflow(WorkflowEntrypoint):
 
 ::right::
 
-- <span v-click.hide="1">▸ <strong>Step 1</strong>: `fetch_a` を `@step.do()` で定義</span>
-- <span v-click="1" v-click.hide="2">▸ <strong>Step 2</strong>: `fetch_b` を独立した step として定義</span>
-- <span v-click="2" v-click.hide="3">▸ <strong>Step 3</strong>: `merge` を `concurrent=True` + 引数名 `fetch_a` / `fetch_b` で依存宣言</span>
-- <span v-click="3" v-click.hide="4">▸ <strong>Step 4</strong>: `await merge()` 実行 — 依存先が並列起動 (diamond DAG)</span>
-- <span v-click="4">▸ 引数名による暗黙的依存解決で DAG が宣言的に書ける</span>
+- Step 1: `fetch_a` を `@step.do()` で定義
+- Step 2: `fetch_b` を独立した step として定義
+- Step 3: `merge` を `concurrent=True` + 引数名 `fetch_a` / `fetch_b` で依存宣言
+- Step 4: `await merge()` 実行 — 依存先が並列起動 (diamond DAG)
+- 引数名による暗黙的依存解決で DAG が宣言的に書ける
 
 <style>
 .agent-example pre,

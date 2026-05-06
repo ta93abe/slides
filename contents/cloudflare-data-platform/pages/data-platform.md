@@ -86,6 +86,7 @@ wrangler r2 bucket create < bucket-name >
 - **Repositioning Records**: S3 互換 API を提供していて、既存のツールや SDK がそのまま使える。
 - **Ridiculously Reliable**: 99.999999999% (イレブンナイン) の耐久性、99.9% の可用性。
 - **Radically Reprogrammable**: Workers Binding 統合。
+- 「R」と「2」は「S」と「3」の一個前？ https://object-storage-name-generator.com/
 
 </div>
 

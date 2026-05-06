@@ -17,11 +17,12 @@ layout: two-cols-header
 
 ::left::
 
-Workers だと **128 MB** の制限がある。
+Workers では **128 MB** の制限があります。
 
-そこで Containers を使えば、この制約を突破できる。
+そこで Containers を使えば、この制約を突破できます。
+任意の Dockerfile で dbt の実行環境を定義できます。
 
-Cloudflare で完結させるメリットとすれば
+Cloudflare で完結させるメリットは次のとおりです。
 - アーティファクトを **R2 に Binding 経由**で永続化
 - Workers を R2 のリバースプロキシとして dbt docs を配信
 - Cloudflare Access で社内限定配信
