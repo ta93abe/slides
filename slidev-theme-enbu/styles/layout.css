@@ -9,7 +9,7 @@
    simulate a hand-drawn, irregular squiggle. The stroke uses the theme primary. */
 .slidev-layout:not(.cover):not(.section) h1 {
     display: inline-block;
-    padding-bottom: 0.25em;
+    padding-bottom: 0.5em;
     background-repeat: repeat-x;
     background-position: left calc(100% - 1px), left calc(100% - 2px);
     background-size: 260px 20px, 200px 22px;
