@@ -30,27 +30,27 @@ src: ./pages/04-durable-objects.md
 ---
 
 ---
-src: ./pages/05-wrangler.md
+src: ./pages/05-dbt.md
 ---
 
 ---
-src: ./pages/06-observability.md
+src: ./pages/06-ambient-agent.md
 ---
 
 ---
-src: ./pages/07-dbt.md
+src: ./pages/07-durability.md
 ---
 
 ---
-src: ./pages/08-ambient-agent.md
+src: ./pages/08-ai-sprawl.md
 ---
 
 ---
-src: ./pages/09-durability.md
+src: ./pages/09-wrangler.md
 ---
 
 ---
-src: ./pages/10-ai-sprawl.md
+src: ./pages/10-observability.md
 ---
 
 ---

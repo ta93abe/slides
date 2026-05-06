@@ -370,7 +370,7 @@ table.append(users_data)
 
 ## Demo 4: OpenTelemetry → Honeycomb トレース
 
-**スライド対応**: `06-observability.md`
+**スライド対応**: `10-observability.md`
 **メッセージ**: コード変更ゼロで Worker の全操作が可視化される
 
 ### アーキテクチャ
@@ -537,7 +537,7 @@ wrangler d1 execute demo-db --command \
 
 ## Demo 5: Astro データカタログ × AI Search
 
-**スライド対応**: `07-dbt.md`（dbt artifacts → カタログ）+ `10-ai-sprawl.md`（AI Search で対策）
+**スライド対応**: `05-dbt.md`（dbt artifacts → カタログ）+ `08-ai-sprawl.md`（AI Search で対策）
 **メッセージ**: 「売上に関連するテーブルは？」で検索できるデータカタログ
 
 ### アーキテクチャ
