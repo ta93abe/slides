@@ -138,10 +138,11 @@ Spark / StarRocks 等のクライアントから直接クエリできる = ベ�
 
 ```bash
 # WRANGLER_R2_SQL_AUTH_TOKEN を設定したうえで Iceberg テーブルに直接 SQL
-$ npx wrangler r2 sql query "$WAREHOUSE" \
-    "SELECT user_id, COUNT(*) AS n FROM default.events
-     WHERE __ingest_ts > '2026-05-01'
-     GROUP BY user_id ORDER BY n DESC LIMIT 10"
+npx wrangler r2 sql query "$WAREHOUSE" \
+  "SELECT user_id, COUNT(*) AS n
+   FROM default.events
+   WHERE __ingest_ts > '2026-05-01'
+   GROUP BY user_id ORDER BY n DESC LIMIT 10"
 ```
 
 <div class="grid grid-cols-2 gap-6 mt-4">
