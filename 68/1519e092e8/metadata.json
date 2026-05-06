@@ -1,0 +1,38 @@
+{
+  "cli_version": "0.6.0",
+  "checkpoint_id": "681519e092e8",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 10,
+  "files_touched": [
+    "contents/cloudflare-data-platform/demo.md",
+    "contents/cloudflare-data-platform/pages/05-dbt.md",
+    "contents/cloudflare-data-platform/pages/05-wrangler.md",
+    "contents/cloudflare-data-platform/pages/06-ambient-agent.md",
+    "contents/cloudflare-data-platform/pages/06-observability.md",
+    "contents/cloudflare-data-platform/pages/07-dbt.md",
+    "contents/cloudflare-data-platform/pages/07-durability.md",
+    "contents/cloudflare-data-platform/pages/08-ai-sprawl.md",
+    "contents/cloudflare-data-platform/pages/08-ambient-agent.md",
+    "contents/cloudflare-data-platform/pages/09-durability.md",
+    "contents/cloudflare-data-platform/pages/09-wrangler.md",
+    "contents/cloudflare-data-platform/pages/10-ai-sprawl.md",
+    "contents/cloudflare-data-platform/pages/10-observability.md",
+    "contents/cloudflare-data-platform/slides.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/68/1519e092e8/0/metadata.json",
+      "transcript": "/68/1519e092e8/0/full.jsonl",
+      "content_hash": "/68/1519e092e8/0/content_hash.txt",
+      "prompt": "/68/1519e092e8/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 89,
+    "cache_creation_tokens": 117299,
+    "cache_read_tokens": 15705351,
+    "output_tokens": 91205,
+    "api_call_count": 39
+  }
+}

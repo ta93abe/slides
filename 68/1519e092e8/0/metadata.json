@@ -1,0 +1,190 @@
+{
+  "cli_version": "0.6.0",
+  "checkpoint_id": "681519e092e8",
+  "session_id": "e12f3198-9311-49b8-a183-d042931d3696",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-06T08:47:52.812964Z",
+  "branch": "main",
+  "checkpoints_count": 10,
+  "files_touched": [
+    "contents/cloudflare-data-platform/demo.md",
+    "contents/cloudflare-data-platform/pages/05-dbt.md",
+    "contents/cloudflare-data-platform/pages/05-wrangler.md",
+    "contents/cloudflare-data-platform/pages/06-ambient-agent.md",
+    "contents/cloudflare-data-platform/pages/06-observability.md",
+    "contents/cloudflare-data-platform/pages/07-dbt.md",
+    "contents/cloudflare-data-platform/pages/07-durability.md",
+    "contents/cloudflare-data-platform/pages/08-ai-sprawl.md",
+    "contents/cloudflare-data-platform/pages/08-ambient-agent.md",
+    "contents/cloudflare-data-platform/pages/09-durability.md",
+    "contents/cloudflare-data-platform/pages/09-wrangler.md",
+    "contents/cloudflare-data-platform/pages/10-ai-sprawl.md",
+    "contents/cloudflare-data-platform/pages/10-observability.md",
+    "contents/cloudflare-data-platform/slides.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "5db937b81f4e",
+  "checkpoint_transcript_start": 927,
+  "transcript_lines_at_start": 927,
+  "token_usage": {
+    "input_tokens": 89,
+    "cache_creation_tokens": 117299,
+    "cache_read_tokens": 15705351,
+    "output_tokens": 91205,
+    "api_call_count": 39
+  },
+  "session_metrics": {
+    "turn_count": 37
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-06T08:47:52.764215Z",
+    "agent_lines": 0,
+    "agent_removed": 0,
+    "human_added": 0,
+    "human_modified": 924,
+    "human_removed": 0,
+    "total_committed": 0,
+    "total_lines_changed": 924,
+    "agent_percentage": 0,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 9,
+      "user_lines_removed": 0,
+      "agent_lines_added": 2,
+      "agent_lines_removed": 2,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    },
+    {
+      "checkpoint_number": 3,
+      "user_lines_added": 9,
+      "user_lines_removed": 0,
+      "agent_lines_added": 2,
+      "agent_lines_removed": 2,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    },
+    {
+      "checkpoint_number": 4,
+      "user_lines_added": 10,
+      "user_lines_removed": 1,
+      "agent_lines_added": 12,
+      "agent_lines_removed": 97,
+      "user_added_per_file": {
+        "contents/cloudflare-data-platform/pages/03-workers.md": 1,
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      },
+      "user_removed_per_file": {
+        "contents/cloudflare-data-platform/pages/03-workers.md": 1
+      }
+    },
+    {
+      "checkpoint_number": 5,
+      "user_lines_added": 941,
+      "user_lines_removed": 945,
+      "agent_lines_added": 40,
+      "agent_lines_removed": 112,
+      "user_added_per_file": {
+        "contents/cloudflare-data-platform/demo.md": 2,
+        "contents/cloudflare-data-platform/pages/03-workers.md": 8,
+        "contents/cloudflare-data-platform/pages/05-dbt.md": 171,
+        "contents/cloudflare-data-platform/pages/06-ambient-agent.md": 116,
+        "contents/cloudflare-data-platform/pages/07-durability.md": 120,
+        "contents/cloudflare-data-platform/pages/08-ai-sprawl.md": 218,
+        "contents/cloudflare-data-platform/pages/09-wrangler.md": 104,
+        "contents/cloudflare-data-platform/pages/10-observability.md": 187,
+        "contents/cloudflare-data-platform/slides.md": 6,
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      },
+      "user_removed_per_file": {
+        "contents/cloudflare-data-platform/demo.md": 2,
+        "contents/cloudflare-data-platform/pages/03-workers.md": 21,
+        "contents/cloudflare-data-platform/pages/05-wrangler.md": 104,
+        "contents/cloudflare-data-platform/pages/06-observability.md": 187,
+        "contents/cloudflare-data-platform/pages/07-dbt.md": 171,
+        "contents/cloudflare-data-platform/pages/08-ambient-agent.md": 116,
+        "contents/cloudflare-data-platform/pages/09-durability.md": 120,
+        "contents/cloudflare-data-platform/pages/10-ai-sprawl.md": 218,
+        "contents/cloudflare-data-platform/slides.md": 6
+      }
+    },
+    {
+      "checkpoint_number": 6,
+      "user_lines_added": 9,
+      "user_lines_removed": 0,
+      "agent_lines_added": 949,
+      "agent_lines_removed": 1024,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    },
+    {
+      "checkpoint_number": 7,
+      "user_lines_added": 11,
+      "user_lines_removed": 2,
+      "agent_lines_added": 973,
+      "agent_lines_removed": 1025,
+      "user_added_per_file": {
+        "contents/cloudflare-data-platform/pages/03-workers.md": 2,
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      },
+      "user_removed_per_file": {
+        "contents/cloudflare-data-platform/pages/03-workers.md": 2
+      }
+    },
+    {
+      "checkpoint_number": 8,
+      "user_lines_added": 9,
+      "user_lines_removed": 0,
+      "agent_lines_added": 990,
+      "agent_lines_removed": 1026,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    },
+    {
+      "checkpoint_number": 9,
+      "user_lines_added": 10,
+      "user_lines_removed": 0,
+      "agent_lines_added": 980,
+      "agent_lines_removed": 1026,
+      "user_added_per_file": {
+        "contents/cloudflare-data-platform/pages/03-workers.md": 1,
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    },
+    {
+      "checkpoint_number": 10,
+      "user_lines_added": 9,
+      "user_lines_removed": 0,
+      "agent_lines_added": 987,
+      "agent_lines_removed": 1026,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    },
+    {
+      "checkpoint_number": 11,
+      "user_lines_added": 9,
+      "user_lines_removed": 0,
+      "agent_lines_added": 989,
+      "agent_lines_removed": 1026,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    }
+  ]
+}
