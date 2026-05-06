@@ -1,12 +1,12 @@
 ---
 theme: enbu
 favicon: /favicon.png
-title: Cloudflare Data Platform
+title: Cloudflare で始める Data Platform
 titleTemplate: "%s"
 info: |
   ## Cloudflare Data Platform
 
-  Cloudflare Data Platform の紹介
+  Cloudflare のサービスを使ってデータ基盤を作るならこんな風に
 author: 阿部拓海
 keywords: Cloudflare,Data Platform,Pipelines,R2,R2 Data Catalog,R2 SQL,Workers,wrangler,observability
 exportFilename: cloudflare-data-platform
@@ -32,16 +32,28 @@ src: ./pages/workers.md
 ---
 
 ---
+src: ./pages/workflows.md
+---
+
+---
 src: ./pages/dbt.md
 ---
 
----
-src: ./pages/ambient-agent.md
----
+<!--
+ambient-agent.md は本登壇から一時的に除外中 (pages/ambient-agent.md は保持)。
+復活させたい場合は以下のブロックをこの直下に追加 (インデントを外す):
+  ---
+  src: ./pages/ambient-agent.md
+  ---
+-->
 
----
-src: ./pages/durability.md
----
+<!--
+durability.md は本登壇から一時的に除外中 (pages/durability.md は保持)。
+復活させたい場合は以下のブロックをこの直下に追加 (インデントを外す):
+  ---
+  src: ./pages/durability.md
+  ---
+-->
 
 ---
 src: ./pages/ai-sprawl.md
