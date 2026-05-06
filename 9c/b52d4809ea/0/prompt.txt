@@ -1,0 +1,84 @@
+PR #20 の CI 状態を確認し、全 check が SUCCESS なら squash merge + delete-branch でマージ。失敗があれば内容を報告。
+
+---
+
+これって trycloudflare.comで公開できる?
+
+---
+
+cloudflare pipelines の3つの構成要素は何？
+
+---
+
+pipeline,sink,
+
+---
+
+stream
+
+---
+
+streams と cloudflare queues は違うの？
+
+---
+
+Logpush ってどんなサービス？
+
+---
+
+contents/cloudflare-data-platform/public/cloudflare-pipelines.excalidraw
+この図を# Pipelines — ストリーミング ingestの真ん中に置きたい。今書いてある図、テキストは消していいよ。
+
+---
+
+Arroyoもstream,pipeline,sinkの構成なの？
+
+---
+
+テキストを入れたんだけど画像の裏に回っちゃっている
+
+---
+
+図と箇条書きを上下逆にしたい。
+
+---
+
+h1 の波の下線をもう少し下げて
+
+---
+
+Arroyo って Flink と同じ機能を持っている？
+
+---
+
+R2 SQL — 分散クエリエンジン のスライド長い。具体的な関数とかはかく必要ない。
+
+---
+
+Athena の名前はスライドに出したくない。スピーカーノートに書いておいて。
+
+---
+
+git add -p で pipelines と excalidraw ファイルをコミットしてほしい。
+
+---
+
+こっちで修正したからコミット続けて
+
+---
+
+R2 Data Catalog の機能を説明して
+
+---
+
+**ACID トランザクション** / **スキーマ進化** / **タイムトラベル**
+ここらへんの機能を教えて
+
+---
+
+R2 Data Catalog でまだ対応していないIcebergの主要な機能があればスピーカーノートに書いて
+
+---
+
+contents/cloudflare-data-platform/public/check-iceberg-version.png
+いい感じにR2 Data Catalog のスライドに入れたい。
