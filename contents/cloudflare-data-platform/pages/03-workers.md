@@ -2,17 +2,40 @@
 layout: section
 ---
 
-# もう一つ重要なサービス
+# Cloudflare Data Platform 以外の<br/>重要なサービス
 
 ---
 
 # Cloudflare Workers
 
-エッジコンピューティングプラットフォーム。Cloudflare の全世界 250+ ロケーションでコードを実行可能。
+全世界 330+ 都市のエッジで動くサーバーレス実行基盤。
+
+特徴:
+
+- **V8 Isolate**: VM コンテナの起動コストが不要、コールドスタートが構造的に発生しない
+- **anycast 配置**: ユーザー最寄りのエッジで処理、リージョン設計不要
+- **Binding**: SDK / 認証情報なしで env から Cloudflare サービスを直接呼べる (Capability-based)
+- **多様な実行起点**: HTTP / Cron Triggers / Queues / Workflows / Service Binding
+
+Data Platform 章で見た Pipelines / R2 Data Catalog / R2 SQL を呼び出す側の実体が Workers。
+
+<!--
+Cloudflare Workers の特徴を 4 つに整理:
+
+1. V8 Isolate 実行モデル: コンテナ + VM を毎回起動するのではなく、1 プロセス内で数百〜数千の isolate を切り替える方式。isolate の起動は数 ms 以下、メモリ消費もコンテナ型より 1 桁小さい (公式 docs より)。リクエストごとに VM 起動が要らない設計なので「コンテナ型のコールドスタート」が構造的に発生しない。
+
+2. anycast 配置: 全世界 330+ 都市のエッジに同じコードが展開され、リクエストはユーザー最寄りのノードで処理される。「どのリージョンに置くか」を選ぶ必要がない。
+
+3. Binding: 他のサーバーレス系で典型的な「SDK + 認証情報でクライアントを生成して呼び出す」フローが要らない。wrangler.jsonc に Binding を宣言すると env.X.method() で呼べる。Capability-based セキュリティモデルで、宣言されていないリソースには触る手段が無い (構造的に最小権限)。
+
+4. 多様な実行起点: HTTP リクエストが基本だが、Cron Triggers (スケジュール実行)、Queues (非同期メッセージング)、Workflows (durable な長時間処理)、Service Binding (別 Worker からの直接呼び出し)、Email Workers なども使える。
+
+本セクションでは Data Platform の orchestrator として位置付ける: Pipelines への ingest、R2 Data Catalog の操作、R2 SQL の呼び出しを 1 つの Worker に集約できる、というのを次の Binding スライドで具体的に見せる。
+-->
 
 ---
 
-# Binding — 宣言するだけで env から呼べる
+## Binding
 
 `wrangler.jsonc` に宣言するだけで、Worker の `env` から Cloudflare サービスを直接呼べる。SDK / 認証情報 / region 設定はいらない。
 
@@ -42,110 +65,25 @@ binding 名と対象サービスを宣言した瞬間、コード側からは en
 同一ノード参照なので DNS / TLS のオーバーヘッドが無い、wrangler types で Env の
 型が自動生成されるので IDE 補完が効く、といった性質があり、Worker をデータ基盤の
 中核 orchestrator として運用しても破綻しない設計になっています。
--->
 
----
+具体的にどのサービスが Binding 対応かは公式 docs を案内する方針 (一覧は登壇本筋から
+外れる)。話す時にカテゴリ感だけ持っておく: ストレージ系 (R2 / D1 / KV / Analytics
+Engine)、コンピュート系 (Durable Objects / Service Binding / Queues / Workflows /
+Sandbox / Containers)、データ・AI 系 (Pipelines / Workers AI / Vectorize / Hyperdrive)。
 
-# Binding でつながる主要サービス
-
-<div class="grid grid-cols-3 gap-3 mt-4 text-sm">
-
-<div class="border border-orange-500/30 rounded p-3">
-
-### ストレージ
-
-- **R2** — オブジェクト
-- **D1** — SQLite RDB
-- **KV** — グローバル KV
-- **Analytics Engine** — メトリクス
-
-</div>
-
-<div class="border border-orange-500/30 rounded p-3">
-
-### コンピュート
-
-- **Durable Objects** — ステートフル
-- **Service Binding** — Worker 間呼び出し
-- **Queues / Workflows**
-- **Sandbox / Containers**
-
-</div>
-
-<div class="border border-orange-500/30 rounded p-3">
-
-### データ / AI
-
-- **Pipelines** — ストリーム ingest
-- **Workers AI** — LLM / 埋め込み
-- **Vectorize** — ベクトル検索
-- **Hyperdrive** — Postgres / MySQL 接続プール
-
-</div>
-
-</div>
-
-<div class="grid grid-cols-2 gap-4 mt-4 text-xs">
-
-<div>
-
-**取り込み Worker** — Webhook → R2 / D1 / Pipelines
-
-```typescript
-async fetch(req: Request, env: Env) {
-  const data = await req.json();
-  await env.BUCKET.put(
-    `raw/${data.id}.json`, JSON.stringify(data)
-  );
-  await env.DB.prepare(
-    "INSERT INTO events VALUES (?, ?)"
-  ).bind(data.id, data.type).run();
-  await env.PIPELINE.send(
-    [{ ts: Date.now(), ...data }]
-  );
-  return Response.json({ ok: true });
-}
-```
-
-</div>
-
-<div>
-
-**LLM 推論 Worker** — Workers AI + AI Gateway
-
-```typescript
-async fetch(req: Request, env: Env) {
-  const { prompt } = await req.json();
-  // env.AI が Workers AI、gateway オプションが AI Gateway
-  const ai = await env.AI.run(
-    "@cf/meta/llama-3.3-70b-instruct",
-    { messages: [{ role: "user", content: prompt }] },
-    { gateway: { id: "my-gw", cacheTtl: 3600 } }
-  );
-  return Response.json(ai);
-}
-```
-
-</div>
-
-</div>
-
-<!--
-Cloudflare の主要サービスはほぼ全て Binding 経由で Worker から呼べる。
-取り込み Worker は Webhook 受信から R2 保存・D1 への構造化挿入・Pipelines
-送信までを数行で書ける典型で、データ取り込み Worker のミニマル形。
-LLM 推論 Worker は env.AI が Workers AI の Binding で、env.AI.run の
-第 3 引数の gateway オプションが AI Gateway を介する指示。これだけで全 LLM
-呼び出しが Gateway を経由し、DLP / セマンティックキャッシュ / メタデータが
-自動で効くようになる。データ系も AI 系も Worker 1 ファイルに収まる、
-というのが Cloudflare Data Platform の中核 orchestrator としての位置づけ。
+実例として: Webhook を受ける Worker 1 ファイルで env.BUCKET.put (R2) → env.DB.prepare
+(D1) → env.PIPELINE.send (Pipelines) を直列に呼べば、データ取り込みパイプラインの
+ミニマル形が完成する。LLM 推論 Worker でも env.AI.run の第 3 引数に gateway オプションを
+渡すだけで AI Gateway を経由でき、DLP / セマンティックキャッシュ / メタデータが自動で
+効く。データ系も AI 系も同じ Worker 1 ファイルに同居できる = orchestrator として機能する
+根拠、と説明できる。
 -->
 
 ---
 
 ## Static Assets
 
-HTML, CSS, JavaScript 画像などの静的アセットを Cloudflare Workers を使って配信することができます。(dbt docs とか持っていませんか？)
+HTML / CSS / JavaScript / 画像などの静的アセットを Cloudflare Workers から配信できる。dbt docs のような静的サイトをそのままホストできる。
 
 ```yml
       - name: Generate dbt docs
@@ -158,10 +96,20 @@ HTML, CSS, JavaScript 画像などの静的アセットを Cloudflare Workers �
           command: deploy
 ```
 
-さらに Cloudflare Access を使えば認証を挟むこともできます。(50人まで無料！)
+Cloudflare Access を組み合わせれば認証付きの限定配信にもできる。
 
 <img
     v-motion
     :initial="{ opacity: 0, y: 80 }"
     :click-1="{ opacity: 1, y: 0 }"
      src="/cloudflare-access.png" alt="Cloudflare Access" class="my-8 w-80 ml-auto" />
+
+<!--
+Static Assets は HTML / CSS / JS / 画像などをそのまま Workers から配信する仕組み。
+dbt docs / Storybook / Astro 等で生成した静的サイトのホスト先として向いている。
+GitHub Actions の wrangler-action@v3 を使えば deploy が 1 行で済む。
+Cloudflare Access (Zero Trust 製品) を前段に挟むと認証ゲートを掛けられ、社内
+ドキュメントの限定配信に使える。Free プランは小規模 (現時点では 50 ユーザー
+まで無料) で個人 / チーム用途に向く。料金は変動するので Cloudflare の料金ページ
+を案内する。
+-->
