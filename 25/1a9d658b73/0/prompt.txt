@@ -1,0 +1,170 @@
+binding は優れているんだけどTerraform で定義できないよね
+
+---
+
+Binding 先のサービスを削除したらどうなるの？
+
+---
+
+https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/workers_script
+これ使うとBindingをTerraformをcanonicalとして定義できる？
+
+---
+
+observability のスライドは Workers Observability, Logpush, AI Gateway, export to Honeycomb, Analytics Engine
+  をテーマにしたい。
+
+---
+
+Logpush は Log Expolrerについても触れたい。
+
+---
+
+Ambient Agentsのスライドはファイルは残しておいてほしいけど、slide.mdではコメントアウトしておいて
+
+---
+
+代わりに Airflowのように DAGを実行するものとして Cloudflare Workflow についてWorkersの後ろにスライドを作りたい。新しいファイルにして。
+基本（Typescript)、ビジュアライザ、Python SDKをテーマに
+
+---
+
+dbt のスライドは1枚目がWorkersの限界とContainerなら
+
+---
+
+dbt のスライドは1枚目がWorkersの限界とContainerなら動く、さらにこんなメリットもある
+2枚目はアーキテクチャを Workflows のPython SDK
+
+---
+
+wo
+
+---
+
+dbt のスライドは1枚目がWorkersの限界とContainerなら動く、さらにこんなメリットもある
+2枚目はアーキテクチャを Workflows のPython SDKでDAGとして実行するアーキテクチャ図をデカデカと書いてほしい。
+
+---
+
+ai-sprawl は AI Gateway と MCP Server Portalの2枚構成にしてほしい。
+
+---
+
+workflow のスライドに workflow-visualizer の画像を入れてほしい。
+
+---
+
+dbt-build-diagram.png
+この画像
+
+---
+
+Cloudflare Workflows は AI Agents的なコード例にしてほしい。
+
+---
+
+もう少しコードの文字を小さくして。
+
+---
+
+R2 へのファイルの保存をトリガーに何かするAI Agentsのコード例にできない？
+
+---
+
+画像に説明をつけるのとかどう？
+
+---
+
+https://developers.cloudflare.com/ai-gateway/features/
+ここにあげられている機能を列挙して
+
+---
+
+AI Gatewayのスライドにここらへんを含めたい。
+
+---
+
+Beta のものも積極的に書いていきたい。
+
+---
+
+Python SDK のコード例も小さくして
+
+---
+
+Cloudflare Workflows のスライドは2カラムにして。
+
+---
+
+betaのバッジは外して
+
+---
+
+コードは0.3remにしてほしい。
+
+---
+
+0.6
+
+---
+
+コードのフォントを変えたい。
+
+---
+
+woff2 ファイルがあるんだけど
+
+---
+
+public/fonts においた。dmvendor.css も参考になると思う
+
+---
+
+箇条書きのところいらなくて消したからコード例を中央寄せしてほしい。
+
+---
+
+コードをアニメーションしたい。ステップごとに徐々に出てくるようにする。
+
+---
+
+https://sli.dev/guide/animations#positioning
+ここを参考に
+
+---
+
+Python SDK もアニメーションを入れてステップごとに
+
+---
+
+dockerfile もう少し洗練させてほしい。インターネットでdbt on Docker の実例のコード探してきて。
+
+---
+
+dbt を Cloudflare 環境で動かす
+~/zettelkasten のノートにあるから読んで。
+
+---
+
+dbt-snowflake で動かすことを前提としていいよ。
+
+---
+
+ghcr.io/dbt-labs/dbt-snowflake これって存在するの？
+
+---
+
+dbt-core のイメージを使ってほしい。
+
+---
+
+R2 のスライドのTwitterのカードはv-click で下から上にフェードインしてほしい。
+
+---
+
+アニメーション効いていない。slidev のスキルを使って実装して。
+
+---
+
+適度な粒度でコミットしてほしい。
