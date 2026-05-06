@@ -1,0 +1,27 @@
+{
+  "cli_version": "0.6.0",
+  "checkpoint_id": "0bff1f077e99",
+  "strategy": "manual-commit",
+  "branch": "codex/configure-slidev-metadata",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/data-platform.md",
+    "contents/cloudflare-data-platform/pages/workers.md",
+    "contents/cloudflare-data-platform/pages/wrangler.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/0b/ff1f077e99/0/metadata.json",
+      "transcript": "/0b/ff1f077e99/0/full.jsonl",
+      "content_hash": "/0b/ff1f077e99/0/content_hash.txt",
+      "prompt": "/0b/ff1f077e99/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 911,
+    "cache_creation_tokens": 1646207,
+    "cache_read_tokens": 208739084,
+    "output_tokens": 518749,
+    "api_call_count": 483
+  }
+}
