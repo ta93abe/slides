@@ -1,0 +1,40 @@
+{
+  "cli_version": "0.6.0",
+  "checkpoint_id": "c738fb17216f",
+  "session_id": "1c3ba0cc-ad3f-4d21-8e97-279a06edce0a",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-06T04:02:12.568873Z",
+  "branch": "feat/cfdp-data-platform-section",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/02-data-platform.md",
+    "contents/cloudflare-data-platform/pages/11-summary.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "005940504716",
+  "checkpoint_transcript_start": 2049,
+  "transcript_lines_at_start": 2049,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "session_metrics": {
+    "turn_count": 49
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-06T04:02:12.442823Z",
+    "agent_lines": 7,
+    "agent_removed": 6,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 7,
+    "total_lines_changed": 13,
+    "agent_percentage": 100,
+    "metric_version": 2
+  }
+}
