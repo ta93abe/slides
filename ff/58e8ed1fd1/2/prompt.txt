@@ -1,0 +1,13 @@
+/pr
+
+---
+
+/pr review
+
+---
+
+PR #21 の CI 状態を再確認し、Claude Review が完了したら inline comment を取得して対応 (なければそのまま merge)。merge は squash + delete-branch。
+
+---
+
+PR #21 の CI 再確認 → Claude Review 完了したら inline comment を取得して対応 (なければそのまま merge)。merge は squash + delete-branch。
