@@ -1,0 +1,57 @@
+{
+  "cli_version": "0.6.0",
+  "checkpoint_id": "c738fb17216f",
+  "session_id": "d8a25c20-9e06-4a1a-855c-84849de7fb39",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-06T04:02:12.72416Z",
+  "branch": "feat/cfdp-data-platform-section",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/02-data-platform.md",
+    "contents/cloudflare-data-platform/pages/11-summary.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "ed8b1d393826",
+  "token_usage": {
+    "input_tokens": 3012,
+    "cache_creation_tokens": 81209,
+    "cache_read_tokens": 504883,
+    "output_tokens": 1689,
+    "api_call_count": 8
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-06T04:02:12.717594Z",
+    "agent_lines": 0,
+    "agent_removed": 0,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 36,
+    "total_committed": 0,
+    "total_lines_changed": 36,
+    "agent_percentage": 0,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 372,
+      "user_lines_removed": 360,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        "contents/cloudflare-data-platform/pages/02-data-platform.md": 39,
+        "contents/cloudflare-data-platform/pages/03-workers.md": 218,
+        "contents/cloudflare-data-platform/pages/04-durable-objects.md": 104,
+        "contents/cloudflare-data-platform/slides.md": 2,
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      },
+      "user_removed_per_file": {
+        "contents/cloudflare-data-platform/pages/02-data-platform.md": 36,
+        "contents/cloudflare-data-platform/pages/02-workers.md": 218,
+        "contents/cloudflare-data-platform/pages/03-durable-objects.md": 104,
+        "contents/cloudflare-data-platform/slides.md": 2
+      }
+    }
+  ]
+}
