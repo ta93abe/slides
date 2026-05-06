@@ -186,7 +186,7 @@ npx wrangler r2 sql query "$WAREHOUSE" \
    WHERE __ingest_ts > '2026-05-01' GROUP BY user_id LIMIT 10"
 ```
 
-基本的な分析 SQL (フィルタ・集約・CTE) は対応済み。JOIN / WINDOW はまだ
+基本的な分析 SQL (フィルタ・集約・CTE) は対応済み。JOIN / WINDOW は今後対応予定。
 
 <!--
 AWS Athena みたいなサービス
