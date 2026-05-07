@@ -1,0 +1,10 @@
+durability.md とambient-agent.md はslides.md に含めないからIssue立てないでいいよ。
+
+---
+
+本文の文構造を整える（長文分割 / 表現統一)このIssueやろう
+
+---
+
+スダンプショット
+スナップショット
