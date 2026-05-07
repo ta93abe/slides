@@ -26,7 +26,7 @@ Cloudflare で完結させるメリットは次のとおりです。
 - アーティファクトを **R2 に Binding 経由**で永続化
 - Workers を R2 のリバースプロキシとして dbt docs を配信
 - Cloudflare Access で社内限定配信
-- **Workers Secrets** or **Secrets Store** が `wrangler.jsonc` に集約 
+- **Workers Secrets** または **Secrets Store** が `wrangler.jsonc` に集約
 - Workers Observability でログを一元管理
 
 ::right::

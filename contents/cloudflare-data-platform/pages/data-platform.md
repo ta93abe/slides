@@ -127,7 +127,7 @@ wrangler r2 bucket catalog enable < bucket-name >
 - Trino / DuckDB / PyIceberg / Spark / StarRocks などのクライアントから直接クエリ可能
 - テーブルメンテナンス
   - **Compaction**: `--target-size` で指定したサイズに合わせて Parquet ファイルを集約
-  - **Snapshot expiration**: `--older-than-days` と `--retain-last` で古くなったものの削除と最低残すスナップショットを指定
+  - **Snapshot expiration**: `--older-than-days` で古いスナップショットを削除、`--retain-last` で最低限残す数を指定
 
 </div>
 <div>
