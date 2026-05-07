@@ -1,0 +1,33 @@
+{
+  "cli_version": "0.6.0",
+  "checkpoint_id": "f38e89d9f1b1",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 14,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/ai-sprawl.md",
+    "contents/cloudflare-data-platform/pages/ambient-agent.md",
+    "contents/cloudflare-data-platform/pages/data-platform.md",
+    "contents/cloudflare-data-platform/pages/durability.md",
+    "contents/cloudflare-data-platform/pages/observability.md",
+    "contents/cloudflare-data-platform/pages/summary.md",
+    "contents/cloudflare-data-platform/pages/workers.md",
+    "contents/cloudflare-data-platform/pages/workflows.md",
+    "contents/cloudflare-data-platform/pages/wrangler.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/f3/8e89d9f1b1/0/metadata.json",
+      "transcript": "/f3/8e89d9f1b1/0/full.jsonl",
+      "content_hash": "/f3/8e89d9f1b1/0/content_hash.txt",
+      "prompt": "/f3/8e89d9f1b1/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 165,
+    "cache_creation_tokens": 556769,
+    "cache_read_tokens": 8266495,
+    "output_tokens": 83293,
+    "api_call_count": 60
+  }
+}

@@ -1,0 +1,71 @@
+Local Explorer のスライドでYoutube埋め込んでいるけど、publicにある動画ファイルに置き換えてほしい。
+
+---
+
+autoplayにする
+
+---
+
+LinearのCloudflare Data Platform スライド完成プロジェクトにIssueを立てていきたい。
+
+---
+
+ai-sprawl のスライドは内容は十分だからデザインをどうにかしたい。Issueにして。
+
+---
+
+全体的にドキュメントやブログのリンクを張っていきたい。
+
+---
+
+それでいいよ
+
+---
+
+observability のスライドはスライドの数とそれぞれのタイトルはいいが、内容について詰められていないのでIssueにしてほしい
+
+---
+
+そうして。
+
+---
+
+Workers Logsで取れるものは全部列挙してほしい。
+
+---
+
+Trace
+
+---
+
+Metrics and Analytics
+
+---
+
+Query builder
+
+---
+
+https://developers.cloudflare.com/workers/observability/dev-tools/
+DevToolsのプロファイリング機能
+
+---
+
+Ta565で完結させて
+
+---
+
+https://developers.cloudflare.com/ai-gateway/llms.txt
+ai-sprawl と observability で AI Gatewayを2回扱うのだけどテーマに合わせていい感じに分割したい。
+
+---
+
+スライドの文をですます調にそろえてほしい。
+
+---
+
+OK
+
+---
+
+こここうしたほうがいいとかあればIssueにしてほしい。
