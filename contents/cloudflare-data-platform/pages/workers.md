@@ -8,7 +8,7 @@ layout: section
 
 # Cloudflare Workers
 
-全世界 330+ 都市のエッジで動くサーバーレス実行基盤。
+全世界 330+ 都市のエッジで動くサーバーレス実行基盤です。
 
 特徴:
 - **V8 Isolate**: VM コンテナの起動コストが不要、コールドスタートが構造的に発生しない
@@ -34,7 +34,7 @@ Cloudflare Workers の特徴を 4 つに整理:
 
 ## Binding
 
-`wrangler.jsonc` (設定ファイル) に宣言するだけで、Worker の `env` から Cloudflare サービスを JavaScript オブジェクトとして直接呼べる。SDK / 認証情報設定はいらない。
+`wrangler.jsonc` (設定ファイル) に宣言するだけで、Worker の `env` から Cloudflare サービスを JavaScript オブジェクトとして直接呼べます。SDK / 認証情報設定はいりません。
 
 ```jsonc
 // wrangler.jsonc — 使うサービスを宣言
@@ -50,7 +50,7 @@ await env.DB.prepare("INSERT INTO events VALUES (?)").bind(id).run();
 await env.AI.run("@cf/meta/llama-3.3-70b-instruct", { messages });
 ```
 
-Cloudflare ドキュメントでは Capability-based という表現が使われている。
+Cloudflare ドキュメントでは Capability-based という表現が使われています。
 
 <!--
 Binding は Worker と Cloudflare サービスを直接つなぐ仕組みです。wrangler.jsonc に
@@ -80,7 +80,7 @@ Sandbox / Containers)、データ・AI 系 (Pipelines / Workers AI / Vectorize /
 
 ## Static Assets
 
-HTML / CSS / JavaScript / 画像などの静的アセットを Cloudflare Workers から配信できる。dbt docs のような静的サイトをそのままホストできる。
+HTML / CSS / JavaScript / 画像などの静的アセットを Cloudflare Workers から配信できます。dbt docs のような静的サイトをそのままホストできます。
 
 ```yml
       - name: Generate dbt docs
@@ -93,7 +93,7 @@ HTML / CSS / JavaScript / 画像などの静的アセットを Cloudflare Worker
           command: deploy
 ```
 
-Cloudflare Access を組み合わせれば認証付きの限定配信にもできる。
+Cloudflare Access を組み合わせれば認証付きの限定配信にもできます。
 
 <img
     v-motion

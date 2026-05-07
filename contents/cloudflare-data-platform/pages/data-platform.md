@@ -10,7 +10,7 @@ layout: section
 
 # Cloudflare Data Platform
 
-Cloudflare の **Cloudflare Data Platform** は、入れる/貯める/使うを 1 つのプラットフォームで提供する。<br>([Announcing the Cloudflare Data Platform: ingest, store, and query your data directly on Cloudflare](https://blog.cloudflare.com/cloudflare-data-platform/))
+Cloudflare の **Cloudflare Data Platform** は、入れる/貯める/使うを 1 つのプラットフォームで提供します。<br>([Announcing the Cloudflare Data Platform: ingest, store, and query your data directly on Cloudflare](https://blog.cloudflare.com/cloudflare-data-platform/))
 
 <v-click>
 
@@ -52,10 +52,10 @@ ISMAP に登録され、日本でもエンタープライズ・公共系で使�
 wrangler pipelines setup
 ```
 
-- **Streams** で HTTP / Workers Binding / Logpush からデータを受ける。
-- **Pipelines** で SQL 変換を行える。（変更はできない）
-- **Sinks** で `--roll-size` or `--roll-interval` で設定した粒度で自動バッチ化して R2 / R2 Data Catalog に書き出せる。
-- 2025年4月に買収した [Arroyo](https://www.arroyo.dev/) をベースとしている。
+- **Streams** で HTTP / Workers Binding / Logpush からデータを受けます。
+- **Pipelines** で SQL 変換を行えます。（変更はできません）
+- **Sinks** で `--roll-size` or `--roll-interval` で設定した粒度で自動バッチ化し、R2 / R2 Data Catalog に書き出せます。
+- 2025年4月に買収した [Arroyo](https://www.arroyo.dev/) をベースとしています。
 
 <div class="p-4">
     <Excalidraw
@@ -86,7 +86,6 @@ wrangler r2 bucket create < bucket-name >
 - **Repositioning Records**: S3 互換 API を提供していて、既存のツールや SDK がそのまま使える。
 - **Ridiculously Reliable**: 99.999999999% (イレブンナイン) の耐久性、99.9% の可用性。
 - **Radically Reprogrammable**: Workers Binding 統合。
-- 「R」と「2」は「S」と「3」の一個前？ https://object-storage-name-generator.com/
 
 </div>
 
@@ -114,7 +113,7 @@ env.BUCKET.put でキー無しに書き込める。
 
 # R2 Data Catalog
 
-データを **構造化する** レイヤー。R2 上の Apache Iceberg テーブルをマネージドで管理。
+データを **構造化する** レイヤーです。R2 上の Apache Iceberg テーブルをマネージドで管理します。
 
 ```bash
 wrangler r2 bucket catalog enable < bucket-name >
@@ -180,12 +179,12 @@ R2 Data Catalog は Iceberg format-version 2 (V2) ベース。public beta blog �
 
 # R2 SQL — 分散クエリエンジン
 
-R2 Data Catalog の Iceberg テーブルに標準 SQL を実行できる、Cloudflare ネイティブの分散クエリエンジン。
+R2 Data Catalog の Iceberg テーブルに標準 SQL を実行できる、Cloudflare ネイティブの分散クエリエンジンです。
 
 現在は
 - Wrangler
 - HTTP API
-経由で実行できる。
+経由で実行できます。
 
 ```bash
 wrangler r2 sql query "$WAREHOUSE" \
@@ -193,7 +192,7 @@ wrangler r2 sql query "$WAREHOUSE" \
    WHERE __ingest_ts > '2026-05-01' GROUP BY user_id LIMIT 10"
 ```
 
-基本的な分析 SQL (フィルタ・集約・CTE) は対応済み。JOIN / WINDOW は今後対応予定。
+基本的な分析 SQL (フィルタ・集約・CTE) は対応済みです。JOIN / WINDOW は今後対応予定です。
 
 <!--
 AWS Athena みたいなサービス

@@ -15,7 +15,7 @@ WebSocket Hibernation / RPC) が、実は全部 Ambient Agent のための部品
 
 # Ambient Agent — 呼ばなくても動く・呼ばれた時だけ動く
 
-ユーザーが叩くたびに動く **対話型 Agent** に対し、**Ambient Agent** はメール / Webhook / cron / ファイル変更などのイベントで **背景で常時稼働**する。
+ユーザーが叩くたびに動く **対話型 Agent** に対し、**Ambient Agent** はメール / Webhook / cron / ファイル変更などのイベントで **背景で常時稼働**します。
 
 <div class="grid grid-cols-2 gap-4 mt-4 text-sm">
 
@@ -47,9 +47,9 @@ WebSocket Hibernation / RPC) が、実は全部 Ambient Agent のための部品
 
 ### 経済性の核 — **99% idle, 1% burst**
 
-10,000 ユーザー × 常駐 Agent でも、**実際に動くのは 100 程度**。**待機コストを払わずに常駐**できなければ Ambient は商用に乗らない。
+10,000 ユーザー × 常駐 Agent でも、**実際に動くのは 100 程度**です。**待機コストを払わずに常駐**できなければ Ambient は商用に乗りません。
 
-→ Cloudflare は **Durable Objects + Alarms + WebSocket Hibernation + SQLite** で、この経済性を **プリミティブとして** 提供する。
+→ Cloudflare は **Durable Objects + Alarms + WebSocket Hibernation + SQLite** で、この経済性を **プリミティブとして** 提供します。
 
 </div>
 
@@ -68,7 +68,7 @@ Cloudflare は前半で説明した DO + Alarm + WebSocket Hibernation + SQLite 
 
 # DO 5 点セットがそのまま Agents SDK のプリミティブ
 
-前半で見せた Durable Objects の機能群が、`agents` パッケージの基底クラスに **一対一で対応**する。
+前半で見せた Durable Objects の機能群が、`agents` パッケージの基底クラスに **一対一で対応**します。
 
 <div class="text-sm mt-4">
 

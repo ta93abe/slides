@@ -15,7 +15,7 @@ Cloudflare のさまざまなサービスを 1 コマンドで操作できます
 
 `wrangler types` コマンドで Binding の TypeScript 型を自動生成できます。
 
-**LocalStack**、**Floci** などのサードパーティのローカルエミュレーターサービスは、どこまで行っても API を再実装するしかありません。一方で `wrangler` は Cloudflare のエッジ環境で動いている workerd ランタイムが Miniflare を介してローカルで動きます。
+**LocalStack**、**Floci** などのサードパーティのローカルエミュレーターサービスは、どこまで行っても API レベルのエミュレートしかできません。一方で `wrangler` は Cloudflare のエッジ環境で動いている workerd ランタイムが Miniflare を介してローカルで動きます。
 
 <div class="mt-3 text-xs op-60 line-height-tight">
 
@@ -58,13 +58,14 @@ Wrangler を置き換えるのではなく住み分け。
 ## Local Explorer
 
 <div class="flex justify-center mt-4">
-  <iframe
-    src="https://www.youtube.com/embed/26NzILA4NIY?rel=0"
-    title="Cloudflare Local Explorer"
+  <video
+    src="/cloudflare-local-explorer.mp4"
     class="aspect-video w-[860px] max-w-full rounded border border-zinc-700/60 shadow-lg"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen
-  ></iframe>
+    autoplay
+    loop
+    muted
+    playsinline
+  ></video>
 </div>
 
 ---

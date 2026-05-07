@@ -1,6 +1,6 @@
 # Cloudflare Workflows
 
-Cloudflare Workflows はステップを連鎖させ、失敗時に再試行し、長期間実行されるプロセス全体で状態を保持できる耐久性のある実行エンジン。Workers Bindings を step に組み込める。
+Cloudflare Workflows はステップを連鎖させ、失敗時に再試行し、長期間実行されるプロセス全体で状態を保持できる耐久性のある実行エンジンです。Workers Bindings を step に組み込めます。
 
 <div class="flex justify-center mt-3">
 <div class="agent-example">
@@ -93,7 +93,7 @@ Workflow に渡してリトライ + durable 実行)。
 
 ## ビジュアライザ
 
-Cloudflare ダッシュボードが Workflow コードを parse し、**step / 並列 / 条件分岐 / ループの DAG 図** を自動生成する。
+Cloudflare ダッシュボードが Workflow コードを parse し、**step / 並列 / 条件分岐 / ループの DAG 図** を自動生成します。
 
 <div class="grid grid-cols-[3fr_2fr] gap-6 mt-3 text-sm">
 
@@ -103,7 +103,7 @@ Cloudflare ダッシュボードが Workflow コードを parse し、**step / �
 - 並列ステップ / 条件分岐も自動レイアウト
 - TypeScript / JavaScript Workflows で利用可能 (Python は未対応)
 
-実例: 右図は **dbt build を Workflows で実行** した際のビジュアライザ。`loop` / `try-catch` / `retry-backoff` を含むパイプラインが一画面で構造把握できる。
+実例: 右図は **dbt build を Workflows で実行** した際のビジュアライザです。`loop` / `try-catch` / `retry-backoff` を含むパイプラインを一画面で構造把握できます。
 
 [Workflows Visualizer Doc](https://developers.cloudflare.com/workflows/build/visualizer/)
 
@@ -138,7 +138,7 @@ layout: two-cols-header
 
 ## Python SDK
 
-`WorkflowEntrypoint` を Python で継承。**関数パラメータ名で依存を暗黙解決** する DAG 表現が特徴。
+`WorkflowEntrypoint` を Python で継承します。**関数パラメータ名で依存を暗黙解決** する DAG 表現が特徴です。
 
 ::left::
 
@@ -172,7 +172,7 @@ class IngestWorkflow(WorkflowEntrypoint):
 - Step 2: `fetch_b` を独立した step として定義
 - Step 3: `merge` を `concurrent=True` + 引数名 `fetch_a` / `fetch_b` で依存宣言
 - Step 4: `await merge()` 実行 — 依存先が並列起動 (diamond DAG)
-- 引数名による暗黙的依存解決で DAG が宣言的に書ける
+- 引数名による暗黙的依存解決で DAG が宣言的に書けます
 
 <style>
 .agent-example pre,

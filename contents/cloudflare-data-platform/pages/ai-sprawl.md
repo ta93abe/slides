@@ -4,7 +4,7 @@ layout: section
 
 # AI スプロールをどうにかする
 
-組織内で **AI モデル / エージェント / ツール / プロンプト** が無秩序に増殖し統制不能になる状態。
+組織内で **AI モデル / エージェント / ツール / プロンプト** が無秩序に増殖し、統制不能になる状態です。
 
 <!--
 LLM 呼び出しとツール呼び出しが社内に散らばる sprawl 問題に対し、Cloudflare は
@@ -17,7 +17,7 @@ LLM 層を AI Gateway、ツール層を MCP Server Portal で集約・統制す�
 
 # AI Gateway — LLM 呼び出しの統制点
 
-**Universal Endpoint** で全 LLM プロバイダーを 1 経路に集約。**Fallback / Retry** で信頼性を担保しつつ、以下 3 カテゴリ・11 機能で観測 / 制御 / 最適化を一括導入。
+**Universal Endpoint** で全 LLM プロバイダーを 1 経路に集約します。**Fallback / Retry** で信頼性を担保しつつ、以下 3 カテゴリ・11 機能で観測 / 制御 / 最適化を一括導入できます。
 
 <div class="grid grid-cols-3 gap-3 mt-3 text-xs">
 
@@ -57,7 +57,7 @@ LLM 層を AI Gateway、ツール層を MCP Server Portal で集約・統制す�
 
 <div class="mt-3 text-sm op-80">
 
-→ 「LLM SDK を直接叩く」をやめて Gateway 経由を強制すれば、観測 / 統制 / コスト管理が後付け不要。
+→ 「LLM SDK を直接叩く」をやめて Gateway 経由を強制すれば、観測 / 統制 / コスト管理を後付けで実装する必要がなくなります。
 
 </div>
 
@@ -107,7 +107,7 @@ Honeycomb 等に流す経路として組合せる。BYOK + Custom Costs + Guardr
 
 # MCP Server Portal — ツールの統制点
 
-組織内で乱立する MCP server (= LLM が叩く外部ツール群) を **中央集約してアクセス制御** する portal。**Cloudflare Access** が認証 / 認可 / 監査を担当。
+組織内で乱立する MCP server (= LLM が叩く外部ツール群) を **中央集約してアクセス制御** する portal です。**Cloudflare Access** が認証 / 認可 / 監査を担当します。
 
 <div class="grid grid-cols-2 gap-4 mt-4 text-sm">
 
@@ -135,7 +135,7 @@ Honeycomb 等に流す経路として組合せる。BYOK + Custom Costs + Guardr
 
 <div class="mt-4 text-sm op-80">
 
-→ "**Shadow MCP**" (社員が勝手にローカルで MCP server を立てて社内データに繋ぐ) を **構造で防ぐ**。観測対象を一元化することで、AI Gateway と合わせて 「LLM 層 + ツール層」の二重統制が成立する。
+→ "**Shadow MCP**" (社員が勝手にローカルで MCP server を立てて社内データに繋ぐ) を **構造で防ぎます**。観測対象を一元化することで、AI Gateway と合わせて 「LLM 層 + ツール層」の二重統制が成立します。
 
 </div>
 
