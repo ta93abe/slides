@@ -86,10 +86,18 @@ wrangler r2 bucket create < bucket-name >
 - **Repositioning Records**: S3 互換 API を提供していて、既存のツールや SDK がそのまま使える。
 - **Ridiculously Reliable**: 99.999999999% (イレブンナイン) の耐久性、99.9% の可用性。
 - **Radically Reprogrammable**: Workers Binding 統合。
+- 「R」と「2」は「S」と「3」の一個前？ https://object-storage-name-generator.com/
 
 </div>
 
-<Tweet id="1442879872154566658" />
+<div
+  v-click
+  v-motion
+  :initial="{ y: 60, opacity: 0 }"
+  :enter="{ y: 0, opacity: 1, transition: { duration: 600, ease: [0.16, 1, 0.3, 1] } }"
+>
+  <Tweet id="1442879872154566658" />
+</div>
 
 </div>
 
@@ -180,8 +188,7 @@ R2 Data Catalog の Iceberg テーブルに標準 SQL を実行できる、Cloud
 経由で実行できる。
 
 ```bash
-# WRANGLER_R2_SQL_AUTH_TOKEN を設定して warehouse 名 + SQL を渡すだけ
-npx wrangler r2 sql query "$WAREHOUSE" \
+wrangler r2 sql query "$WAREHOUSE" \
   "SELECT user_id, COUNT(*) AS n FROM default.events
    WHERE __ingest_ts > '2026-05-01' GROUP BY user_id LIMIT 10"
 ```

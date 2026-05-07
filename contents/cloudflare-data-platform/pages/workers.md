@@ -2,7 +2,7 @@
 layout: section
 ---
 
-# Cloudflare Data Platform 以外の<br/>重要なサービス
+# Cloudflare Data Platform <br/>以外の重要なサービス
 
 ---
 
@@ -11,13 +11,10 @@ layout: section
 全世界 330+ 都市のエッジで動くサーバーレス実行基盤。
 
 特徴:
-
 - **V8 Isolate**: VM コンテナの起動コストが不要、コールドスタートが構造的に発生しない
 - **anycast 配置**: ユーザー最寄りのエッジで処理、リージョン設計不要
 - **Binding**: SDK / 認証情報なしで env から Cloudflare サービスを直接呼べる (Capability-based)
 - **多様な実行起点**: HTTP / Cron Triggers / Queues / Workflows / Service Binding
-
-Data Platform 章で見た Pipelines / R2 Data Catalog / R2 SQL を呼び出す側の実体が Workers。
 
 <!--
 Cloudflare Workers の特徴を 4 つに整理:
@@ -37,7 +34,7 @@ Cloudflare Workers の特徴を 4 つに整理:
 
 ## Binding
 
-`wrangler.jsonc` に宣言するだけで、Worker の `env` から Cloudflare サービスを直接呼べる。SDK / 認証情報 / region 設定はいらない。
+`wrangler.jsonc` (設定ファイル) に宣言するだけで、Worker の `env` から Cloudflare サービスを JavaScript オブジェクトとして直接呼べる。SDK / 認証情報設定はいらない。
 
 ```jsonc
 // wrangler.jsonc — 使うサービスを宣言
@@ -53,7 +50,7 @@ await env.DB.prepare("INSERT INTO events VALUES (?)").bind(id).run();
 await env.AI.run("@cf/meta/llama-3.3-70b-instruct", { messages });
 ```
 
-宣言 3 行 + 呼び出し 3 行で、ストレージ・DB・AI の連携が完成する。
+Cloudflare ドキュメントでは Capability-based という表現が使われている。
 
 <!--
 Binding は Worker と Cloudflare サービスを直接つなぐ仕組みです。wrangler.jsonc に
