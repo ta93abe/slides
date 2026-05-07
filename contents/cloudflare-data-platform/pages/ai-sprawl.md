@@ -4,7 +4,7 @@ layout: section
 
 # AI スプロールをどうにかする
 
-組織内で **AI モデル / エージェント / ツール / プロンプト** が無秩序に増殖し、統制不能になる状態です。
+組織内で **AI モデル / エージェント / ツール / プロンプト** が無秩序に増殖し、統制不能になる状態
 
 <!--
 LLM 呼び出しとツール呼び出しが社内に散らばる sprawl 問題に対し、Cloudflare は
@@ -15,7 +15,7 @@ LLM 層を AI Gateway、ツール層を MCP Server Portal で集約・統制す�
 
 ---
 
-# AI Gateway — LLM 呼び出しの統制点
+# AI Gateway — LLM 呼び出しを統制する
 
 **Universal Endpoint** で全 LLM プロバイダーを 1 経路に集約します。**Fallback / Retry** で信頼性を担保しつつ、以下 3 カテゴリ・11 機能で観測 / 制御 / 最適化を一括導入できます。
 
@@ -105,7 +105,7 @@ Honeycomb 等に流す経路として組合せる。BYOK + Custom Costs + Guardr
 
 ---
 
-# MCP Server Portal — ツールの統制点
+# MCP Server Portal — MCPサーバーを統制する
 
 組織内で乱立する MCP server (= LLM が叩く外部ツール群) を **中央集約してアクセス制御** する portal です。**Cloudflare Access** が認証 / 認可 / 監査を担当します。
 
