@@ -1,0 +1,87 @@
+{
+  "cli_version": "0.6.0",
+  "checkpoint_id": "a06250363545",
+  "session_id": "2cc7fe3e-bf24-49a2-96cb-3b9179db8782",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-08T02:15:18.548668Z",
+  "branch": "cfdp/sandbox-and-iac-polish",
+  "checkpoints_count": 4,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/containers-and-sandbox.md",
+    "contents/cloudflare-data-platform/pages/wrangler.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "25c4784f5ca6",
+  "token_usage": {
+    "input_tokens": 298,
+    "cache_creation_tokens": 1762597,
+    "cache_read_tokens": 17752279,
+    "output_tokens": 135192,
+    "api_call_count": 99
+  },
+  "session_metrics": {
+    "turn_count": 27
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-08T02:15:18.512244Z",
+    "agent_lines": 58,
+    "agent_removed": 3,
+    "human_added": 0,
+    "human_modified": 5,
+    "human_removed": 7,
+    "total_committed": 63,
+    "total_lines_changed": 73,
+    "agent_percentage": 83.56164383561644,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 9,
+      "user_lines_removed": 11,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      },
+      "user_removed_per_file": {
+        "contents/cloudflare-data-platform/pages/containers-and-sandbox.md": 11
+      }
+    },
+    {
+      "checkpoint_number": 3,
+      "user_lines_added": 14,
+      "user_lines_removed": 1,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 11,
+      "user_added_per_file": {
+        "contents/cloudflare-data-platform/pages/containers-and-sandbox.md": 5,
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      },
+      "user_removed_per_file": {
+        "contents/cloudflare-data-platform/pages/containers-and-sandbox.md": 1
+      }
+    },
+    {
+      "checkpoint_number": 4,
+      "user_lines_added": 9,
+      "user_lines_removed": 0,
+      "agent_lines_added": 75,
+      "agent_lines_removed": 15,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    },
+    {
+      "checkpoint_number": 5,
+      "user_lines_added": 9,
+      "user_lines_removed": 0,
+      "agent_lines_added": 75,
+      "agent_lines_removed": 15,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    }
+  ]
+}

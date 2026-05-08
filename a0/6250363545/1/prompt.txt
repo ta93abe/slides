@@ -1,0 +1,53 @@
+cloudflare worker + pulumi の開発体験かなり良いな。
+
+最近の cloudflare-worker はR2とかKVで構成がかなり複雑になってるので、terraform 相当の機能が欲しかったんだけど、pulumi で構成するとスタックがシュッとまとまった
+
+これどう思う？
+
+---
+
+ai-sprawl のスライドを observability にマージしたい。
+
+---
+
+dbt.md を containers.md にリネームしたい。git mv
+
+---
+
+containers-and-sandbox.md にしよう。
+
+---
+
+一旦全部コミットして
+
+---
+
+このままでいいよ。
+
+---
+
+Cloudflare Sandbox について触れたい。
+
+---
+
+Cloudflare Sandbox について触れたい。
+
+---
+
+A+B
+コード例はBの内容がいい。
+章の流れは現状
+
+---
+
+A+B
+コード例はBの内容がいい。
+章の流れは現状
+
+---
+
+なんでこんなに長いの？
+
+---
+
+/pr
