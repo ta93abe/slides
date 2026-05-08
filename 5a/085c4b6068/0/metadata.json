@@ -1,0 +1,53 @@
+{
+  "cli_version": "0.6.0",
+  "checkpoint_id": "5a085c4b6068",
+  "session_id": "2cc7fe3e-bf24-49a2-96cb-3b9179db8782",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-08T03:52:30.062993Z",
+  "branch": "cfdp/merge-ai-sprawl-into-observability",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/ai-sprawl.md",
+    "contents/cloudflare-data-platform/pages/observability.md",
+    "contents/cloudflare-data-platform/slides.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "2dc92bcccbfe",
+  "checkpoint_transcript_start": 853,
+  "transcript_lines_at_start": 853,
+  "token_usage": {
+    "input_tokens": 27,
+    "cache_creation_tokens": 46484,
+    "cache_read_tokens": 4218008,
+    "output_tokens": 27883,
+    "api_call_count": 12
+  },
+  "session_metrics": {
+    "turn_count": 31
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-08T03:52:30.020703Z",
+    "agent_lines": 0,
+    "agent_removed": 1,
+    "human_added": 0,
+    "human_modified": 189,
+    "human_removed": 72,
+    "total_committed": 1,
+    "total_lines_changed": 262,
+    "agent_percentage": 0.38167938931297707,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 9,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    }
+  ]
+}
