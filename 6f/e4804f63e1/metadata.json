@@ -1,0 +1,27 @@
+{
+  "cli_version": "0.6.0",
+  "checkpoint_id": "6fe4804f63e1",
+  "strategy": "manual-commit",
+  "branch": "cfdp/merge-ai-sprawl-into-observability",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/observability.md",
+    "contents/cloudflare-data-platform/pages/summary.md",
+    "contents/cloudflare-data-platform/pages/workflows.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/6f/e4804f63e1/0/metadata.json",
+      "transcript": "/6f/e4804f63e1/0/full.jsonl",
+      "content_hash": "/6f/e4804f63e1/0/content_hash.txt",
+      "prompt": "/6f/e4804f63e1/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 7,
+    "cache_creation_tokens": 4404,
+    "cache_read_tokens": 773536,
+    "output_tokens": 1535,
+    "api_call_count": 2
+  }
+}
