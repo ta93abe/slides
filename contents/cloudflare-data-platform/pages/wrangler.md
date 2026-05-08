@@ -97,14 +97,20 @@ https://github.com/cloudflare/skills
 
 # IaC
 
-Terraform プロバイダーがあり、多くのサービスを宣言的に定義できます。
+宣言的にリソースを管理する選択肢が用意されています。
 
-https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs
+- **Terraform** プロバイダーで多くのサービスを宣言的に定義できます。
+  - https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs
+- **Alchemy** は TypeScript ネイティブな IaC で、Workers と同じ言語で完結します。
+  - https://v2.alchemy.run
 
-`wrangler` コマンドで簡単に作成、編集、削除できますが、Terraform で管理したい場面もあります。
+`wrangler` コマンドで簡単に作成・編集・削除できますが、IaC で管理したい場面もあります。
 
 <!--
 binding 先が削除されたとしてもデプロイときにエラーが起きるようになっている。
+Terraform は HCL で多クラウドを横断的に管理する定番、Alchemy は TypeScript で
+書ける Cloudflare 寄りの新興 IaC。Workers 開発者なら言語を揃えられて、
+Wrangler と地続きで扱える点が魅力。
 -->
 
 ---

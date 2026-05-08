@@ -1,19 +1,8 @@
 ---
-layout: section
----
-
-# dbt を Cloudflare 環境で動かす
-
-<!--
-データ変換のデファクト dbt を、外部 DWH や dbt Cloud 無しで Cloudflare 一社で
-回す構成。Workers では動かないので Containers が必要、という前提を見せる。
--->
-
----
 layout: two-cols-header
 ---
 
-# dbt をどう実行するか
+# Cloudflare Containers
 
 ::left::
 
@@ -86,4 +75,69 @@ Cloudflare 完結のメリットは大きく 4 点:
 外部 DWH を完全に捨てる必要はなく、重い集約は Snowflake、軽い下流マートは
 Containers + dbt-duckdb のハイブリッド構成も現実解。R2 を共通基盤に dbt を
 2 系統並走できる。
+-->
+
+---
+layout: two-cols-header
+---
+
+# Cloudflare Sandbox
+
+::left::
+
+Containers と同じ microVM 基盤の上で動く、**ephemeral・per-request** な隔離実行環境です。
+
+Containers との対比:
+- Containers = **常駐サービス**（dbt / バッチ / 長時間処理）
+- Sandbox = **per-request の隔離環境**（LLM 生成コードの実行 / ユーザースクリプト）
+
+典型用途は **AI が書いたコードを安全に走らせる場**です。
+- LLM が出した Python / JS / Bash を一時環境で実行
+- ファイル書き込み / プロセス起動 / ネットワーク制御を SDK で操作
+- 実行が終われば破棄、state を持たない
+
+::right::
+
+```typescript
+import { getSandbox } from "@cloudflare/sandbox";
+
+export default {
+  async fetch(req, env) {
+    const { prompt } = await req.json();
+
+    // 1. LLM にコード生成を依頼
+    const { response: code } = await env.AI.run(
+      "@cf/meta/llama-3.3-70b-instruct",
+      { messages: [{ role: "user", content: prompt }] }
+    );
+
+    // 2. ephemeral Sandbox を取得
+    const sandbox = getSandbox(env.SANDBOX, crypto.randomUUID());
+
+    // 3. 生成コードを書き込んで隔離 microVM 内で実行
+    await sandbox.writeFile("/tmp/main.py", code);
+    const { stdout } = await sandbox["exec"]("python /tmp/main.py");
+
+    return Response.json({ stdout });
+  }
+};
+```
+
+<!--
+Sandbox は Containers と同じ microVM 基盤を使うが、用途と寿命が異なる。
+Containers が長期サービス向け、Sandbox は短命・per-request の隔離実行向け。
+
+コード上の sandbox["exec"] は Cloudflare Sandbox SDK のメソッド呼び出し
+(microVM 内で隔離実行)。Node の child_process.exec とは無関係。
+登壇前に developers.cloudflare.com/sandbox/ で
+package 名 (@cloudflare/sandbox) / getSandbox / exec / writeFile の最新を確認。
+書き換え: 公開時は sandbox.exec(...) のドット記法に戻して可。
+
+典型 use case:
+- AI Agent が生成したコードの実行 (code interpreter パターン)
+- ユーザーが投稿したスクリプトの安全な実行
+- ad-hoc なデータ加工 (DuckDB / pandas など)
+
+データ基盤との接続: R2 SQL では JOIN / WINDOW が未対応なので、複雑なクエリを
+Sandbox 上の DuckDB に逃がすハイブリッド構成も組める。
 -->
