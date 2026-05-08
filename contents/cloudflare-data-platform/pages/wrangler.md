@@ -101,7 +101,7 @@ https://github.com/cloudflare/skills
 
 - **Terraform** プロバイダーで多くのサービスを宣言的に定義できます。
   - https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs
-- **Alchemy** は TypeScript ネイティブな IaC で、Workers と同じ言語で完結します。Bindingがすごく書きやすい。
+- **Alchemy** は TypeScript ネイティブな IaC で、Workers と同じ言語で完結します。Binding がすごく書きやすい。
   - https://v2.alchemy.run (v2 ドキュメント)
 
 `wrangler` コマンドで簡単に作成・編集・削除できますが、IaC で管理したい場面もあります。
