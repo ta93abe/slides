@@ -1,0 +1,27 @@
+iac のところにhttps://github.com/alchemy-run/alchemyも入れてほしい。
+
+---
+
+alchemy は v2 が出ているね。v2.alchemy.run
+
+---
+
+https://sst.dev/
+SST について単独のノート作って。
+
+---
+
+https://v2.alchemy.run/
+Alchemy について単独のノートを作って。
+
+---
+
+V２のEffectとの関連を書いてほしい
+
+---
+
+Effect単独のノートなかったっけ？
+
+---
+
+Cloudflare Workers のドキュメントはある？
