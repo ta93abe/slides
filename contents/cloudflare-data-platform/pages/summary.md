@@ -13,9 +13,9 @@ layout: section
 
 - まずは cloudflare.com にたどり着きましょう。
 - 無事たどり着いて管理画面に入ったら **Agent Lee** が迎えてくれます。
-- こんな Cloudflare の始め方もあるよ。
+- こんな Cloudflare の始め方もあります。
   - ドメインを購入する or 移管してくる
-  - 個人のサイト/ブログをホスティング (Astro というフレームワークを使えばフロントエンドも簡単に作れる。Markdown でコンテンツを書いて Content Collections でいい感じに表示する)
+  - 個人のサイト/ブログをホスティング (Astro というフレームワークを使えばフロントエンドも簡単に作れます。Markdown でコンテンツを書いて Content Collections でいい感じに表示できます)
   - 日常のちょっとしたことを Workers で実装してみる
-  - R2 Data Catalog は Iceberg を始めるには結構お手軽
+  - R2 Data Catalog は Iceberg を始めるには結構お手軽です
 - 次回は商用環境でのユースケースを聞けたらうれしいです。

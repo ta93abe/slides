@@ -15,7 +15,7 @@ Cloudflare のさまざまなサービスを 1 コマンドで操作できます
 
 `wrangler types` コマンドで Binding の TypeScript 型を自動生成できます。
 
-**LocalStack**、**Floci** などのサードパーティのローカルエミュレーターサービスは、どこまで行っても API を再実装するしかありません。一方で `wrangler` は Cloudflare のエッジ環境で動いている workerd ランタイムが Miniflare を介してローカルで動きます。
+**LocalStack**、**Floci** などのサードパーティのローカルエミュレーターサービスは、どこまで行っても API レベルのエミュレートしかできません。一方で `wrangler` は Cloudflare のエッジ環境で動いている workerd ランタイムが Miniflare を介してローカルで動きます。
 
 <div class="mt-3 text-xs op-60 line-height-tight">
 
@@ -58,13 +58,14 @@ Wrangler を置き換えるのではなく住み分け。
 ## Local Explorer
 
 <div class="flex justify-center mt-4">
-  <iframe
-    src="https://www.youtube.com/embed/26NzILA4NIY?rel=0"
-    title="Cloudflare Local Explorer"
+  <video
+    src="/cloudflare-local-explorer.mp4"
     class="aspect-video w-[860px] max-w-full rounded border border-zinc-700/60 shadow-lg"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen
-  ></iframe>
+    autoplay
+    loop
+    muted
+    playsinline
+  ></video>
 </div>
 
 ---
@@ -96,14 +97,20 @@ https://github.com/cloudflare/skills
 
 # IaC
 
-Terraform プロバイダーがあり、多くのサービスを宣言的に定義できます。
+宣言的にリソースを管理する選択肢が用意されています。
 
-https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs
+- **Terraform** プロバイダーで多くのサービスを宣言的に定義できます。
+  - https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs
+- **Alchemy** は TypeScript ネイティブな IaC で、Workers と同じ言語で完結します。
+  - https://v2.alchemy.run
 
-`wrangler` コマンドで簡単に作成、編集、削除できますが、Terraform で管理したい場面もあります。
+`wrangler` コマンドで簡単に作成・編集・削除できますが、IaC で管理したい場面もあります。
 
 <!--
 binding 先が削除されたとしてもデプロイときにエラーが起きるようになっている。
+Terraform は HCL で多クラウドを横断的に管理する定番、Alchemy は TypeScript で
+書ける Cloudflare 寄りの新興 IaC。Workers 開発者なら言語を揃えられて、
+Wrangler と地続きで扱える点が魅力。
 -->
 
 ---

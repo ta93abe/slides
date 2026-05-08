@@ -17,7 +17,7 @@ trace の自動計装)、Logpush (Cloudflare 製品が生成するログ)、AI G
 
 # Workers Observability
 
-全ての操作に**自動でスパンが生成**(OpenTelemetry 互換)。
+全ての操作に**自動でスパンが生成されます**(OpenTelemetry 互換)。
 
 - R2 読み書き / D1 クエリ / 外部 fetch / Queue 送信 / AI 推論を**自動計装**
 - コード変更なしでパイプラインのボトルネックを可視化
@@ -45,7 +45,7 @@ SDK 導入や計装コードは不要、wrangler.jsonc に enabled: true を書�
 
 # Logpush + Log Explorer
 
-Cloudflare 製品が生成する **HTTP リクエスト / WAF / Workers traces / DNS** などのログ。**外に push する (Logpush) / 中でクエリする (Log Explorer)** の 2 つの取り回しを選べる。共通 datasets。
+Cloudflare 製品が生成する **HTTP リクエスト / WAF / Workers traces / DNS** などのログです。**外に push する (Logpush) / 中でクエリする (Log Explorer)** の 2 つの取り回しを選べます。datasets は両者で共通です。
 
 <div class="grid grid-cols-2 gap-4 mt-4 text-sm">
 
@@ -65,7 +65,7 @@ Cloudflare 製品が生成する **HTTP リクエスト / WAF / Workers traces /
 
 ### Log Explorer — 中でクエリ
 
-Cloudflare ダッシュボード or **SQL API** で同じ datasets を直接クエリ。データは R2 上に per-customer 格納。
+Cloudflare ダッシュボード or **SQL API** で同じ datasets を直接クエリできます。データは R2 上に per-customer で格納されます。
 
 - カスタムダッシュボード / 保存クエリ
 - 契約で最大 **2 年保持** に拡張可能
@@ -111,7 +111,7 @@ workers_trace_events (Worker の生 console.log + 例外)、dns_logs、access_re
 
 # AI Gateway も OTel — LLM スパンが同じトレースに繋がる
 
-AI Gateway 経由の **全 LLM 呼び出し**が **Gen AI セマンティック規約**準拠の span として OTLP エクスポート可能。Workers Observability と組み合わせると、Worker → Gateway → LLM が **1 つのトレース**に束ねられる。
+AI Gateway 経由の **全 LLM 呼び出し**を **Gen AI セマンティック規約**準拠の span として OTLP エクスポートできます。Workers Observability と組み合わせると、Worker → Gateway → LLM が **1 つのトレース**に束ねられます。
 
 <div class="grid grid-cols-2 gap-4 mt-4 text-sm">
 
@@ -130,7 +130,7 @@ AI Gateway 経由の **全 LLM 呼び出し**が **Gen AI セマンティック�
 
 ### Trace Context 伝播
 
-Worker から `cf-aig-otel-trace-id` / `cf-aig-otel-parent-span-id` を渡せば、**Worker のトレースに LLM 呼び出しが直接ぶら下がる**
+Worker から `cf-aig-otel-trace-id` / `cf-aig-otel-parent-span-id` を渡せば、**Worker のトレースに LLM 呼び出しが直接ぶら下がります**
 
 → レイテンシ / コスト / モデル別使用量を **Worker のスパンと同じ画面で相関**
 
@@ -162,7 +162,7 @@ gen_ai.usage に input_tokens / output_tokens、それからプロンプト本�
 
 # Analytics Engine — Worker から書く高カーディナリティ時系列
 
-Worker から `env.X.writeDataPoint()` でカスタムイベントを時系列で記録。**user_id / tenant** などの高カーディナリティ属性を保持できる柱状型ストア。
+Worker から `env.X.writeDataPoint()` でカスタムイベントを時系列で記録します。**user_id / tenant** などの高カーディナリティ属性を保持できる柱状型ストアです。
 
 ```typescript
 env.ANALYTICS.writeDataPoint({
@@ -172,7 +172,7 @@ env.ANALYTICS.writeDataPoint({
 });
 ```
 
-- 非同期書き込み (`await` 不要、レイテンシに影響しない)
+- 非同期書き込み (`await` 不要、レイテンシに影響しません)
 - 保持 **90 日**、SQL API でクエリ可能
 - 用途: 業務メトリクス / 課金集計 / SLI 計測 / per-tenant 観測
 
@@ -195,7 +195,7 @@ Cloudflare 内で観測を完結したい時の選択肢。OTel ではないの�
 
 # OTLP で Honeycomb へ送る
 
-Workers Observability / AI Gateway は **OTLP HTTP** で外部バックエンドにそのまま送れる。Logpush は HTTP destination で Honeycomb の Logpush integration に直送できる。
+Workers Observability / AI Gateway は **OTLP HTTP** で外部バックエンドにそのまま送れます。Logpush は HTTP destination で Honeycomb の Logpush integration に直送できます。
 
 ```mermaid
 flowchart LR
