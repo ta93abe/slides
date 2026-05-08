@@ -69,8 +69,8 @@ Worker が env.AGENT.create({ key }) で Workflow を起動、という経路。
 "赤いスニーカーの画像を探して" のような自然言語クエリで類似画像を引ける。
 
 LLM 呼び出しの第 3 引数 gateway: { id: "image-agent" } で AI Gateway を
-経由するので、DLP / Cache / Fallback / Metadata が自動で効く (前章 ai-sprawl
-の AI Gateway スライドと連動)。
+経由するので、DLP / Cache / Fallback / Metadata が自動で効く (後の observability
+章の AI Gateway スライドと連動)。
 
 各 step は失敗時に自動リトライ (デフォルト exponential backoff)。LLaVA や
 BGE の推論タイムアウト、Vectorize の一時的なエラーがあっても、進行状況は

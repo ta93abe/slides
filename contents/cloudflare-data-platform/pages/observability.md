@@ -56,7 +56,7 @@ Worker から `writeDataPoint` で書く **高カーディナリティ時系列*
 
 <div class="mt-3 text-sm op-80">
 
-→ 最初の 3 つは **OTLP HTTP / JSON** で外部バックエンドにそのまま送れます。
+→ Analytics Engine 以外は外部バックエンドに直送できます（Workers Obs / AI Gateway は **OTLP**、Logpush は **HTTP destination**）。
 
 </div>
 

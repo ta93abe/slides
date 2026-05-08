@@ -5,7 +5,7 @@ layout: section
 # まとめ
 
 <!--
-ここまでで Cloudflare Data Platform の全体像 — 基礎 (Workers / DO / R2) → ツール (Wrangler / Honeycomb) → solution (dbt / Ambient Agent / Durability / AI sprawl) を流した。
+ここまでで Cloudflare Data Platform の全体像 — 基礎 (Workers / Workflows) → 実行環境 (Containers / Sandbox) → 観測 + 統制 (Observability + AI Gateway / MCP Server Portal) → 開発者体験 (Wrangler / IaC) を流した。
 最後に、聴衆が何を持ち帰って、何から手を動かせばいいかをセクション扉 + 箇条書きの 2 枚で締める。
 -->
 
