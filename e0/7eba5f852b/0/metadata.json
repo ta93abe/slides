@@ -1,0 +1,39 @@
+{
+  "cli_version": "0.6.0",
+  "checkpoint_id": "e07eba5f852b",
+  "session_id": "2cc7fe3e-bf24-49a2-96cb-3b9179db8782",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-08T03:52:40.487416Z",
+  "branch": "cfdp/merge-ai-sprawl-into-observability",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/wrangler.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "2dc92bcccbfe",
+  "checkpoint_transcript_start": 941,
+  "transcript_lines_at_start": 941,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "session_metrics": {
+    "turn_count": 31
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-08T03:52:40.444179Z",
+    "agent_lines": 2,
+    "agent_removed": 1,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 2,
+    "total_lines_changed": 3,
+    "agent_percentage": 100,
+    "metric_version": 2
+  }
+}
