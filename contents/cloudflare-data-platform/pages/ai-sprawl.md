@@ -105,7 +105,7 @@ Honeycomb 等に流す経路として組合せる。BYOK + Custom Costs + Guardr
 
 ---
 
-# MCP Server Portal — MCPサーバーを統制する
+# MCP Server Portal — MCP サーバーを統制する
 
 組織内で乱立する MCP server (= LLM が叩く外部ツール群) を **中央集約してアクセス制御** する portal です。**Cloudflare Access** が認証 / 認可 / 監査を担当します。
 
