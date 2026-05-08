@@ -56,10 +56,6 @@ durability.md は本登壇から一時的に除外中 (pages/durability.md は�
 -->
 
 ---
-src: ./pages/ai-sprawl.md
----
-
----
 src: ./pages/observability.md
 ---
 
