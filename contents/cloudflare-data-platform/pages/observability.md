@@ -2,7 +2,7 @@
 layout: section
 ---
 
-# Observability と AI 統制
+# Observability
 
 <!--
 Cloudflare で AI スタックを「見る + 統制する」 2 軸を 1 章で扱う。
@@ -18,37 +18,35 @@ LLM 層を AI Gateway、ツール層を MCP Server Portal で集約・統制す�
 
 ---
 
-# Cloudflare の telemetry source
-
-Cloudflare 製品から **4 つの源泉**が取れます。
+Worker が出すログ (`workers_trace_events`) を、用途で 4 経路に振り分けます。
 
 <div class="grid grid-cols-2 gap-3 mt-3 text-sm">
 
 <div class="border border-orange-500/30 rounded p-3">
 
-### Workers Observability
-Worker 内の操作（R2 / D1 / fetch / Queue / AI）の **trace + log**。`observability.traces.enabled = true` の **1 行で有効化**。
+### Workers Logs
+ダッシュボードに自動収集 / 保存 / 検索（**保持 7 日**）
 
 </div>
 
 <div class="border border-orange-500/30 rounded p-3">
 
-### Logpush + Log Explorer
-Cloudflare 製品ログ（HTTP / WAF / DNS / Workers traces 等）。**外に push** か **中で SQL クエリ** を選べます。
+### Real-time Logs
+near real-time の live tail。`wrangler tail` or dashboard。**保存しない**
 
 </div>
 
 <div class="border border-orange-500/30 rounded p-3">
 
-### AI Gateway
-LLM 呼び出しの **span**（Gen AI セマンティック規約準拠）。次の 2 スライドで詳述。
+### Tail Workers (Beta)
+別 Worker でログを受けて **filtering / sampling / 変換 / export** を自前実装
 
 </div>
 
 <div class="border border-orange-500/30 rounded p-3">
 
-### Analytics Engine
-Worker から `writeDataPoint` で書く **高カーディナリティ時系列**。OTel ではなく SQL API でクエリ。
+### Workers Logpush
+**外部 destination** に数分バッチで push（R2 / Pipelines / 汎用 HTTP / SIEM）
 
 </div>
 
@@ -56,36 +54,126 @@ Worker から `writeDataPoint` で書く **高カーディナリティ時系列*
 
 <div class="mt-3 text-sm op-80">
 
-→ Analytics Engine 以外は外部バックエンドに直送できます（Workers Obs / AI Gateway は **OTLP**、Logpush は **HTTP destination**）。
+→ **Invocation logs / Custom logs / Errors / Uncaught exceptions** が共通の元データ。`console.log` を JSON object にすると自動でフィールド抽出。
 
 </div>
 
 <!--
-4 つの telemetry source の概要:
+4 経路の選択指針:
+- ダッシュボードで普通に見たい → Workers Logs (GA、保持 7 日、JSON 自動抽出)
+- 今この瞬間を見たい → Real-time Logs (sampling mode に注意)
+- 自前ロジックで加工 / 別宛先に転送 → Tail Workers (Beta)
+- 既存 SIEM / DWH に長期 push → Workers Logpush (R2 / S3 / GCS / Datadog / Splunk / Pipelines / 汎用 HTTP)
 
-(1) Workers Observability — Cloudflare 純正のテレメトリ基盤。R2 / D1 / fetch /
-Queue / Workers AI など Worker 内の主要操作が全部自動でスパン化される。SDK 不要、
-wrangler.jsonc に enabled: true を書くだけ。本番では head_sampling_rate: 0.05 で
-5% に絞ってコストを抑えつつ代表的なトレースが取れる、という運用がベース。
+共通の元データは workers_trace_events (1 invocation あたり最大 256 KB)。
+console.log() / 例外 / リクエスト metadata / ヘッダ が自動キャプチャ。
+JSON object を渡すとフィールド自動抽出 + unlimited cardinality。
+-->
 
-(2) Logpush + Log Explorer — 同じ source データに対して 2 つの取り回し。
-Logpush は数分間隔のバッチで R2 / S3 / GCS / Datadog / Splunk / Pipelines /
-汎用 HTTP に push。Log Explorer は SQL API で同じ datasets をその場でクエリ、
-契約で最大 2 年保持。datasets は両者共通: http_requests / firewall_events /
-workers_trace_events / dns_logs / access_requests など。
+---
 
-(3) AI Gateway — LLM 呼び出しの reverse proxy。Universal Endpoint で全プロバイダー
-を 1 URL に集約、Gen AI セマンティック規約準拠の span を OTLP/JSON で吐ける。
-governance + telemetry の交差点で、次の 2 スライドで詳述。
+# Workers Metrics & Analytics
 
-(4) Analytics Engine — Worker 専用の時系列カスタムイベントストア。
-env.X.writeDataPoint() で書き込み、SQL API でクエリ。blobs (文字列 最大 20) /
-doubles (数値 最大 20) / indexes (サンプリングキー) の 3 種類。最大の特徴は
-無制限カーディナリティで、user_id や tenant のような無限増えるディメンションでも
-扱える。保持 90 日。OTel ではないので Honeycomb への直送は無く、SQL で必要に
-応じて取り出す。
+dashboard と API で「何が / どれくらい / どう動いたか」を測れます。
 
-最初の 3 つは OTel で外部集約可能、Analytics Engine だけ Cloudflare 内完結。
+<div class="grid grid-cols-2 gap-4 mt-4 text-sm">
+
+<div class="border border-orange-500/30 rounded p-3">
+
+### Built-in メトリクス（dashboard）
+- **Requests / Success / Errors**（Invocation Statuses 別）
+- **Subrequests**（cached / uncached）
+- **Wall Time / CPU Time / Execution Duration (GB-s)**
+- 保持 **3 ヶ月**（週単位の窓）
+
+</div>
+
+<div class="border border-orange-500/30 rounded p-3">
+
+### GraphQL Analytics API
+1 endpoint (`api.cloudflare.com/client/v4/graphql`) で Workers / KV / D1 / Workflows などを SQL ライクに横断クエリ。dashboard の裏側もこれ。
+
+</div>
+
+</div>
+
+<div class="mt-3 border border-orange-500/30 rounded p-3 text-sm">
+
+### Workers Analytics Engine — アプリ独自の高カーディナリティ時系列
+`env.X.writeDataPoint({ blobs, doubles, indexes })` で書き込み（`await` 不要）→ SQL API でクエリ。`user_id` / `tenant` のような無限ディメンションも扱える。**保持 90 日**。
+
+</div>
+
+<!--
+Built-in メトリクスは Workers Paid プラン込みで追加課金なし。
+Subrequests は fetch から発した 2nd hop 通信、外部 API 依存の重さを見るのに使える。
+Invocation Statuses は Success / Client Disconnected / Worker Threw Exception /
+Exceeded Resources / Internal Error の 5 区分。
+
+GraphQL Analytics API endpoint は dashboard の裏側でも使われている本物の API。
+プロダクト別 dataset (workersInvocationsAdaptive / kvOperationsAdaptiveGroups /
+kvStorageAdaptiveGroups / d1AnalyticsAdaptiveGroups / d1StorageAdaptiveGroups /
+d1QueriesAdaptiveGroups / workflowsAdaptiveGroups) で横断クエリできる。
+
+Analytics Engine は OTel 経路に乗らないが、無制限カーディナリティで業務メトリクスを
+手軽に貯められる。blobs (文字列 最大 20) / doubles (数値 最大 20) / indexes
+(サンプリングキー) の 3 種類。Workers Paid 無料枠あり、保持 90 日。
+-->
+
+---
+
+# Workers Traces — 自動計装で 1 行有効化
+
+`observability.tracing.enabled = true` の **1 行で fetch / binding / handler を自動 span 化**（OpenTelemetry 互換、open beta）。
+
+<div class="grid grid-cols-2 gap-4 mt-4 text-sm">
+
+<div class="border border-orange-500/30 rounded p-3">
+
+### 自動 span 化されるもの
+- **Fetch calls** — outbound HTTP の timing / status / metadata
+- **Binding calls** — KV / R2 / Durable Objects の操作
+- **Handler calls** — `fetch` / `scheduled` / `queue` のライフサイクル
+
+</div>
+
+<div class="border border-orange-500/30 rounded p-3">
+
+### 共通 span 属性（抜粋）
+`cloud.provider` / `cloud.platform` / `faas.*` / `service.name` / `cloudflare.colo` (3-letter IATA) / `cloudflare.script_*` / `telemetry.sdk.*`
+
+</div>
+
+</div>
+
+<div class="mt-3 text-sm op-80">
+
+→ **OTLP-compatible バックエンド**（Honeycomb など）に直送。`head_sampling_rate` を 0〜1 で本番コスト調整。
+
+**既知の制約 (beta)**: 非 I/O 操作は `0ms`（Spectre 対策）/ trace context は外部に伝播しない / Service Binding / Durable Object は別 trace。
+
+</div>
+
+<!--
+2025-11-07 に open beta 開始。「自動計装で 1 行 enable」は観測世界で強烈に効く。
+従来は OpenTelemetry SDK を入れて span 化を自前で書く必要があった。
+fetch / binding / handler が共通形で span 化されるので、Worker → R2 / D1 → 外部 API の
+全体トレースが何もせずに取れる。
+
+head_sampling_rate のデフォルトは 1 (全部取る)。本番では 0.05 (5%) など下げて
+コストを抑えるのが定番。logs と traces で別々に sampling rate を設定可能。
+
+エクスポート対応: OTLP endpoint があれば任意のバックエンド (Honeycomb / Grafana Cloud /
+Sentry / Axiom 等)。dashboard → Workers & Pages → Observability → Destinations で設定。
+
+既知の制約 (beta):
+- Worker の Spectre 対策 (timer 粒度制限) で非 I/O 操作の経過時間が 0ms に丸まる
+- W3C Trace Context での外部伝播がまだ → 外部サービスとの trace が繋がらない (改善予定)
+- Service Binding や Durable Object をまたぐ呼び出しは別 trace (改善予定)
+- span 名 / 属性名は beta 中に変わる可能性
+
+課金: 2026-03-01 から開始予定。Workers logs と共有クォータで Free 200K events/日、
+Paid 10M/月込み。料金は最新を要確認。
 -->
 
 ---
