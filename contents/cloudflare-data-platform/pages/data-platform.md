@@ -110,6 +110,8 @@ env.BUCKET.put でキー無しに書き込める。
 -->
 
 ---
+layout: two-cols-header
+---
 
 # R2 Data Catalog
 
@@ -119,25 +121,17 @@ env.BUCKET.put でキー無しに書き込める。
 wrangler r2 bucket catalog enable < bucket-name >
 ```
 
-<div class="grid grid-cols-[3fr_2fr] gap-6 mt-4">
-<div>
+::left::
 
-- 標準の **Iceberg REST Catalog API** を公開
-- **ACID トランザクション** / **スキーマ進化** / **タイムトラベル**
-- Trino / DuckDB / PyIceberg / Spark / StarRocks などのクライアントから直接クエリ可能
+- Trino / DuckDB / PyIceberg / Snowflake / Spark / StarRocks などのクライアントから直接クエリ可能
+- **Iceberg V2 の機能**はそのまま使える（ACID / Schema evolution / Time travel 等）
 - テーブルメンテナンス
   - **Compaction**: `--target-size` で指定したサイズに合わせて Parquet ファイルを集約
   - **Snapshot expiration**: `--older-than-days` で古いスナップショットを削除、`--retain-last` で最低限残す数を指定
 
-</div>
-<div>
+::right::
 
-<img src="/check-iceberg-version.png" alt="iceberg_table_format_version=2" class="w-full rounded border border-zinc-700/60 shadow-lg" />
-
-<p class="text-xs op-60 mt-2 text-center">実際の table を SQL で確認 → <code>iceberg_table_format_version = 2</code></p>
-
-</div>
-</div>
+<img src="/check-iceberg-version.png" alt="iceberg_table_format_version=2" class="rounded border border-zinc-700/60 shadow-lg m-4" />
 
 <!--
 R2 Data Catalog は Apache Iceberg のメタデータマネージドサービス。
@@ -179,12 +173,13 @@ R2 Data Catalog は Iceberg format-version 2 (V2) ベース。public beta blog �
 
 # R2 SQL — 分散クエリエンジン
 
-R2 Data Catalog の Iceberg テーブルに標準 SQL を実行できる、Cloudflare ネイティブの分散クエリエンジンです。
+R2 Data Catalog の Iceberg テーブルに標準 SQL を実行できる、Cloudflare ネイティブの分散クエリエンジンです。[Apache DataFusion](https://github.com/apache/datafusion) をベースにしています。
 
-現在は
-- Wrangler
-- HTTP API
-経由で実行できます。
+実行方法
+- **Wrangler**
+- **HTTP API**
+
+基本的な演算はできますが、JOIN や WINDOWS 関数はまだ対応していません。ベータ版で開発真っ只中。
 
 ```bash
 wrangler r2 sql query "$WAREHOUSE" \
@@ -192,10 +187,11 @@ wrangler r2 sql query "$WAREHOUSE" \
    WHERE __ingest_ts > '2026-05-01' GROUP BY user_id LIMIT 10"
 ```
 
-基本的な分析 SQL (フィルタ・集約・CTE) は対応済みです。JOIN / WINDOW は今後対応予定です。
 
 <!--
 AWS Athena みたいなサービス
+
+MySQL が 8.0 になったとき window 関数が追加された。
 
 R2 SQL は R2 Data Catalog の Iceberg テーブルに対して標準 SQL でクエリを
 実行できる Cloudflare ネイティブのクエリエンジン。基盤技術は Apache DataFusion
