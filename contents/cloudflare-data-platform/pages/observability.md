@@ -18,14 +18,14 @@ LLM 層を AI Gateway、ツール層を MCP Server Portal で集約・統制す�
 
 ---
 
-# Workers Logs — 4 つの経路
+# Workers Logs
 
 Worker が出すログ (`workers_trace_events`) を、用途で 4 経路に振り分けます。
 
-- **Workers Logs**: ダッシュボードに自動収集 / 保存 / 検索（保持 7 日）
-- **Real-time Logs**: near real-time の live tail。`wrangler tail` or dashboard。保存はされない。
-- **Tail Workers**: 別 Worker でログを受けて filtering / sampling / 変換 / export を自前実装
-- **Workers Logpush**: 外部 destination に数分バッチで push（R2 / Pipelines / 汎用 HTTP / SIEM）
+- **Workers Logs**: ダッシュボードに自動収集（保持 7 日）→ 普段使いのログ閲覧
+- **Real-time Logs**: near real-time の live tail（保存はされない）→ デプロイ直後の動作確認
+- **Tail Workers**: 別 Worker でログを受けて filtering / sampling / 変換 / export → カスタム加工・別宛先転送
+- **Workers Logpush**: 外部 destination に数分バッチで push（R2 / Pipelines / 汎用 HTTP / SIEM）→ 既存 SIEM / DWH 連携・長期保管
 
 → **Invocation logs / Custom logs / Errors / Uncaught exceptions** が共通の元データ。`console.log` を JSON object にすると自動でフィールド抽出。
 
@@ -47,9 +47,9 @@ JSON object を渡すとフィールド自動抽出 + unlimited cardinality。
 
 dashboard と API で **何が / どれくらい / どう動いたか** を測れます。
 
-- **Built-in メトリクス**: Requests / Subrequests / Wall Time / CPU Time / Execution Duration（保持 3 ヶ月）
-- **GraphQL Analytics API**: 1 endpoint で Workers / KV / D1 / Workflows などを横断クエリ
-- **Workers Analytics Engine**: アプリ独自の高カーディナリティ時系列（保持 90 日、ClickHouse ベース）
+- **Built-in メトリクス**: Requests / Subrequests / Wall Time / CPU Time / Execution Duration（保持 3 ヶ月）→ Worker の基本健康状態を把握
+- **GraphQL Analytics API**: 1 endpoint で Workers / KV / D1 / Workflows などを横断クエリ → 複数プロダクト集計・カスタムダッシュボード
+- **Workers Analytics Engine**: アプリ独自の高カーディナリティ時系列（保持 90 日、ClickHouse ベース）→ 業務メトリクス・per-user / per-tenant 計測
 
 <!--
 Built-in メトリクスは Workers Paid プラン込みで追加課金なし。
@@ -71,11 +71,13 @@ Analytics Engine は OTel 経路に乗らないが、無制限カーディナリ
 
 # Workers Traces
 
-`observability.tracing.enabled = true` の **1 行で自動 span 化**（OpenTelemetry 互換、open beta）。
+`observability.tracing.enabled = true` の **1 行で自動 span 化**（OpenTelemetry 互換）。
 
 - **自動 span**: Fetch / Binding (KV / R2 / DO) / Handler (`fetch` / `scheduled` / `queue`)
 - **共通属性**: `cloud.*` / `faas.*` / `service.name` / `cloudflare.*` / `telemetry.sdk.*`
 - **OTLP-compatible バックエンドに直送**、`head_sampling_rate` 0〜1 でコスト調整
+
+→ **使い時**: ボトルネック特定 / 外部依存のレイテンシ可視化 / リクエスト全体のライフサイクル追跡
 
 → **制約 (beta)**: 非 I/O は `0ms` / 外部 trace context 非伝播 / Service Binding と DO は別 trace
 
@@ -107,9 +109,9 @@ Paid 10M/月込み。料金は最新を要確認。
 
 **Universal Endpoint** で全 LLM プロバイダーを 1 経路に集約。**Fallback / Retry** 込みで以下の 3 カテゴリ・11 機能を一括導入できます。
 
-- **Performance & Cost**: Caching / Rate Limiting / Dynamic Routing / Custom Costs
-- **Security & Safety**: Guardrails / DLP / Authentication / BYOK
-- **Observability & Analytics**: Analytics / Logging / Custom Metadata
+- **Performance & Cost**: Caching / Rate Limiting / Dynamic Routing / Custom Costs → コスト・レイテンシを下げたい
+- **Security & Safety**: Guardrails / DLP / Authentication / BYOK → 機密情報・有害コンテンツを構造で防ぎたい
+- **Observability & Analytics**: Analytics / Logging / Custom Metadata → 部署 / ユーザー別の使用状況を可視化したい
 
 → Gateway 経由を強制すれば、観測 / 統制 / コスト管理を後付けで実装する必要がなくなります。
 
@@ -197,7 +199,9 @@ gen_ai.usage に input_tokens / output_tokens、それからプロンプト本�
 - **Code Mode**: tool 定義を 1 つに圧縮 → context window 削減
 - **監査ログ**: Access logs → SIEM / Logpush
 
-→ "**Shadow MCP**" を構造で防ぎ、AI Gateway と合わせて「LLM 層 + ツール層」の二重統制が成立します。
+→ **使い時**: Shadow MCP の防止 / 部署別の tool アクセス制御 / IDE エージェントの破壊操作の構造的封じ込め
+
+→ AI Gateway と合わせて「LLM 層 + ツール層」の二重統制が成立します。
 
 <!--
 MCP server portal は Cloudflare Access の AI controls 配下に提供されている機能で、
