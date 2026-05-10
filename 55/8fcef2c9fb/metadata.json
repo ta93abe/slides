@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.6.0",
+  "checkpoint_id": "558fcef2c9fb",
+  "strategy": "manual-commit",
+  "branch": "cfdp/observability-deep-dive-and-polish",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/observability.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/55/8fcef2c9fb/0/metadata.json",
+      "transcript": "/55/8fcef2c9fb/0/full.jsonl",
+      "content_hash": "/55/8fcef2c9fb/0/content_hash.txt",
+      "prompt": "/55/8fcef2c9fb/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 17,
+    "cache_creation_tokens": 14147,
+    "cache_read_tokens": 5002261,
+    "output_tokens": 8374,
+    "api_call_count": 7
+  }
+}
