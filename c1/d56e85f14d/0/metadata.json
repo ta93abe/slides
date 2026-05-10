@@ -1,0 +1,38 @@
+{
+  "cli_version": "0.6.0",
+  "checkpoint_id": "c1d56e85f14d",
+  "session_id": "2cc7fe3e-bf24-49a2-96cb-3b9179db8782",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-10T14:36:14.65044Z",
+  "branch": "cfdp/observability-deep-dive-and-polish",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/containers-and-sandbox.md",
+    "contents/cloudflare-data-platform/pages/data-platform.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "05c479b68760",
+  "token_usage": {
+    "input_tokens": 709,
+    "cache_creation_tokens": 3796584,
+    "cache_read_tokens": 91324762,
+    "output_tokens": 339743,
+    "api_call_count": 256
+  },
+  "session_metrics": {
+    "turn_count": 78
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-10T14:36:14.575261Z",
+    "agent_lines": 36,
+    "agent_removed": 21,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 36,
+    "total_lines_changed": 57,
+    "agent_percentage": 100,
+    "metric_version": 2
+  }
+}
