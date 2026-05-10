@@ -1,0 +1,9 @@
+いい感じのlayout探して適切なものを選んでほしい
+
+---
+
+Workers Metrics & Analytics, Workers Traces,AI Gateway,MCP Server Portal のスライド全部文字が多すぎる。
+
+---
+
+間違えて保存しちゃったからもう一回書いて
