@@ -25,3 +25,16 @@ ta-624やりたい。
 ---
 
 続けて
+
+---
+
+/pr review
+
+---
+
+https://slides.ta93abe.com/cloudflare-data-platform/2
+ここにアクセスしてもエラーになる。
+
+---
+
+続けて
