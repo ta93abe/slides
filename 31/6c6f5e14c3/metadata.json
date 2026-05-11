@@ -1,0 +1,32 @@
+{
+  "cli_version": "0.6.0",
+  "checkpoint_id": "316c6f5e14c3",
+  "strategy": "manual-commit",
+  "branch": "cfdp/speaker-notes-as-script",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/containers-and-sandbox.md",
+    "contents/cloudflare-data-platform/pages/data-platform.md",
+    "contents/cloudflare-data-platform/pages/observability.md",
+    "contents/cloudflare-data-platform/pages/summary.md",
+    "contents/cloudflare-data-platform/pages/workers.md",
+    "contents/cloudflare-data-platform/pages/workflows.md",
+    "contents/cloudflare-data-platform/pages/wrangler.md",
+    "contents/cloudflare-data-platform/slides.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/31/6c6f5e14c3/0/metadata.json",
+      "transcript": "/31/6c6f5e14c3/0/full.jsonl",
+      "content_hash": "/31/6c6f5e14c3/0/content_hash.txt",
+      "prompt": "/31/6c6f5e14c3/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 1815,
+    "cache_creation_tokens": 7481640,
+    "cache_read_tokens": 292265171,
+    "output_tokens": 640160,
+    "api_call_count": 734
+  }
+}
