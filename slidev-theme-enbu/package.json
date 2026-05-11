@@ -16,10 +16,10 @@
     "screenshot": "slidev export example.md --format png"
   },
   "dependencies": {
-    "@slidev/types": "^52.15.0"
+    "@slidev/types": "catalog:"
   },
   "devDependencies": {
-    "@slidev/cli": "^52.15.0"
+    "@slidev/cli": "catalog:"
   },
   "//": "Learn more: https://sli.dev/guide/write-theme.html",
   "slidev": {

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## プロジェクト概要
 
-Slidevプレゼンテーションのモノレポ。各スライドがpnpmワークスペースの独立パッケージとして管理され、Cloudflare Workers（Static Assets）でホスティングされる。
+Slidevプレゼンテーションのモノレポ。各スライドがpnpmワークスペースの独立パッケージとして管理され、Cloudflare Workers（Static Assets + Worker handler）でホスティングされる。
 
 ## コマンド
 
@@ -13,17 +13,18 @@ Slidevプレゼンテーションのモノレポ。各スライドがpnpmワー�
 # /new-slide コマンドまたは「新しいスライドを作って」で実行（.claude/skills/new-slide 参照）
 cd contents && pnpm create slidev <project-name>
 
-# 特定スライドの開発サーバー起動
+# 対話 picker で dev / build / export を実行
+pnpm dev              # = pnpm pick dev
+pnpm pick build
+pnpm export           # = pnpm pick export
+
+# 特定スライドのみ
 pnpm --filter <slide-name> dev
-
-# 全スライドのビルド（dist/に出力）
-pnpm build
-
-# 特定スライドのみビルド
 pnpm --filter <slide-name> build
-
-# スライドのPDFエクスポート
 pnpm --filter <slide-name> export
+
+# 全スライド並列ビルド（dist/ に出力 + slides.json 生成）
+pnpm build
 ```
 
 ## アーキテクチャ
@@ -32,36 +33,53 @@ pnpm --filter <slide-name> export
 /
 ├── contents/                      # 全スライドの格納ディレクトリ
 │   └── <event-name-YYYY-MM-DD>/   # 各スライドプロジェクト（pnpmワークスペースパッケージ）
-│       ├── package.json           # slidevメタデータ（title, date, description）
+│       ├── package.json           # slidev フィールド (title, date, description, addons)
 │       ├── slides.md              # スライド本体（Slidev Markdown）
 │       ├── components/            # Vueカスタムコンポーネント（任意）
 │       ├── snippets/              # コードスニペット（任意）
 │       └── pages/                 # 追加ページ（任意）
-├── themes/                        # Slidevカスタムテーマ
-│   └── enbu/                      # 炎舞テーマ（slidev-theme-enbu）
-├── build.js                       # 全スライド一括ビルドスクリプト
-├── .claude/skills/new-slide/       # スライド作成スキル
-├── wrangler.toml                  # Cloudflare Workers設定（dist/を静的配信）
-└── dist/                          # ビルド成果物（gitignore対象）
-    ├── <slide-name>/              # 各スライドのSPA
-    ├── slides.json                # スライド一覧メタデータ
-    └── _redirects                 # / → ta93abe.com/slides へリダイレクト
+├── slidev-theme-enbu/             # Slidevカスタムテーマ (workspace package)
+├── scripts/
+│   ├── build.js                   # 各スライドの build wrapper (favicon + dist-stale cache)
+│   ├── build-all.js               # 全体オーケストレータ (clean + pnpm -r build + slides.json)
+│   └── picker.js                  # 対話 CLI (dev/build/export)
+├── src/
+│   └── index.js                   # Cloudflare Worker handler (/ → ta93abe.com/slides 302)
+├── pnpm-workspace.yaml            # workspaces + catalog (依存バージョン統一)
+├── wrangler.toml                  # Cloudflare Workers (assets + main handler)
+├── dist-stale/                    # 過去ビルドキャッシュ（gitignore、削除で再ビルド）
+└── dist/                          # ビルド成果物（gitignore）
+    ├── <slide-name>/              # 各スライドの SPA
+    └── slides.json                # スライド一覧メタデータ
 ```
+
+### 依存管理 (pnpm catalog)
+
+`pnpm-workspace.yaml` の `catalog:` に Slidev 本体・テーマ・vue などの共通依存を集約。各スライドの `package.json` は `"@slidev/cli": "catalog:"` のように `catalog:` 参照を書く。バージョンを 1 箇所で管理できる。
 
 ### テーマの利用
 
-`themes/` 配下のテーマは `slidev-theme-*` として pnpm workspace で管理。スライドから利用するには:
+`slidev-theme-enbu/` は pnpm workspace package。スライドから利用するには:
 
 1. スライドの `package.json` に `"slidev-theme-enbu": "workspace:*"` を追加
 2. `slides.md` の frontmatter で `theme: enbu` を指定
 
-npm 公開する場合は `themes/enbu/` ディレクトリから `npm publish` するだけで移行可能。
+npm 公開する場合は `slidev-theme-enbu/` ディレクトリから `npm publish` するだけで移行可能。
 
-### ビルドの仕組み（build.js）
+### ビルドの仕組み
 
-- `contents/`配下のディレクトリを走査し、`package.json`に`slidev`フィールドがあるものをスライドとして自動検出
-- 各スライドを`slidev build --base /<slide-id>/`でビルドし`dist/<slide-id>/`に出力
-- `slides.json`（日付降順のスライド一覧）と`_redirects`を生成
+- `pnpm build` = `node scripts/build-all.js`
+- `dist/` を clean → `pnpm -r --parallel --filter "./contents/*" run build` で全スライド並列ビルド → `slides.json` 生成
+- 各スライドの `package.json` の `build` スクリプトは `node ../../scripts/build.js /<slide-id>/`
+- `scripts/build.js`: `dist-stale/<slide-id>/` があれば cp してビルドスキップ。無ければ favicon を `public/` にコピーして `slidev build --base /<slide-id>/ --out ../../dist/<slide-id>/`
+
+### dist-stale キャッシュ
+
+過去スライドを毎回再ビルドすると CI 時間が伸びるので、`dist-stale/<slide-id>/` にビルド結果を残しておけば次回以降の `pnpm build` でそのまま採用される。再ビルドしたい場合は該当ディレクトリを削除。
+
+### ルーティング (Worker handler)
+
+`src/index.js` で `/` → `https://ta93abe.com/slides` (302) を返す。それ以外のパスは `env.ASSETS.fetch(request)` で静的配信。`_redirects` は使わない。
 
 ### スライドの命名規則
 
@@ -69,7 +87,7 @@ npm 公開する場合は `themes/enbu/` ディレクトリから `npm publish` 
 
 ### スライドの識別
 
-各スライドの`package.json`内の`slidev`フィールドがビルド対象の識別子。このフィールドがないディレクトリはスキップされる。
+各スライドの `package.json` 内の `slidev` フィールドがビルド対象の識別子。このフィールドがないディレクトリはスキップされる。
 
 ## ナレッジソース
 
@@ -78,6 +96,6 @@ npm 公開する場合は `themes/enbu/` ディレクトリから `npm publish` 
 ## 技術スタック
 
 - **Slidev** (v52+): Markdownベースのプレゼンテーションフレームワーク（Vue 3）
-- **pnpm**: パッケージマネージャ（ワークスペース管理）
-- **Cloudflare Workers**: Static Assetsによるホスティング
+- **pnpm**: パッケージマネージャ（ワークスペース管理 + catalog）
+- **Cloudflare Workers**: Static Assets + Worker handler
 - **Node.js 20**

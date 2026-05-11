@@ -3,7 +3,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "slidev build",
+    "build": "node ../../scripts/build.js /pug-at-fukuoka-2025-06-06/",
     "dev": "slidev --open",
     "export": "slidev export"
   },
@@ -13,9 +13,9 @@
     "description": "Presentation slides for PUG at Fukuoka"
   },
   "dependencies": {
-    "@slidev/cli": "^52.14.2",
-    "@slidev/theme-default": "latest",
-    "@slidev/theme-seriph": "latest",
-    "vue": "^3.5.32"
+    "@slidev/cli": "catalog:",
+    "@slidev/theme-default": "catalog:",
+    "@slidev/theme-seriph": "catalog:",
+    "vue": "catalog:"
   }
 }

@@ -3,6 +3,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node build.js"
+    "build": "node scripts/build-all.js",
+    "dev": "node scripts/picker.js dev",
+    "export": "node scripts/picker.js export",
+    "pick": "node scripts/picker.js"
+  },
+  "devDependencies": {
+    "prompts": "^2.4.2"
   }
 }
