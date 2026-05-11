@@ -12,7 +12,7 @@ layout: section
 
 特徴:
 - **V8 Isolate**: 1 プロセス内で多数の isolate を切り替える実行モデル。VM / コンテナの起動オーバーヘッドが無く、isolate のコールドスタートは ms オーダー
-- **Global 配置 + anycast routing**: 1 deploy で 330+ 都市のエッジに同一バイナリを自動展開、リクエストは最寄り POP で実行（リージョン指定不要）
+- **Global 配置 + anycast network**: 1 deploy で 330+ 都市のエッジに同一バイナリを自動展開、リクエストは最寄り POP で実行（リージョン指定不要）
 - **Binding**: `wrangler.jsonc` で宣言したリソースを `env` から呼ぶ。SDK / 認証情報不要、Capability-based セキュリティ（宣言されていないリソースには触れない）
 - **多彩なトリガー**: HTTP / Cron / Queues / Workflows / Email / WebSocket / RPC / Tail
 
