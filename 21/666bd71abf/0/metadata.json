@@ -1,0 +1,51 @@
+{
+  "cli_version": "0.6.0",
+  "checkpoint_id": "21666bd71abf",
+  "session_id": "2cc7fe3e-bf24-49a2-96cb-3b9179db8782",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-11T12:48:14.607699Z",
+  "branch": "cfdp/remove-claude-review-workflow",
+  "checkpoints_count": 0,
+  "files_touched": [
+    ".github/workflows/claude-code-review.yml"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "091fbb0c7fa1",
+  "checkpoint_transcript_start": 2721,
+  "transcript_lines_at_start": 2721,
+  "token_usage": {
+    "input_tokens": 17,
+    "cache_creation_tokens": 13092,
+    "cache_read_tokens": 6598309,
+    "output_tokens": 3086,
+    "api_call_count": 7
+  },
+  "session_metrics": {
+    "turn_count": 115
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-11T12:48:14.501456Z",
+    "agent_lines": 0,
+    "agent_removed": 44,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 0,
+    "total_lines_changed": 44,
+    "agent_percentage": 100,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 9,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    }
+  ]
+}

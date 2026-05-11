@@ -1,0 +1,5 @@
+/pr review
+
+---
+
+claude-review の GitHub Actionsは削除したい
