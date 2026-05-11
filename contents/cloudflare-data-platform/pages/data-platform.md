@@ -131,7 +131,7 @@ wrangler r2 bucket catalog enable < bucket-name >
 
 ::right::
 
-<img src="/check-iceberg-version.png" alt="iceberg_table_format_version=2" class="rounded border border-zinc-700/60 shadow-lg m-4" />
+<img src="/check-iceberg-version.png" alt="iceberg_table_format_version=2" class="w-full max-w-full h-auto rounded border border-zinc-700/60 shadow-lg m-4" />
 
 <!--
 R2 Data Catalog は Apache Iceberg のメタデータマネージドサービス。
