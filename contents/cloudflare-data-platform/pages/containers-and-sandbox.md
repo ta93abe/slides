@@ -53,12 +53,12 @@ CMD ["dbt", "build", "--target", "prod"]
 dbt は Python の CLI ツールなので、Workers / Python Workers では動かない。
 subprocess が呼べない、DuckDB のような native binary が Pyodide にない、
 メモリ 128 MB の壁。これらを全部解決するのが Containers。任意の Docker image
-を持ち込めて、メモリ最大 12 GiB、CPU 制限なし、Linux microVM 上で実行され、
-sleepAfter で idle なら課金ゼロ。Sandbox でも同じことができるが本筋は Containers
-で説明する。
+を持ち込めて、Linux microVM 上で実行される。instance class に応じてメモリ /
+vCPU が割り当てられ (dev / basic / standard 等で異なる、最新は公式 docs 参照)、
+sleepAfter で idle なら課金ゼロ。
 
 【Dockerfile の補足】
-ベースは ghcr.io/dbt-labs/dbt-core (アクティブメンテ中、最新 1.11.8)。dbt-snowflake
+ベースは ghcr.io/dbt-labs/dbt-core (アクティブメンテ中、1.11 系が現行)。dbt-snowflake
 adapter は v1.8 から dbt-core と decoupled された (dbt-snowflake repo は
 dbt-labs/dbt-adapters モノレポに移動)。なので RUN pip install --no-cache-dir
 dbt-snowflake==1.11.* で adapter を上乗せする構成。pip install dbt-snowflake
@@ -135,7 +135,7 @@ export default {
 
     // 3. 生成コードを書き込んで隔離 microVM 内で実行
     await sandbox.writeFile("/tmp/main.py", code);
-    const { stdout } = await sandbox["exec"]("python /tmp/main.py");
+    const { stdout } = await sandbox.exec("python /tmp/main.py");
 
     return Response.json({ stdout });
   }
@@ -146,11 +146,10 @@ export default {
 Sandbox は Containers と同じ microVM 基盤を使うが、用途と寿命が異なる。
 Containers が長期サービス向け、Sandbox は短命・per-request の隔離実行向け。
 
-コード上の sandbox["exec"] は Cloudflare Sandbox SDK のメソッド呼び出し
+コード上の sandbox.exec は Cloudflare Sandbox SDK のメソッド呼び出し
 (microVM 内で隔離実行)。Node の child_process.exec とは無関係。
-登壇前に developers.cloudflare.com/sandbox/ で
-package 名 (@cloudflare/sandbox) / getSandbox / exec / writeFile の最新を確認。
-書き換え: 公開時は sandbox.exec(...) のドット記法に戻して可。
+package 名 @cloudflare/sandbox、getSandbox / writeFile / exec は公式 docs と整合済み。
+登壇前に developers.cloudflare.com/sandbox/ で API シグネチャの最新を再確認。
 
 典型 use case:
 - AI Agent が生成したコードの実行 (code interpreter パターン)

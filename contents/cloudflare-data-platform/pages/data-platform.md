@@ -67,7 +67,7 @@ wrangler pipelines setup
 
 <!--
 Cloudflare Pipelines より多くの Streams (Sources) に対応している。
-Arroyo (アロヨ) は英語で「峡谷」を意味する。Apache Flink 相当のサービス。
+Arroyo (アロヨ) はスペイン語で「小川 / 細い水路」を意味する。Apache Flink 相当のサービス。
 Pipelines SQL は DataFusion をベースにしている。ドキュメントに使える SQL が書いてある。
 -->
 
@@ -179,7 +179,7 @@ R2 Data Catalog の Iceberg テーブルに標準 SQL を実行できる、Cloud
 - **Wrangler**
 - **HTTP API**
 
-基本的な演算はできますが、JOIN や WINDOWS 関数はまだ対応していません。ベータ版で開発真っ只中。
+基本的な演算はできますが、JOIN や WINDOW 関数はまだ対応していません。ベータ版で開発真っ只中。
 
 ```bash
 wrangler r2 sql query "$WAREHOUSE" \
@@ -199,8 +199,9 @@ R2 SQL は R2 Data Catalog の Iceberg テーブルに対して標準 SQL でク
 エッジで分散クエリが走る。
 スライドのコマンドは wrangler r2 sql query で、WRANGLER_R2_SQL_AUTH_TOKEN を
 設定すれば warehouse 名と SQL 文字列を渡すだけで実行できる。Iceberg 側の
-__ingest_ts は Pipelines が付与する取り込みタイムスタンプで、時間範囲の
-枝刈りに使えるカラム。
+__ingest_ts は **Pipelines Sink** が書き込み時に自動付与する取り込みタイムスタンプ
+カラム。Iceberg を Spark / Trino 等で直接書く場合は存在しないので、コード例の
+WHERE 句が動くのは Pipelines Sink 経由で書かれたテーブルだけ、と前提を補足する。
 対応済み: SELECT / WHERE / ORDER BY / LIMIT / GROUP BY / 集約関数 / CTE /
 スカラー関数 190+ 種 / 複合型 (struct / array / map) / EXPLAIN。
 未対応 (2026 H1 予定): JOIN 全種類 / WINDOW / UNION / サブクエリ / SELECT DISTINCT。
