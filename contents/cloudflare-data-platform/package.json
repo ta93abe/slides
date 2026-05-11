@@ -3,7 +3,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "slidev build",
+    "build": "node ../../scripts/build.js /cloudflare-data-platform/",
     "dev": "slidev --open",
     "export": "slidev export"
   },
@@ -16,10 +16,10 @@
     ]
   },
   "dependencies": {
-    "@slidev/cli": "^52.14.2",
-    "@slidev/theme-default": "latest",
-    "slidev-addon-excalidraw": "^1.1.0",
+    "@slidev/cli": "catalog:",
+    "@slidev/theme-default": "catalog:",
+    "slidev-addon-excalidraw": "catalog:",
     "slidev-theme-enbu": "workspace:*",
-    "vue": "^3.5.32"
+    "vue": "catalog:"
   }
 }
