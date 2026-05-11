@@ -1,0 +1,47 @@
+{
+  "cli_version": "0.6.0",
+  "checkpoint_id": "f10992650bf5",
+  "session_id": "2cc7fe3e-bf24-49a2-96cb-3b9179db8782",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-11T14:43:39.382363Z",
+  "branch": "cfdp/antfu-monorepo-style",
+  "checkpoints_count": 1,
+  "files_touched": [],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "a0d8c9086a22",
+  "token_usage": {
+    "input_tokens": 1714,
+    "cache_creation_tokens": 7019763,
+    "cache_read_tokens": 271957436,
+    "output_tokens": 594540,
+    "api_call_count": 672
+  },
+  "session_metrics": {
+    "turn_count": 121
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 34,
+      "user_lines_removed": 11,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        "pnpm-lock.yaml": 9,
+        "pnpm-workspace.yaml": 5,
+        "scripts/build-all.js": 1,
+        "scripts/build.js": 2,
+        "scripts/picker.js": 5,
+        "slidev-theme-enbu/.claude/settings.local.json": 9,
+        "wrangler.toml": 3
+      },
+      "user_removed_per_file": {
+        "pnpm-lock.yaml": 7,
+        "pnpm-workspace.yaml": 2,
+        "scripts/build-all.js": 1,
+        "scripts/build.js": 1
+      }
+    }
+  ]
+}

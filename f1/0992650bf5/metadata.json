@@ -1,0 +1,23 @@
+{
+  "cli_version": "0.6.0",
+  "checkpoint_id": "f10992650bf5",
+  "strategy": "manual-commit",
+  "branch": "cfdp/antfu-monorepo-style",
+  "checkpoints_count": 1,
+  "files_touched": null,
+  "sessions": [
+    {
+      "metadata": "/f1/0992650bf5/0/metadata.json",
+      "transcript": "/f1/0992650bf5/0/full.jsonl",
+      "content_hash": "/f1/0992650bf5/0/content_hash.txt",
+      "prompt": "/f1/0992650bf5/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 1714,
+    "cache_creation_tokens": 7019763,
+    "cache_read_tokens": 271957436,
+    "output_tokens": 594540,
+    "api_call_count": 672
+  }
+}
