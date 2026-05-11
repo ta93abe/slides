@@ -1,8 +1,13 @@
+---
+layout: two-cols-header
+---
+
 # Cloudflare Workflows
 
 Cloudflare Workflows は耐久性のある実行エンジンです。ステップを連鎖させ、失敗時には自動で再試行し、長期間実行されるプロセス全体で状態を保持します。各 step には Workers Bindings を組み込めます。
 
-<div class="flex justify-center mt-3">
+::left::
+
 <div class="agent-example">
 
 ```typescript {all|3-6|8-15|17-20|22-24|all}
@@ -35,15 +40,15 @@ export class ImageProcessingWorkflow extends WorkflowEntrypoint {
 ```
 
 </div>
-</div>
 
-<div class="text-sm text-center mt-3 min-h-[1.6em]">
-  <span v-click.hide="1">▸ <strong>Step 1</strong>: R2 から画像を取得 (`arrayBuffer`)</span>
-  <span v-click="1" v-click.hide="2">▸ <strong>Step 2</strong>: LLaVA で 1 文の説明を生成</span>
-  <span v-click="2" v-click.hide="3">▸ <strong>Step 3</strong>: 24h durable に人間承認を待つ</span>
-  <span v-click="3" v-click.hide="4">▸ <strong>Step 4</strong>: R2 へ publish (公開ディレクトリ)</span>
-  <span v-click="4">▸ 全 step を可視化、durable に再開可能</span>
-</div>
+::right::
+
+<ol class="ml-4">
+  <li><span :class="['transition-opacity duration-300', $clicks === 0 || $clicks === 1 || $clicks > 4 ? '' : 'opacity-30']">R2 から画像を取得</span></li>
+  <li><span :class="['transition-opacity duration-300', $clicks === 0 || $clicks === 2 || $clicks > 4 ? '' : 'opacity-30']">LLaVA で 1 文の説明を生成</span></li>
+  <li><span :class="['transition-opacity duration-300', $clicks === 0 || $clicks === 3 || $clicks > 4 ? '' : 'opacity-30']">24h durable に人間承認を待つ</span></li>
+  <li><span :class="['transition-opacity duration-300', $clicks === 0 || $clicks === 4 || $clicks > 4 ? '' : 'opacity-30']">R2 へ publish (公開ディレクトリ)</span></li>
+</ol>
 
 <style>
 .agent-example pre,
@@ -138,7 +143,7 @@ layout: two-cols-header
 
 ## Python SDK
 
-`WorkflowEntrypoint` を Python で継承します。**関数パラメータ名で依存を暗黙解決** する DAG 表現が特徴です。
+`WorkflowEntrypoint` を Python で継承します。**関数パラメータ名で依存を暗黙解決** する DAG 表現が特徴です。引数名による暗黙的依存解決で DAG が宣言的に書けます。
 
 ::left::
 
@@ -168,11 +173,22 @@ class IngestWorkflow(WorkflowEntrypoint):
 
 ::right::
 
-- Step 1: `fetch_a` を `@step.do()` で定義
-- Step 2: `fetch_b` を独立した step として定義
-- Step 3: `merge` を `concurrent=True` + 引数名 `fetch_a` / `fetch_b` で依存宣言
-- Step 4: `await merge()` 実行 — 依存先が並列起動 (diamond DAG)
-- 引数名による暗黙的依存解決で DAG が宣言的に書けます
+<ol class="ml-4">
+  <li><span :class="['transition-opacity duration-300', $clicks === 0 || $clicks === 1 || $clicks > 4 ? '' : 'opacity-30']">`fetch_a` を `@step.do()` で定義</span></li>
+  <li><span :class="['transition-opacity duration-300', $clicks === 0 || $clicks === 2 || $clicks > 4 ? '' : 'opacity-30']">`fetch_b` を独立した step として定義</span></li>
+  <li><span :class="['transition-opacity duration-300', $clicks === 0 || $clicks === 3 || $clicks > 4 ? '' : 'opacity-30']">`merge` を `concurrent=True` + 引数名 `fetch_a` / `fetch_b` で依存宣言</span></li>
+  <li><span :class="['transition-opacity duration-300', $clicks === 0 || $clicks === 4 || $clicks > 4 ? '' : 'opacity-30']">`await merge()` 実行 — 依存先が並列起動 (diamond DAG)</span></li>
+</ol>
+
+<Excalidraw
+  v-motion
+  :initial="{ y: 60, opacity: 0 }"
+  :click-5="{ y: 0, opacity: 1, transition: { duration: 600, ease: [0.16, 1, 0.3, 1] } }"
+  drawFilePath="./workflows-python-dag.excalidraw"
+  :darkMode="true"
+  :background="false"
+  class="mt-4"
+/>
 
 <style>
 .agent-example pre,

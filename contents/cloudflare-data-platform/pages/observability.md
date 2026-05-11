@@ -2,7 +2,7 @@
 layout: section
 ---
 
-# Observability と AI 統制
+# Observability
 
 <!--
 Cloudflare で AI スタックを「見る + 統制する」 2 軸を 1 章で扱う。
@@ -18,123 +18,118 @@ LLM 層を AI Gateway、ツール層を MCP Server Portal で集約・統制す�
 
 ---
 
-# Cloudflare の telemetry source
+# Workers Logs
 
-Cloudflare 製品から **4 つの源泉**が取れます。
+Worker が出すログ (`workers_trace_events`) を、用途で 4 経路に振り分けます。
 
-<div class="grid grid-cols-2 gap-3 mt-3 text-sm">
+- **Workers Logs**: ダッシュボードに自動収集（保持 7 日）→ 普段使いのログ閲覧
+- **Real-time Logs**: near real-time の live tail（保存はされない）→ デプロイ直後の動作確認
+- **Tail Workers**: 別 Worker でログを受けて filtering / sampling / 変換 / export → カスタム加工・別宛先転送
+- **Workers Logpush**: 外部 destination に数分バッチで push（R2 / Pipelines / 汎用 HTTP / SIEM）→ 既存 SIEM / DWH 連携・長期保管
 
-<div class="border border-orange-500/30 rounded p-3">
+→ **Invocation logs / Custom logs / Errors / Uncaught exceptions** が共通の元データ。`console.log` を JSON object にすると自動でフィールド抽出。
 
-### Workers Observability
-Worker 内の操作（R2 / D1 / fetch / Queue / AI）の **trace + log**。`observability.traces.enabled = true` の **1 行で有効化**。
-
-</div>
-
-<div class="border border-orange-500/30 rounded p-3">
-
-### Logpush + Log Explorer
-Cloudflare 製品ログ（HTTP / WAF / DNS / Workers traces 等）。**外に push** か **中で SQL クエリ** を選べます。
-
-</div>
-
-<div class="border border-orange-500/30 rounded p-3">
-
-### AI Gateway
-LLM 呼び出しの **span**（Gen AI セマンティック規約準拠）。次の 2 スライドで詳述。
-
-</div>
-
-<div class="border border-orange-500/30 rounded p-3">
-
-### Analytics Engine
-Worker から `writeDataPoint` で書く **高カーディナリティ時系列**。OTel ではなく SQL API でクエリ。
-
-</div>
-
-</div>
-
-<div class="mt-3 text-sm op-80">
-
-→ Analytics Engine 以外は外部バックエンドに直送できます（Workers Obs / AI Gateway は **OTLP**、Logpush は **HTTP destination**）。
-
-</div>
+→ Workers Observability の Destinations から **OpenTelemetry 互換**でエクスポート可能。
 
 <!--
-4 つの telemetry source の概要:
+4 経路の選択指針:
+- ダッシュボードで普通に見たい → Workers Logs (GA、保持 7 日、JSON 自動抽出)
+- 今この瞬間を見たい → Real-time Logs (sampling mode に注意)
+- 自前ロジックで加工 / 別宛先に転送 → Tail Workers (Beta)
+- 既存 SIEM / DWH に長期 push → Workers Logpush (R2 / S3 / GCS / Datadog / Splunk / Pipelines / 汎用 HTTP)
 
-(1) Workers Observability — Cloudflare 純正のテレメトリ基盤。R2 / D1 / fetch /
-Queue / Workers AI など Worker 内の主要操作が全部自動でスパン化される。SDK 不要、
-wrangler.jsonc に enabled: true を書くだけ。本番では head_sampling_rate: 0.05 で
-5% に絞ってコストを抑えつつ代表的なトレースが取れる、という運用がベース。
-
-(2) Logpush + Log Explorer — 同じ source データに対して 2 つの取り回し。
-Logpush は数分間隔のバッチで R2 / S3 / GCS / Datadog / Splunk / Pipelines /
-汎用 HTTP に push。Log Explorer は SQL API で同じ datasets をその場でクエリ、
-契約で最大 2 年保持。datasets は両者共通: http_requests / firewall_events /
-workers_trace_events / dns_logs / access_requests など。
-
-(3) AI Gateway — LLM 呼び出しの reverse proxy。Universal Endpoint で全プロバイダー
-を 1 URL に集約、Gen AI セマンティック規約準拠の span を OTLP/JSON で吐ける。
-governance + telemetry の交差点で、次の 2 スライドで詳述。
-
-(4) Analytics Engine — Worker 専用の時系列カスタムイベントストア。
-env.X.writeDataPoint() で書き込み、SQL API でクエリ。blobs (文字列 最大 20) /
-doubles (数値 最大 20) / indexes (サンプリングキー) の 3 種類。最大の特徴は
-無制限カーディナリティで、user_id や tenant のような無限増えるディメンションでも
-扱える。保持 90 日。OTel ではないので Honeycomb への直送は無く、SQL で必要に
-応じて取り出す。
-
-最初の 3 つは OTel で外部集約可能、Analytics Engine だけ Cloudflare 内完結。
+共通の元データは workers_trace_events (1 invocation あたり最大 256 KB)。
+console.log() / 例外 / リクエスト metadata / ヘッダ が自動キャプチャ。
+JSON object を渡すとフィールド自動抽出 + unlimited cardinality。
 -->
 
 ---
 
-# AI Gateway — LLM 呼び出しを統制する
+# Workers Metrics & Analytics
 
-**Universal Endpoint** で全 LLM プロバイダーを 1 経路に集約します。**Fallback / Retry** で信頼性を担保しつつ、以下 3 カテゴリ・11 機能で観測 / 制御 / 最適化を一括導入できます。
+dashboard と API で **何が / どれくらい / どう動いたか** を測れます。
 
-<div class="grid grid-cols-3 gap-3 mt-3 text-xs">
+- **Built-in メトリクス**: Requests / Subrequests / Wall Time / CPU Time / Execution Duration（保持 3 ヶ月）→ Worker の基本健康状態を把握
+- **GraphQL Analytics API**: 1 endpoint で Workers / KV / D1 / Workflows などを横断クエリ → 複数プロダクト集計・カスタムダッシュボード
+- **Workers Analytics Engine**: アプリ独自の高カーディナリティ時系列（保持 90 日、ClickHouse ベース）→ 業務メトリクス・per-user / per-tenant 計測
 
-<div class="border border-orange-500/30 rounded p-3">
+→ Worker から **OpenTelemetry SDK で custom metrics を push** も可能（built-in は GraphQL / SQL API 経由）。
 
-### Performance & Cost
+<!--
+Built-in メトリクスは Workers Paid プラン込みで追加課金なし。
+Subrequests は fetch から発した 2nd hop 通信、外部 API 依存の重さを見るのに使える。
+Invocation Statuses は Success / Client Disconnected / Worker Threw Exception /
+Exceeded Resources / Internal Error の 5 区分。
 
-- **Caching** — 同一リクエストをキャッシュ (latency 最大 90% 減)
-- **Rate Limiting** — 時間枠ごとのリクエスト数上限
-- **Dynamic Routing** — segment / geo / content で振り分け
-- **Custom Costs** — 交渉済みレートでコスト計算を上書き
+GraphQL Analytics API endpoint は dashboard の裏側でも使われている本物の API。
+プロダクト別 dataset (workersInvocationsAdaptive / kvOperationsAdaptiveGroups /
+kvStorageAdaptiveGroups / d1AnalyticsAdaptiveGroups / d1StorageAdaptiveGroups /
+d1QueriesAdaptiveGroups / workflowsAdaptiveGroups) で横断クエリできる。
+
+Analytics Engine は OTel 経路に乗らないが、無制限カーディナリティで業務メトリクスを
+手軽に貯められる。blobs (文字列 最大 20) / doubles (数値 最大 20) / indexes
+(サンプリングキー) の 3 種類。Workers Paid 無料枠あり、保持 90 日。
+-->
+
+---
+
+# Workers Traces
+
+`observability.tracing.enabled = true` の **1 行で自動 span 化**（OpenTelemetry 互換）。
+
+- **自動 span**: Fetch / Binding (KV / R2 / DO) / Handler (`fetch` / `scheduled` / `queue`)
+- **共通属性**: `cloud.*` / `faas.*` / `service.name` / `cloudflare.*` / `telemetry.sdk.*`
+- **OpenTelemetry 互換バックエンドに直送**（OTLP HTTP）、`head_sampling_rate` 0〜1 でコスト調整
+
+→ **使い時**: ボトルネック特定 / 外部依存のレイテンシ可視化 / リクエスト全体のライフサイクル追跡
+
+→ **制約 (beta)**: 非 I/O は `0ms` / 外部 trace context 非伝播 / Service Binding と DO は別 trace
+
+<!--
+2025-11-07 に open beta 開始。「自動計装で 1 行 enable」は観測世界で強烈に効く。
+従来は OpenTelemetry SDK を入れて span 化を自前で書く必要があった。
+fetch / binding / handler が共通形で span 化されるので、Worker → R2 / D1 → 外部 API の
+全体トレースが何もせずに取れる。
+
+head_sampling_rate のデフォルトは 1 (全部取る)。本番では 0.05 (5%) など下げて
+コストを抑えるのが定番。logs と traces で別々に sampling rate を設定可能。
+
+エクスポート対応: OTLP endpoint があれば任意のバックエンド (Honeycomb / Grafana Cloud /
+Sentry / Axiom 等)。dashboard → Workers & Pages → Observability → Destinations で設定。
+
+既知の制約 (beta):
+- Worker の Spectre 対策 (timer 粒度制限) で非 I/O 操作の経過時間が 0ms に丸まる
+- W3C Trace Context での外部伝播がまだ → 外部サービスとの trace が繋がらない (改善予定)
+- Service Binding や Durable Object をまたぐ呼び出しは別 trace (改善予定)
+- span 名 / 属性名は beta 中に変わる可能性
+
+課金: 2026-03-01 から開始予定。Workers logs と共有クォータで Free 200K events/日、
+Paid 10M/月込み。料金は最新を要確認。
+-->
+
+---
+layout: two-cols-header
+---
+
+# AI Gateway
+
+**Universal Endpoint** で全 LLM プロバイダーを 1 経路に集約。**Fallback / Retry** 込みで以下の 3 カテゴリ・11 機能を一括導入できます。
+
+::left::
+
+<div class="text-xs">
+
+- **Performance & Cost**: Caching / Rate Limiting / Dynamic Routing / Custom Costs → コスト・レイテンシを下げたい
+- **Security & Safety**: Guardrails / DLP / Authentication / BYOK → 機密情報・有害コンテンツを構造で防ぎたい
+- **Observability & Analytics**: Analytics / Logging / Custom Metadata → 部署 / ユーザー別の使用状況を可視化したい
 
 </div>
 
-<div class="border border-orange-500/30 rounded p-3">
+→ Gateway 経由を強制すれば、観測 / 統制 / コスト管理を後付けで実装する必要がなくなります。AI Sprawl の解決策の一つに。
 
-### Security & Safety
+::right::
 
-- **Guardrails** — 有害コンテンツの検出 / ブロック
-- **DLP** — PII / 財務情報をパターン検出 (`FLAG` / `BLOCK`)
-- **Authentication** — Gateway へのトークンベースアクセス制御
-- **BYOK** — provider API キーを集中暗号化管理 (20+ providers)
-
-</div>
-
-<div class="border border-orange-500/30 rounded p-3">
-
-### Observability & Analytics
-
-- **Analytics** — トークン / コスト / エラーを集計
-- **Logging** — 全 request / response の詳細ログ
-- **Custom Metadata** — `cf-aig-metadata` で user / team タグ
-
-</div>
-
-</div>
-
-<div class="mt-3 text-sm op-80">
-
-→ 「LLM SDK を直接叩く」をやめて Gateway 経由を強制すれば、観測 / 統制 / コスト管理を後付けで実装する必要がなくなります。
-
-</div>
+<img src="/ai-gateway-dynamic.png" alt="AI Gateway Dynamic Routing" class="w-full rounded border border-zinc-700/60 shadow-lg scale-[0.8]" />
 
 <!--
 AI Gateway は LLM 呼び出しの reverse proxy。Universal Endpoint で全プロバイダー
@@ -178,13 +173,9 @@ BYOK + Custom Costs + Guardrails の 3 つは特に効くポイント。Guardrai
 
 ---
 
-# AI Gateway も OTel — LLM スパンが同じトレースに繋がる
+## AI Gateway も OTel — LLM スパンが同じトレースに繋がる
 
 AI Gateway 経由の **全 LLM 呼び出し**を **Gen AI セマンティック規約**準拠の span として OTLP エクスポートできます。Workers Observability と組み合わせると、Worker → Gateway → LLM が **1 つのトレース**に束ねられます。
-
-<div class="grid grid-cols-2 gap-4 mt-4 text-sm">
-
-<div class="border border-orange-500/30 rounded p-3">
 
 ### 自動付与される span 属性
 
@@ -193,25 +184,11 @@ AI Gateway 経由の **全 LLM 呼び出し**を **Gen AI セマンティック�
 - `gen_ai.prompt_json` / `gen_ai.completion_json`
 - `cf-aig-metadata` ヘッダの値 (team / user 等)
 
-</div>
-
-<div class="border border-orange-500/30 rounded p-3">
-
 ### Trace Context 伝播
 
-Worker から `cf-aig-otel-trace-id` / `cf-aig-otel-parent-span-id` を渡せば、**Worker のトレースに LLM 呼び出しが直接ぶら下がります**
+Worker から `cf-aig-otel-trace-id` / `cf-aig-otel-parent-span-id` を渡せば、**Worker のトレースに LLM 呼び出しが直接ぶら下がります**。レイテンシ / コスト / モデル別使用量を **Worker のスパンと同じ画面で相関**できます。
 
-→ レイテンシ / コスト / モデル別使用量を **Worker のスパンと同じ画面で相関**
-
-</div>
-
-</div>
-
-<div class="mt-4 border border-orange-500/30 rounded p-3 text-sm">
-
-**設定**: AI Gateway ダッシュボード → Settings → OTel exporter で OTLP/JSON エンドポイントと認可ヘッダを登録 (Honeycomb など OTLP/JSON 対応バックエンド)
-
-</div>
+**設定**: AI Gateway ダッシュボード → Settings → OTel exporter で OTLP/JSON エンドポイントと認可ヘッダを登録（Honeycomb など OTLP/JSON 対応バックエンド）
 
 <!--
 AI Gateway は独自の OTLP エクスポート機能を持っていて、Gen AI セマンティック
@@ -229,39 +206,26 @@ gen_ai.usage に input_tokens / output_tokens、それからプロンプト本�
 
 ---
 
-# MCP Server Portal — MCP サーバーを統制する
+# MCP Server Portal
 
-組織内で乱立する MCP server (= LLM が叩く外部ツール群) を **中央集約してアクセス制御** する portal です。**Cloudflare Access** が認証 / 認可 / 監査を担当します。
+組織内で乱立する MCP server (= LLM が叩く外部ツール群) を **中央集約してアクセス制御** する portal。**Cloudflare Access** が認証 / 認可 / 監査を担当します。
 
-<div class="grid grid-cols-2 gap-4 mt-4 text-sm">
+- **集約 / 認証**: 1 portal URL に複数 MCP server / OAuth 2.0 / SSO・MFA
+- **3 軸ポリシー**: Identity × Conditions × Scope
+- **Code Mode**: tool 定義を 1 つに圧縮 → context window 削減
+- **監査ログ**: Access logs → SIEM / Logpush
 
-<div class="border border-orange-500/30 rounded p-3">
+<div class="grid grid-cols-2 gap-4 mt-4">
 
-### 集約 / 認証
+<img src="/mcp-server-portal.png" alt="MCP Server Portal" class="w-full rounded border border-zinc-700/60 shadow-lg" />
 
-- **1 つの portal URL に複数 MCP server を集約** (内部 + サードパーティ + SaaS 系)
-- **OAuth 2.0** (managed OAuth) で MCP クライアントを認証
-- **SSO / MFA** を前段に挟める (Access 経由)
-
-</div>
-
-<div class="border border-orange-500/30 rounded p-3">
-
-### 統制 / 最適化
-
-- **3 軸ポリシー**: Identity (誰が) / Conditions (どの条件で) / Scope (どの tool まで)
-- **Code Mode**: 全 tool 定義を 1 つの `code` tool に圧縮 → context window 削減
-- **監査ログ**: 全 tool 実行を Access logs に記録 → SIEM / Logpush 連携
+<img src="/mcp-auth.png" alt="MCP Auth" class="w-full rounded border border-zinc-700/60 shadow-lg" />
 
 </div>
 
-</div>
+→ **使い時**: Shadow MCP の防止 / 部署別の tool アクセス制御 / IDE エージェントの破壊操作の構造的封じ込め
 
-<div class="mt-4 text-sm op-80">
-
-→ "**Shadow MCP**" (社員が勝手にローカルで MCP server を立てて社内データに繋ぐ) を **構造で防ぎます**。観測対象を一元化することで、AI Gateway と合わせて 「LLM 層 + ツール層」の二重統制が成立します。
-
-</div>
+→ AI Gateway と合わせて「LLM 層 + ツール層」の二重統制が成立します。
 
 <!--
 MCP server portal は Cloudflare Access の AI controls 配下に提供されている機能で、
@@ -314,14 +278,10 @@ flowchart LR
 - API キー 1 個で完結 (`x-honeycomb-team` ヘッダ)
 - dataset は OTLP の `service.name` 属性で**自動分離**
 
-<div class="text-sm op-80 mt-3">
-
 ```
 OTLP Endpoint: https://api.honeycomb.io/v1/traces
 Custom Header: x-honeycomb-team: <HONEYCOMB_API_KEY>
 ```
-
-</div>
 
 <!--
 4 つの source のうち 3 つ (Workers Obs / AI Gateway / Logpush) は Honeycomb

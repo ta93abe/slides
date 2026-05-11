@@ -11,17 +11,17 @@ layout: section
 全世界 330+ 都市のエッジで動くサーバーレス実行基盤です。
 
 特徴:
-- **V8 Isolate**: VM コンテナの起動コストが不要、コールドスタートが構造的に発生しない
-- **anycast 配置**: ユーザー最寄りのエッジで処理、リージョン設計不要
-- **Binding**: SDK / 認証情報なしで env から Cloudflare サービスを直接呼べる (Capability-based)
-- **多様な実行起点**: HTTP / Cron Triggers / Queues / Workflows / Service Binding
+- **V8 Isolate**: 1 プロセス内で多数の isolate を切り替える実行モデル。VM / コンテナの起動オーバーヘッドが無く、isolate のコールドスタートは ms オーダー
+- **Global 配置 + anycast routing**: 1 deploy で 330+ 都市のエッジに同一バイナリを自動展開、リクエストは最寄り POP で実行（リージョン指定不要）
+- **Binding**: `wrangler.jsonc` で宣言したリソースを `env` から呼ぶ。SDK / 認証情報不要、Capability-based セキュリティ（宣言されていないリソースには触れない）
+- **多彩なトリガー**: HTTP / Cron / Queues / Workflows / Email / WebSocket / RPC / Tail
 
 <!--
 Cloudflare Workers の特徴を 4 つに整理:
 
 1. V8 Isolate 実行モデル: コンテナ + VM を毎回起動するのではなく、1 プロセス内で数百〜数千の isolate を切り替える方式。isolate の起動は数 ms 以下、メモリ消費もコンテナ型より 1 桁小さい (公式 docs より)。リクエストごとに VM 起動が要らない設計なので「コンテナ型のコールドスタート」が構造的に発生しない。
 
-2. anycast 配置: 全世界 330+ 都市のエッジに同じコードが展開され、リクエストはユーザー最寄りのノードで処理される。「どのリージョンに置くか」を選ぶ必要がない。
+2. anycast 配置: 全世界 330+ 都市のエッジに同じコードが展開され、リクエストはユーザー最寄りのノードで処理される。「どのリージョンに置くか」を選ぶ必要がない。R2 などのサービスは Location Hints で apac などの粒度でヒントを置くことができる。Cloudflareは保証しない。jurisdiction(ジュリスディクション)でGDPR / FedRAMP 対応用が指定できる。
 
 3. Binding: 他のサーバーレス系で典型的な「SDK + 認証情報でクライアントを生成して呼び出す」フローが要らない。wrangler.jsonc に Binding を宣言すると env.X.method() で呼べる。Capability-based セキュリティモデルで、宣言されていないリソースには触る手段が無い (構造的に最小権限)。
 
@@ -109,4 +109,11 @@ Cloudflare Access (Zero Trust 製品) を前段に挟むと認証ゲートを掛
 ドキュメントの限定配信に使える。Free プランは小規模 (現時点では 50 ユーザー
 まで無料) で個人 / チーム用途に向く。料金は変動するので Cloudflare の料金ページ
 を案内する。
+
+さらに Browser Run (旧 Browser Rendering) を使えば、配信した静的サイトを Worker
+から逆に開ける。HTTP の Quick Actions で screenshot / PDF / Markdown / AI-powered
+JSON 抽出がワンショット、Browser Sessions で Puppeteer / Playwright / CDP による
+精密制御も可能。dbt docs を変更検知でスクリーンショット差分、Markdown や
+JSON 抽出で LLM agent に最新の表構造を読ませて質問応答、といった「配信 +
+読み取り」を同じ Cloudflare 内で閉じるパターンが組める。
 -->

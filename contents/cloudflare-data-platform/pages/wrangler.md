@@ -29,6 +29,25 @@ Cloudflare の文脈で kumo というと [Kumo UI](https://kumo-ui.com/) とい
 </div>
 
 <!--
+wrangler dev のローカル忠実度:
+- ランタイムは本番と同じ workerd (V8 isolate / Workers Runtime API / compatibility flags) なので
+  コードロジックの挙動は本番とほぼ一致。
+- Bindings (R2 / D1 / KV / Durable Objects / Vectorize / Queues 等) は Miniflare で
+  ローカル simulate され、データは .wrangler/state/v3/ に persist。本番と "別データ" だが
+  API としては動く (workerd 内部の実装をそのまま使う simulation で、API 再実装ではない):
+  - D1 はほぼ本番同等 (本番 D1 も SQLite ベース)
+  - R2 / KV / DO / Vectorize は機能的に近似だが本番のスケール / 整合性特性は再現されない
+  - Workers AI / AI Gateway は GPU 推論が必要なので常に本番にリモート呼び出し
+  - Hyperdrive は裏 DB に直結 (pool / cache 効果は再現されない)
+- 再現されないのは edge プラットフォーム層: anycast / 330+ POP / Smart Placement /
+  edge cache / `cf` オブジェクトの実値 / 厳格な CPU / メモリ制限 / マルチテナント
+  スケジューリング 等。
+- 本番データに直接当てたければ `wrangler dev --remote` か wrangler.jsonc の binding に
+  `experimental_remote: true` を付ける (production データに直接アクセスするので破壊操作注意)。
+- 本文の主張: 「サードパーティ系は API 再実装でしかなく挙動乖離リスクあり、wrangler は本物の
+  workerd を持ってきている」。Bindings simulation も workerd 内部の本物の実装で動くので
+  API 再実装系より忠実度が高い、というのがキモ。「edge 環境ごとローカル」ではない点だけ補足。
+
 cf CLI 補足:
 Wrangler と並行して Cloudflare が公開した新 CLI。約 3,000 API 操作を 1 CLI に
 まとめ、Cloudflare REST API のほぼ全域をカバーする。TypeScript スキーマから
@@ -102,7 +121,7 @@ https://github.com/cloudflare/skills
 - **Terraform** プロバイダーで多くのサービスを宣言的に定義できます。
   - https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs
 - **Alchemy** は TypeScript ネイティブな IaC で、Workers と同じ言語で完結します。Binding がすごく書きやすい。
-  - https://v2.alchemy.run (v2 ドキュメント)
+  - https://v2.alchemy.run
 
 `wrangler` コマンドで簡単に作成・編集・削除できますが、IaC で管理したい場面もあります。
 

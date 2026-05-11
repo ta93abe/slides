@@ -10,6 +10,8 @@ layout: section
 -->
 
 ---
+layout: center
+---
 
 - まずは cloudflare.com にたどり着きましょう。
 - 無事たどり着いて管理画面に入ったら **Agent Lee** が迎えてくれます。

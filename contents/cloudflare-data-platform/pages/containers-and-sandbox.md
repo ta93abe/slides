@@ -6,17 +6,26 @@ layout: two-cols-header
 
 ::left::
 
-Workers では **128 MB** の制限があります。
+Workers では **128 MB** の実行メモリ制限があります。
 
 そこで Containers を使えば、この制約を突破できます。
-任意の Dockerfile で dbt の実行環境を定義できます。
+例えば dbt の実行環境を定義できます。
+
+
+<v-clicks>
 
 Cloudflare で完結させるメリットは次のとおりです。
+
+<div class="text-xs">
+
 - アーティファクトを **R2 に Binding 経由**で永続化
 - Workers を R2 のリバースプロキシとして dbt docs を配信
 - Cloudflare Access で社内限定配信
 - **Workers Secrets** または **Secrets Store** が `wrangler.jsonc` に集約
 - Workers Observability でログを一元管理
+
+</div>
+</v-clicks>
 
 ::right::
 
@@ -88,13 +97,23 @@ layout: two-cols-header
 Containers と同じ microVM 基盤の上で動く、**ephemeral・per-request** な隔離実行環境です。
 
 Containers との対比:
+
+<div class="text-xs">
+
 - Containers = **常駐サービス**（dbt / バッチ / 長時間処理）
 - Sandbox = **per-request の隔離環境**（LLM 生成コードの実行 / ユーザースクリプト）
 
+</div>
+
 典型用途は **AI が書いたコードを安全に走らせる場**です。
+
+<div class="text-xs">
+
 - LLM が出した Python / JS / Bash を一時環境で実行
 - ファイル書き込み / プロセス起動 / ネットワーク制御を SDK で操作
 - 実行が終われば破棄、state を持たない
+
+</div>
 
 ::right::
 
