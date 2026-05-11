@@ -1,0 +1,30 @@
+{
+  "cli_version": "0.6.0",
+  "checkpoint_id": "e30db1e654cd",
+  "strategy": "manual-commit",
+  "branch": "cfdp/fact-check-fixes",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/containers-and-sandbox.md",
+    "contents/cloudflare-data-platform/pages/data-platform.md",
+    "contents/cloudflare-data-platform/pages/observability.md",
+    "contents/cloudflare-data-platform/pages/workers.md",
+    "contents/cloudflare-data-platform/pages/workflows.md",
+    "contents/cloudflare-data-platform/pages/wrangler.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/e3/0db1e654cd/0/metadata.json",
+      "transcript": "/e3/0db1e654cd/0/full.jsonl",
+      "content_hash": "/e3/0db1e654cd/0/content_hash.txt",
+      "prompt": "/e3/0db1e654cd/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 244,
+    "cache_creation_tokens": 26711,
+    "cache_read_tokens": 15749426,
+    "output_tokens": 17911,
+    "api_call_count": 18
+  }
+}
