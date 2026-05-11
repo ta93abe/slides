@@ -4,7 +4,7 @@
 // 2. pnpm -r --filter "./contents/*" run build
 // 3. Generate slides.json (index for the homepage)
 
-import { execSync, execFileSync } from "node:child_process";
+import { execFileSync } from "node:child_process";
 import { readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";

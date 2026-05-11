@@ -4,7 +4,7 @@
 // Invoked from a slide directory by its package.json `build` script.
 
 import { execFileSync } from "node:child_process";
-import { cp, mkdir, copyFile } from "node:fs/promises";
+import { cp, mkdir, copyFile, rm } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -29,6 +29,7 @@ const stalePath = join(distStaleDir, slideId);
 // 1. dist-stale cache: if a previous build exists, copy it over and skip slidev.
 if (existsSync(stalePath)) {
   console.log(`[${slideId}] using dist-stale cache (delete dist-stale/${slideId} to rebuild)`);
+  await rm(outDir, { recursive: true, force: true });
   await mkdir(dirname(outDir), { recursive: true });
   await cp(stalePath, outDir, { recursive: true });
   process.exit(0);

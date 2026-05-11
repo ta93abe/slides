@@ -46,7 +46,7 @@ pnpm build
 ├── src/
 │   └── index.js                   # Cloudflare Worker handler (/ → ta93abe.com/slides 302)
 ├── pnpm-workspace.yaml            # workspaces + catalog (依存バージョン統一)
-├── wrangler.toml                  # Cloudflare Workers (assets + main handler)
+├── wrangler.jsonc                  # Cloudflare Workers (assets + main handler)
 ├── dist-stale/                    # 過去ビルドキャッシュ（gitignore、削除で再ビルド）
 └── dist/                          # ビルド成果物（gitignore）
     ├── <slide-name>/              # 各スライドの SPA

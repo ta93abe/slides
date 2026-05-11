@@ -49,6 +49,11 @@ for (const id of await readdir(contentsDir)) {
 // Newest first.
 choices.sort((a, b) => (b._date || "").localeCompare(a._date || ""));
 
+if (choices.length === 0) {
+  console.error("[picker] no slides found in contents/ (need package.json with a `slidev` field)");
+  process.exit(1);
+}
+
 const { id } = await prompts({
   type: "select",
   name: "id",
