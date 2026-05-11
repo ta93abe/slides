@@ -109,7 +109,7 @@ https://github.com/cloudflare/skills
 
 - **llms.txt** を提供しています。（LLM フレンドリー）
 - https://isitagentready.com/developers.cloudflare.com
-- Changelog を週次更新しています。（RSSで購読できて嬉しい。）
+- Changelog を頻繁に更新しています。（RSSで購読できて嬉しい。）
 - ブログもプロダクトの裏側が書かれていたりして参考になります。
 
 ---

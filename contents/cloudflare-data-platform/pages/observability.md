@@ -51,7 +51,7 @@ dashboard と API で **何が / どれくらい / どう動いたか** を測�
 
 - **Built-in メトリクス**: Requests / Subrequests / Wall Time / CPU Time / Execution Duration（保持 3 ヶ月）→ Worker の基本健康状態を把握
 - **GraphQL Analytics API**: 1 endpoint で Workers / KV / D1 / Workflows などを横断クエリ → 複数プロダクト集計・カスタムダッシュボード
-- **Workers Analytics Engine**: アプリ独自の高カーディナリティ時系列（保持 90 日、ClickHouse ベース）→ 業務メトリクス・per-user / per-tenant 計測
+- **Workers Analytics Engine**: アプリ独自の高カーディナリティ時系列（保持 90 日、ClickHouse-like な columnar store）→ 業務メトリクス・per-user / per-tenant 計測
 
 → Worker から **OpenTelemetry SDK で custom metrics を push** も可能（built-in は GraphQL / SQL API 経由）。
 
@@ -274,7 +274,7 @@ flowchart LR
 ```
 
 - **Honeycomb** は OpenTelemetry リファレンスバックエンド
-- Workers Observability の **Day 1 サポート対象** (Grafana / Honeycomb / Sentry / Axiom)
+- Workers Observability の **公式サポート対象** (Grafana / Honeycomb / Sentry / Axiom)
 - API キー 1 個で完結 (`x-honeycomb-team` ヘッダ)
 - dataset は OTLP の `service.name` 属性で**自動分離**
 
@@ -291,8 +291,8 @@ Analytics Engine だけは OTel ではなく Cloudflare 内 SQL API なので、
 Honeycomb に直送する標準機能は無い。SQL でクエリした結果を別途取り込む形に
 なる (アプリ独自の業務メトリクスは Cloudflare 内で完結させる方が自然な選択)。
 Honeycomb は OpenTelemetry プロジェクトの主要貢献者で "observability" 概念の
-伝道元、OTel-native 設計が一番自然に刺さる。Cloudflare 公式の Day 1 サポート
-対象なのでドキュメントも揃っている。
+伝道元、OTel-native 設計が一番自然に刺さる。Cloudflare の公式サポート対象
+バックエンドの一つでドキュメントも揃っている。
 設定は API キー 1 個を x-honeycomb-team ヘッダに入れるだけ。dataset (Honeycomb
 内の論理区切り) は OTLP の service.name で自動分離されるので、他の宛先と比べて
 最も簡素。

@@ -60,31 +60,33 @@ export class ImageProcessingWorkflow extends WorkflowEntrypoint {
 </style>
 
 <!--
-R2 アップロードを起点とする AI Agent パターン。R2 Event Notifications で
-オブジェクト作成イベントが発火 → Cloudflare Queues に通知 → Queue Consumer
-Worker が env.AGENT.create({ key }) で Workflow を起動、という経路。
+R2 アップロードを起点とする画像処理 + 人間承認パターン。R2 Event Notifications
+でオブジェクト作成イベントが発火 → Cloudflare Queues に通知 → Queue Consumer
+Worker が env.IMAGE_WORKFLOW.create({ id, params: { imageKey } }) で
+Workflow を起動、という経路。
 
-コード例の ImageAgent は 4 step の DAG:
-(1) fetch from R2: 対象オブジェクトを arrayBuffer で取得
-(2) describe: Workers AI の vision モデル LLaVA で画像の説明文を生成
-(3) embed: BGE で説明文を embedding ベクトル化
-(4) upsert to Vectorize: key + ベクトル + メタデータを Vectorize に保存
+コード例の ImageProcessingWorkflow は 4 step の DAG:
+(1) fetch image: 対象オブジェクトを R2 から arrayBuffer で取得
+(2) generate description: Workers AI の vision モデル LLaVA で 1 文の説明を生成
+(3) await approval: step.waitForEvent で人間承認を 24h durable に待つ
+(4) publish: 承認後に public/ ディレクトリへ R2 で再 put
 
-これによって「画像にテキストで検索できるインデックス」が自動構築される。
-"赤いスニーカーの画像を探して" のような自然言語クエリで類似画像を引ける。
+step.waitForEvent は外部から sendEvent API で進行する。実用パターンは
+「Slack の承認ボタン → Worker が instance.sendEvent({ type: 'approved' })」。
+24h 以内に承認が来なければ throw されるので try/catch で reject 分岐できる。
 
 LLM 呼び出しの第 3 引数 gateway: { id: "image-agent" } で AI Gateway を
 経由するので、DLP / Cache / Fallback / Metadata が自動で効く (後の observability
 章の AI Gateway スライドと連動)。
 
-各 step は失敗時に自動リトライ (デフォルト exponential backoff)。LLaVA や
-BGE の推論タイムアウト、Vectorize の一時的なエラーがあっても、進行状況は
-永続化されているので途中の step から再開する。Worker 自体が再起動しても
+各 step は失敗時に自動リトライ (デフォルト exponential backoff)。LLaVA の
+推論タイムアウト、外部 API の一時的なエラーがあっても、進行状況は永続化
+されているので途中の step から再開する。Worker 自体が再起動しても
 同じ instance ID で続きが走る。
 
-応用: step.waitForEvent を describe と embed の間に挟めば「説明文を人間が
-承認してから index 化する」フローになる、step.sleep で「N 時間後にもう一度
-別モデルで再分析」のような時間制御もできる、と組合せが効く。
+応用: step.sleep で「N 時間後にもう一度別モデルで再分析」のような時間制御も
+できる。embed → upsert to Vectorize の step を追加すれば「説明文を embedding
+ベクトル化して類似検索インデックス化」する拡張も可能。
 
 位置付けとしては Airflow / Temporal / AWS Step Functions と同じ durable
 workflow engine カテゴリだが、Worker の Binding (R2 / AI / D1 / Vectorize /

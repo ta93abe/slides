@@ -39,7 +39,7 @@ Cloudflare Workers の特徴を 4 つに整理:
 ```jsonc
 // wrangler.jsonc — 使うサービスを宣言
 "r2_buckets":   [{ "binding": "BUCKET", "bucket_name": "data-lake" }],
-"d1_databases": [{ "binding": "DB",     "database_name": "events" }],
+"d1_databases": [{ "binding": "DB",     "database_name": "events", "database_id": "..." }],
 "ai":            { "binding": "AI" }
 ```
 
