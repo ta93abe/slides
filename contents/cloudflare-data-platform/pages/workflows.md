@@ -60,40 +60,16 @@ export class ImageProcessingWorkflow extends WorkflowEntrypoint {
 </style>
 
 <!--
-R2 アップロードを起点とする画像処理 + 人間承認パターン。R2 Event Notifications
-でオブジェクト作成イベントが発火 → Cloudflare Queues に通知 → Queue Consumer
-Worker が env.IMAGE_WORKFLOW.create({ id, params: { imageKey } }) で
-Workflow を起動、という経路。
+Cloudflare Workflows は耐久性のある実行エンジンです。
+ステップを連鎖させて、失敗時は自動でリトライ、長時間プロセスの状態を永続化します。
 
-コード例の ImageProcessingWorkflow は 4 step の DAG:
-(1) fetch image: 対象オブジェクトを R2 から arrayBuffer で取得
-(2) generate description: Workers AI の vision モデル LLaVA で 1 文の説明を生成
-(3) await approval: step.waitForEvent で人間承認を 24h durable に待つ
-(4) publish: 承認後に public/ ディレクトリへ R2 で再 put
+右のコードは画像処理ワークフローの例です。
+R2 から画像を取得、
+Workers AI の LLaVA で説明文を生成、
+人間の承認を 24 時間 durable に待つ、
+承認されたら公開ディレクトリに publish。
 
-step.waitForEvent は外部から sendEvent API で進行する。実用パターンは
-「Slack の承認ボタン → Worker が instance.sendEvent({ type: 'approved' })」。
-24h 以内に承認が来なければ throw されるので try/catch で reject 分岐できる。
-
-LLM 呼び出しの第 3 引数 gateway: { id: "image-agent" } で AI Gateway を
-経由するので、DLP / Cache / Fallback / Metadata が自動で効く (後の observability
-章の AI Gateway スライドと連動)。
-
-各 step は失敗時に自動リトライ (デフォルト exponential backoff)。LLaVA の
-推論タイムアウト、外部 API の一時的なエラーがあっても、進行状況は永続化
-されているので途中の step から再開する。Worker 自体が再起動しても
-同じ instance ID で続きが走る。
-
-応用: step.sleep で「N 時間後にもう一度別モデルで再分析」のような時間制御も
-できる。embed → upsert to Vectorize の step を追加すれば「説明文を embedding
-ベクトル化して類似検索インデックス化」する拡張も可能。
-
-位置付けとしては Airflow / Temporal / AWS Step Functions と同じ durable
-workflow engine カテゴリだが、Worker の Binding (R2 / AI / D1 / Vectorize /
-Pipelines / Hyperdrive) を step 内でそのまま叩けるのが Cloudflare ならではの
-強み。AI Agents SDK との統合も進んでいて、Agent が長時間タスクを Workflow に
-委譲するパターンが推奨される (Agent は WebSocket でリアルタイム応答、重い処理は
-Workflow に渡してリトライ + durable 実行)。
+各ステップで Workers Binding がそのまま使えるのが Cloudflare ならではの強みです。
 -->
 
 ---
@@ -125,18 +101,13 @@ Cloudflare ダッシュボードが Workflow コードを parse し、**step / �
 </div>
 
 <!--
-2026 年 2 月にリリースされた機能。dashboard で対象 Workflow を開くと、コードから
-パースされた DAG が自動で描画される。手動でフロー図を書く必要がない。
-Airflow の DAG view に相当する機能で、複雑な並列・分岐・ループを目視で確認
-できるのは運用上強い。SLO / インシデント対応で「この workflow が今どこまで
-進んでいるか」を見るときの第一歩になる。
-ループやネスト構造は collapse / expand できるので、ハイレベル概要 → 詳細を
-切り替えて見られる。1000 step を超えるような大規模 workflow でも navigate
-しやすい。
-ただし現時点では JS/TS Workflows のみで、Python Workflows は未対応 (Python の
-decorator-based DAG を解析する実装がまだ追いついていない、というのが推測)。
-非デフォルト bundler を使った Workflows は予期しない挙動の場合あり、と公式に
-注意書きがある。
+2026 年 2 月にリリースされた機能です。
+Workflow コードをダッシュボードがパースして、
+step・並列・条件分岐・ループの DAG を自動描画してくれます。
+
+右図は dbt build を Workflows で実行した例。
+loop / try-catch / retry-backoff を含むパイプラインを一画面で俯瞰できます。
+Airflow の DAG View に相当します。
 -->
 
 ---
@@ -202,19 +173,13 @@ class IngestWorkflow(WorkflowEntrypoint):
 </style>
 
 <!--
-2025 年 8 月から Beta。同じ Cloudflare Workflows を Python で書ける。
-特徴的なのは「DAG を関数パラメータ名で表現」する設計: 例えば merge 関数の
-引数 fetch_a が定義済 step と同名なら、その step が完了してから merge が
-実行される、という依存関係に解釈される。明示的な depends=[...] も書けるが、
-新規コードはパラメータ名解決を推奨。
-concurrent=True で diamond shaped DAG (2 つの step が並列で動いて、3 つ目で
-合流する) が自然に書ける。`@step.do(concurrent=True)` を付けた step は
-依存先がまだ完了していなければ並列で起動を試みる。
-Workers AI Python ランタイムや LangChain との組み合わせで AI Workflow を
-書く想定。pyproject.toml に依存パッケージを書くと、Python Worker 同様に
-deploy 時に Pyodide snapshot に展開される。
-ビジュアライザ未対応なので、今のところダッシュボードではコード視点 + instance
-履歴でしか確認できない。
-TypeScript と Python のどちらを選ぶかは: 既存資産が JS/TS なら前者、Python
-ML / data 系の処理を多く挟むなら後者、というのが現実的な切り分け。
+2025 年 8 月から Beta で、同じ Workflows を Python で書けます。
+
+特徴的なのは DAG の表現方法です。
+merge 関数の引数名が fetch_a で、定義済みステップと同名なら、
+それが完了してから merge が実行される、という風に
+引数名で依存を暗黙解決します。
+
+concurrent=True を付ければ、diamond shaped DAG が宣言的に書けます。
+Python の ML / data 系処理と相性がいい設計です。
 -->

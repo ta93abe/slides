@@ -23,6 +23,13 @@ layout: cover
 
 ## 阿部拓海
 
+<!--
+はじめまして、阿部拓海です。
+今日は「Cloudflare で始める Data Platform」というタイトルで、10 分お時間いただきます。
+Cloudflare のサービスを組み合わせて、データ基盤を実際にどう作るか。
+基礎から観測・統制までを駆け足で通します。
+-->
+
 ---
 src: ./pages/data-platform.md
 ---

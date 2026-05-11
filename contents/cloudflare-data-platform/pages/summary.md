@@ -5,8 +5,7 @@ layout: section
 # まとめ
 
 <!--
-ここまでで Cloudflare Data Platform の全体像 — 基礎 (Workers / Workflows) → 実行環境 (Containers / Sandbox) → 観測 + 統制 (Observability + AI Gateway / MCP Server Portal) → 開発者体験 (Wrangler / IaC) を流した。
-最後に、聴衆が何を持ち帰って、何から手を動かせばいいかをセクション扉 + 箇条書きの 2 枚で締める。
+まとめに入ります。
 -->
 
 ---
@@ -21,3 +20,19 @@ layout: center
   - 日常のちょっとしたことを Workers で実装してみる
   - R2 Data Catalog は Iceberg を始めるには結構お手軽です
 - 次回は商用環境でのユースケースを聞けたらうれしいです。
+
+<!--
+今日の内容で、まず手を動かすなら。
+
+最初の一歩は cloudflare.com にたどり着くことです。
+管理画面に入ると Agent Lee が出迎えてくれます。
+
+こんな始め方もあります。
+ドメインを購入する、
+個人サイトやブログを Astro と Workers でホスティングする、
+日常のちょっとしたことを Workers で実装してみる、
+R2 Data Catalog で Iceberg を始めてみる、など。
+
+次回登壇する機会があれば、商用環境でのユースケースが聞けると嬉しいです。
+ご清聴ありがとうございました。
+-->
