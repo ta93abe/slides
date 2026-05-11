@@ -8,7 +8,7 @@ layout: section
 
 # Cloudflare Workers
 
-Cloudflare Developer Platform を支える一番基本的なサービスです。
+全世界 330+ 都市のエッジで動くサーバーレス実行基盤です。
 
 特徴:
 - **V8 Isolate**: 1 プロセス内で多数の isolate を切り替える実行モデル。VM / コンテナの起動オーバーヘッドが無く、isolate のコールドスタートは ms オーダー
