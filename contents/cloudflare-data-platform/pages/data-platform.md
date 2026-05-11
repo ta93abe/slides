@@ -72,6 +72,8 @@ Pipelines SQL は DataFusion をベースにしている。ドキュメントに
 -->
 
 ---
+layout: two-cols-header
+---
 
 # R2 — オブジェクトストレージ
 
@@ -79,15 +81,14 @@ Pipelines SQL は DataFusion をベースにしている。ドキュメントに
 wrangler r2 bucket create < bucket-name >
 ```
 
-<div class="grid grid-cols-2 gap-6 mt-4">
-<div>
+::left::
 
 - **Really Requestable**: エグレスコストがゼロ。ストレージ、Class A (write), Class B (read) も他のプロバイダーより安価。
 - **Repositioning Records**: S3 互換 API を提供していて、既存のツールや SDK がそのまま使える。
 - **Ridiculously Reliable**: 99.999999999% (イレブンナイン) の耐久性、99.9% の可用性。
 - **Radically Reprogrammable**: Workers Binding 統合。
 
-</div>
+::right::
 
 <div
   v-click
@@ -96,8 +97,6 @@ wrangler r2 bucket create < bucket-name >
   :enter="{ y: 0, opacity: 1, transition: { duration: 600, ease: [0.16, 1, 0.3, 1] } }"
 >
   <Tweet id="1442879872154566658" />
-</div>
-
 </div>
 
 <!--
