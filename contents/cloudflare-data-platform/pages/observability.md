@@ -29,6 +29,8 @@ Worker が出すログ (`workers_trace_events`) を、用途で 4 経路に振�
 
 → **Invocation logs / Custom logs / Errors / Uncaught exceptions** が共通の元データ。`console.log` を JSON object にすると自動でフィールド抽出。
 
+→ Workers Observability の Destinations から **OpenTelemetry 互換**でエクスポート可能。
+
 <!--
 4 経路の選択指針:
 - ダッシュボードで普通に見たい → Workers Logs (GA、保持 7 日、JSON 自動抽出)
@@ -50,6 +52,8 @@ dashboard と API で **何が / どれくらい / どう動いたか** を測�
 - **Built-in メトリクス**: Requests / Subrequests / Wall Time / CPU Time / Execution Duration（保持 3 ヶ月）→ Worker の基本健康状態を把握
 - **GraphQL Analytics API**: 1 endpoint で Workers / KV / D1 / Workflows などを横断クエリ → 複数プロダクト集計・カスタムダッシュボード
 - **Workers Analytics Engine**: アプリ独自の高カーディナリティ時系列（保持 90 日、ClickHouse ベース）→ 業務メトリクス・per-user / per-tenant 計測
+
+→ Worker から **OpenTelemetry SDK で custom metrics を push** も可能（built-in は GraphQL / SQL API 経由）。
 
 <!--
 Built-in メトリクスは Workers Paid プラン込みで追加課金なし。
@@ -75,7 +79,7 @@ Analytics Engine は OTel 経路に乗らないが、無制限カーディナリ
 
 - **自動 span**: Fetch / Binding (KV / R2 / DO) / Handler (`fetch` / `scheduled` / `queue`)
 - **共通属性**: `cloud.*` / `faas.*` / `service.name` / `cloudflare.*` / `telemetry.sdk.*`
-- **OTLP-compatible バックエンドに直送**、`head_sampling_rate` 0〜1 でコスト調整
+- **OpenTelemetry 互換バックエンドに直送**（OTLP HTTP）、`head_sampling_rate` 0〜1 でコスト調整
 
 → **使い時**: ボトルネック特定 / 外部依存のレイテンシ可視化 / リクエスト全体のライフサイクル追跡
 
@@ -104,16 +108,28 @@ Paid 10M/月込み。料金は最新を要確認。
 -->
 
 ---
+layout: two-cols-header
+---
 
 # AI Gateway
 
 **Universal Endpoint** で全 LLM プロバイダーを 1 経路に集約。**Fallback / Retry** 込みで以下の 3 カテゴリ・11 機能を一括導入できます。
 
+::left::
+
+<div class="text-xs">
+
 - **Performance & Cost**: Caching / Rate Limiting / Dynamic Routing / Custom Costs → コスト・レイテンシを下げたい
 - **Security & Safety**: Guardrails / DLP / Authentication / BYOK → 機密情報・有害コンテンツを構造で防ぎたい
 - **Observability & Analytics**: Analytics / Logging / Custom Metadata → 部署 / ユーザー別の使用状況を可視化したい
 
-→ Gateway 経由を強制すれば、観測 / 統制 / コスト管理を後付けで実装する必要がなくなります。
+</div>
+
+→ Gateway 経由を強制すれば、観測 / 統制 / コスト管理を後付けで実装する必要がなくなります。AI Sprawl の解決策の一つに。
+
+::right::
+
+<img src="/ai-gateway-dynamic.png" alt="AI Gateway Dynamic Routing" class="w-full rounded border border-zinc-700/60 shadow-lg scale-[0.8]" />
 
 <!--
 AI Gateway は LLM 呼び出しの reverse proxy。Universal Endpoint で全プロバイダー
@@ -157,7 +173,7 @@ BYOK + Custom Costs + Guardrails の 3 つは特に効くポイント。Guardrai
 
 ---
 
-# AI Gateway も OTel — LLM スパンが同じトレースに繋がる
+## AI Gateway も OTel — LLM スパンが同じトレースに繋がる
 
 AI Gateway 経由の **全 LLM 呼び出し**を **Gen AI セマンティック規約**準拠の span として OTLP エクスポートできます。Workers Observability と組み合わせると、Worker → Gateway → LLM が **1 つのトレース**に束ねられます。
 
@@ -198,6 +214,14 @@ gen_ai.usage に input_tokens / output_tokens、それからプロンプト本�
 - **3 軸ポリシー**: Identity × Conditions × Scope
 - **Code Mode**: tool 定義を 1 つに圧縮 → context window 削減
 - **監査ログ**: Access logs → SIEM / Logpush
+
+<div class="grid grid-cols-2 gap-4 mt-4">
+
+<img src="/mcp-server-portal.png" alt="MCP Server Portal" class="w-full rounded border border-zinc-700/60 shadow-lg" />
+
+<img src="/mcp-auth.png" alt="MCP Auth" class="w-full rounded border border-zinc-700/60 shadow-lg" />
+
+</div>
 
 → **使い時**: Shadow MCP の防止 / 部署別の tool アクセス制御 / IDE エージェントの破壊操作の構造的封じ込め
 
