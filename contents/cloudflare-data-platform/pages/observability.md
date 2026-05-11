@@ -215,11 +215,11 @@ gen_ai.usage に input_tokens / output_tokens、それからプロンプト本�
 - **Code Mode**: tool 定義を 1 つに圧縮 → context window 削減
 - **監査ログ**: Access logs → SIEM / Logpush
 
-<div class="grid grid-cols-2 gap-4 mt-4">
+<div class="grid grid-cols-2 gap-3 mt-2">
 
-<img src="/mcp-server-portal.png" alt="MCP Server Portal" class="w-full rounded border border-zinc-700/60 shadow-lg" />
+<img src="/mcp-server-portal.png" alt="MCP Server Portal" class="w-full h-[130px] object-contain rounded border border-zinc-700/60 shadow-lg" />
 
-<img src="/mcp-auth.png" alt="MCP Auth" class="w-full rounded border border-zinc-700/60 shadow-lg" />
+<img src="/mcp-auth.png" alt="MCP Auth" class="w-full h-[130px] object-contain rounded border border-zinc-700/60 shadow-lg" />
 
 </div>
 
@@ -260,18 +260,14 @@ tool を Scope から外す + AI Gateway で DLP に「DROP TABLE 等の SQL パ
 -->
 
 ---
+layout: two-cols-header
+---
 
 # OTLP で Honeycomb へ送る
 
 Workers Observability / AI Gateway は **OTLP HTTP** で外部バックエンドにそのまま送れます。Logpush は HTTP destination で Honeycomb の Logpush integration に直送できます。
 
-```mermaid
-flowchart LR
-    W["Worker<br/>r2 / d1 / fetch / AI"] -->|自動計装| WO["Workers Observability"]
-    AIG["AI Gateway<br/>LLM 呼び出し"] -->|OTLP/JSON| HC
-    LP["Logpush<br/>http / waf / traces"] -->|HTTP| HC
-    WO -->|OTLP HTTP<br/>x-honeycomb-team| HC["Honeycomb<br/>traces + logs"]
-```
+::left::
 
 - **Honeycomb** は OpenTelemetry リファレンスバックエンド
 - Workers Observability の **公式サポート対象** (Grafana / Honeycomb / Sentry / Axiom)
@@ -281,6 +277,16 @@ flowchart LR
 ```
 OTLP Endpoint: https://api.honeycomb.io/v1/traces
 Custom Header: x-honeycomb-team: <HONEYCOMB_API_KEY>
+```
+
+::right::
+
+```mermaid
+flowchart TB
+    W["Worker<br/>r2 / d1 / fetch / AI"] -->|自動計装| WO["Workers Observability"]
+    AIG["AI Gateway<br/>LLM 呼び出し"] -->|OTLP/JSON| HC
+    LP["Logpush<br/>http / waf / traces"] -->|HTTP| HC
+    WO -->|OTLP HTTP<br/>x-honeycomb-team| HC["Honeycomb<br/>traces + logs"]
 ```
 
 <!--
