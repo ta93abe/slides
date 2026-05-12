@@ -62,9 +62,13 @@ durability.md は本登壇から一時的に除外中 (pages/durability.md は�
   ---
 -->
 
----
-src: ./pages/observability.md
----
+<!--
+observability.md は 10 分尺に収めるため本登壇から一時的に除外中 (pages/observability.md は保持)。
+復活させたい場合は以下のブロックをこの直下に追加 (インデントを外す):
+  ---
+  src: ./pages/observability.md
+  ---
+-->
 
 ---
 src: ./pages/wrangler.md
