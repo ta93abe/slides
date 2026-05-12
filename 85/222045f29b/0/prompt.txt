@@ -1,0 +1,26 @@
+/pr review
+
+---
+
+tail workerについて詳しく教えて
+
+---
+
+すらいどの改善案ある？
+
+---
+
+QAの時間はない
+
+---
+
+Honeycomb にエクスポートされていることを確かめるためにCloudflareのダッシュボードとHoneycombで同じデータが見れることを確認したい。
+
+---
+
+Intelligence を ONにしたけどまだチームを選択できない
+
+---
+
+claude mcp add honeycomb --transport http https://mcp.honeycomb.io/mcp
+これ設定したんだけど削除したい。
