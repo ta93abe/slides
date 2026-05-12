@@ -1,0 +1,75 @@
+{
+  "cli_version": "0.6.1",
+  "checkpoint_id": "3d01b6992846",
+  "session_id": "3d4ea9cb-eabe-4a37-86cb-bba684fd4ef3",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-12T09:39:18.596245Z",
+  "branch": "cfdp/links-and-r2-pricing-clarify",
+  "checkpoints_count": 3,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/data-platform.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "b8fc0cb2923f",
+  "checkpoint_transcript_start": 212,
+  "transcript_lines_at_start": 212,
+  "token_usage": {
+    "input_tokens": 88,
+    "cache_creation_tokens": 142935,
+    "cache_read_tokens": 8954715,
+    "output_tokens": 39864,
+    "api_call_count": 48
+  },
+  "session_metrics": {
+    "turn_count": 12
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-12T09:39:18.575581Z",
+    "agent_lines": 0,
+    "agent_removed": 1,
+    "human_added": 84,
+    "human_modified": 14,
+    "human_removed": 0,
+    "total_committed": 85,
+    "total_lines_changed": 252,
+    "agent_percentage": 0.3968253968253968,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 1,
+      "user_lines_removed": 1,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        "contents/cloudflare-data-platform/pages/data-platform.md": 1
+      },
+      "user_removed_per_file": {
+        "contents/cloudflare-data-platform/pages/data-platform.md": 1
+      }
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 1,
+      "agent_lines_removed": 1
+    },
+    {
+      "checkpoint_number": 3,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 2,
+      "agent_lines_removed": 2
+    },
+    {
+      "checkpoint_number": 4,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 2,
+      "agent_lines_removed": 2
+    }
+  ]
+}

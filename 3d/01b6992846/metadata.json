@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.6.1",
+  "checkpoint_id": "3d01b6992846",
+  "strategy": "manual-commit",
+  "branch": "cfdp/links-and-r2-pricing-clarify",
+  "checkpoints_count": 3,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/data-platform.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/3d/01b6992846/0/metadata.json",
+      "transcript": "/3d/01b6992846/0/full.jsonl",
+      "content_hash": "/3d/01b6992846/0/content_hash.txt",
+      "prompt": "/3d/01b6992846/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 88,
+    "cache_creation_tokens": 142935,
+    "cache_read_tokens": 8954715,
+    "output_tokens": 39864,
+    "api_call_count": 48
+  }
+}
