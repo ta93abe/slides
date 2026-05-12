@@ -163,7 +163,7 @@ R2 Data Catalog の Iceberg テーブルに標準 SQL を実行できる、Cloud
 
 基本的な演算はできますが、JOIN や WINDOW 関数はまだ対応していません。ベータ版で開発真っ只中。
 
-実行方法は [**Wrangler**](https://developers.cloudflare.com/workers/wrangler/) と [**HTTP API**](https://developers.cloudflare.com/r2-sql/query-data/#query-via-api) の 2 つがあります。Web SQL エディターみたいなものはありません。
+実行方法は [**Wrangler**](https://developers.cloudflare.com/workers/wrangler/) と [**HTTP API**](https://developers.cloudflare.com/r2-sql/query-data/#query-via-api) の 2 つがあります。Web SQL エディターはありません。
 
 ```bash
 wrangler r2 sql query "$WAREHOUSE" \
