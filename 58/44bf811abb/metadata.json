@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.6.1",
+  "checkpoint_id": "5844bf811abb",
+  "strategy": "manual-commit",
+  "branch": "feat/cfdp-r2sql-http-api",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/data-platform.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/58/44bf811abb/0/metadata.json",
+      "transcript": "/58/44bf811abb/0/full.jsonl",
+      "content_hash": "/58/44bf811abb/0/content_hash.txt",
+      "prompt": "/58/44bf811abb/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 33,
+    "cache_creation_tokens": 80285,
+    "cache_read_tokens": 428340,
+    "output_tokens": 5113,
+    "api_call_count": 13
+  }
+}
