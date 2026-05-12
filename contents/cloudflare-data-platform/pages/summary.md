@@ -27,6 +27,8 @@ layout: center
 最初の一歩は cloudflare.com にたどり着くことです。
 管理画面に入ると Agent Lee が出迎えてくれます。
 
+Workers Paid は $5/month です。個人開発のおもちゃとしては十分すぎる。
+
 こんな始め方もあります。
 ドメインを購入する、
 個人サイトやブログを Astro と Workers でホスティングする、
