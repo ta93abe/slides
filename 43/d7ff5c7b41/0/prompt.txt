@@ -1,0 +1,60 @@
+/pr review
+
+---
+
+tail workerについて詳しく教えて
+
+---
+
+すらいどの改善案ある？
+
+---
+
+QAの時間はない
+
+---
+
+Honeycomb にエクスポートされていることを確かめるためにCloudflareのダッシュボードとHoneycombで同じデータが見れることを確認したい。
+
+---
+
+Intelligence を ONにしたけどまだチームを選択できない
+
+---
+
+claude mcp add honeycomb --transport http https://mcp.honeycomb.io/mcp
+これ設定したんだけど削除したい。
+
+---
+
+cf-portal を再認証したい。
+
+---
+
+Honeycomb にエクスポートされていることを確かめるためにCloudflareのダッシュボードとHoneycombで同じデータが見れることを確認したい。
+
+---
+
+df460ff38c607f30c30e526c662a7e25
+これで一致した。
+OpenTelemetry初心者なのでこのトレースをわかりやすく説明してほしい。
+
+---
+
+上からやってみて
+
+---
+
+全部やって
+
+---
+
+Cloudflareって消えちゃうんだっけ？
+
+---
+
+o11y-*.pngという画像をおいたからスライドに入れて
+
+---
+
+/pr

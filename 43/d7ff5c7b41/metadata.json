@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.6.1",
+  "checkpoint_id": "43d7ff5c7b41",
+  "strategy": "manual-commit",
+  "branch": "cfdp/honeycomb-verify",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/observability.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/43/d7ff5c7b41/0/metadata.json",
+      "transcript": "/43/d7ff5c7b41/0/full.jsonl",
+      "content_hash": "/43/d7ff5c7b41/0/content_hash.txt",
+      "prompt": "/43/d7ff5c7b41/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 2140,
+    "cache_creation_tokens": 8489329,
+    "cache_read_tokens": 334451317,
+    "output_tokens": 706810,
+    "api_call_count": 826
+  }
+}

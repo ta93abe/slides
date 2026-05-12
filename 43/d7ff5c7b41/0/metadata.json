@@ -1,0 +1,37 @@
+{
+  "cli_version": "0.6.1",
+  "checkpoint_id": "43d7ff5c7b41",
+  "session_id": "2cc7fe3e-bf24-49a2-96cb-3b9179db8782",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-12T08:48:12.733783Z",
+  "branch": "cfdp/honeycomb-verify",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/observability.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "72cb13223fd6",
+  "token_usage": {
+    "input_tokens": 2140,
+    "cache_creation_tokens": 8489329,
+    "cache_read_tokens": 334451317,
+    "output_tokens": 706810,
+    "api_call_count": 826
+  },
+  "session_metrics": {
+    "turn_count": 142
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-12T08:48:12.321443Z",
+    "agent_lines": 32,
+    "agent_removed": 0,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 32,
+    "total_lines_changed": 32,
+    "agent_percentage": 100,
+    "metric_version": 2
+  }
+}
