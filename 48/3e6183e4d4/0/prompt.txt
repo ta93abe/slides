@@ -1,0 +1,33 @@
+マージしていいよ。
+
+---
+
+Cloudflare Zero Trust のサービスマップを説明して
+
+---
+
+Cloudflare One ってZero Trustの旧名じゃないの？
+
+---
+
+Dynamic WorkerとCode Modeの違いは？
+
+---
+
+MCPのツール定義って一般的にはマークダウン？
+
+---
+
+同じものをCode Mode実装して比較したい。
+
+---
+
+Cloudflare で　MCPを実装するとトークン効率の良いMCPサーバが作れるのか
+
+---
+
+Code Modeを発表したのは？
+
+---
+
+anthropic もcode mode実装しているの？
