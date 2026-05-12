@@ -1,0 +1,36 @@
+https://developers.cloudflare.com/dynamic-workers/
+dynamic workerが普通のworker to
+
+---
+
+https://developers.cloudflare.com/dynamic-workers/
+dynamic workerが普通のworker と違うところ
+
+---
+
+Python Workflow で dlt on sandbox を並列で実行して、dbt on containersを実行して、Slackに通知する見たいなDAG書ける？
+
+---
+
+コード例を見せて
+
+---
+
+dlt は containerのほうが分かりやすそう。変えて。
+
+---
+
+env={"DLT_DESTINATION__BUCKET_URL": "r2://raw-data/stripe"},
+これBindingでかけない？
+
+---
+
+10分溢れそうなのでObservabilityのスライドはslide.mdde
+
+---
+
+10分溢れそうなのでObservabilityのスライドはslide.mdでコメントアウトして。
+
+---
+
+/pr

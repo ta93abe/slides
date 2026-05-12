@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.6.1",
+  "checkpoint_id": "4052cd217416",
+  "strategy": "manual-commit",
+  "branch": "cfdp/trim-observability",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/workflows.md",
+    "contents/cloudflare-data-platform/pages/wrangler.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/40/52cd217416/0/metadata.json",
+      "transcript": "/40/52cd217416/0/full.jsonl",
+      "content_hash": "/40/52cd217416/0/content_hash.txt",
+      "prompt": "/40/52cd217416/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 2275,
+    "cache_creation_tokens": 9718401,
+    "cache_read_tokens": 375820903,
+    "output_tokens": 747270,
+    "api_call_count": 897
+  }
+}
