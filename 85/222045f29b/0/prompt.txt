@@ -24,3 +24,11 @@ Intelligence を ONにしたけどまだチームを選択できない
 
 claude mcp add honeycomb --transport http https://mcp.honeycomb.io/mcp
 これ設定したんだけど削除したい。
+
+---
+
+cf-portal を再認証したい。
+
+---
+
+Honeycomb にエクスポートされていることを確かめるためにCloudflareのダッシュボードとHoneycombで同じデータが見れることを確認したい。
