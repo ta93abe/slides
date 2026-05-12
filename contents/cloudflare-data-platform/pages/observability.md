@@ -229,3 +229,35 @@ dataset は OTLP の service.name で自動分離されます。
 OTel 標準で送っているので、後で Grafana や Datadog に乗り換えても
 destinations を差し替えるだけで済みます。
 -->
+
+---
+layout: two-cols-header
+---
+
+## 同じ trace が両方で見える
+
+`trace_id = df460ff3...` を両方の UI で開いた様子です。Cloudflare 側は保持 **7 日**、Honeycomb 側は長期保持 — 同じデータを 2 つの粒度で持てます。
+
+::left::
+
+<img src="/o11y-cloudflare.png" alt="Cloudflare Workers Observability UI" class="w-full h-[280px] object-contain rounded border border-zinc-700/60 shadow-lg" />
+
+<div class="text-xs text-center mt-1 opacity-70">Cloudflare ダッシュボード</div>
+
+::right::
+
+<img src="/o11y-honeycomb.png" alt="Honeycomb trace view" class="w-full h-[280px] object-contain rounded border border-zinc-700/60 shadow-lg" />
+
+<div class="text-xs text-center mt-1 opacity-70">Honeycomb</div>
+
+<!--
+実際に Cloudflare ダッシュボードと Honeycomb で同じ trace_id を開いた画面です。
+左が Cloudflare の Observability タブ、右が Honeycomb の trace view。
+
+両方で同じ 57 spans / 約 6 分のトレースが見えていて、エラー span も同じ位置でハイライトされています。
+
+Cloudflare 側の保持は 7 日。Honeycomb 側は数十日〜年単位 (プラン依存)。
+つまり「今この瞬間を見る」のは Cloudflare ダッシュボードでも十分、
+「7 日後の振り返り」や「複数 Worker 横断クエリ」は Honeycomb に長期で残しておく、
+という使い分けが OTel エクスポートする一番分かりやすい価値です。
+-->
