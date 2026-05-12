@@ -50,7 +50,7 @@ Cloudflare Data Platform を構成するサービス
 
 ---
 
-# [Pipelines](https://developers.cloudflare.com/pipelines/) - ストリーミングデータインジェスチョン
+# [Pipelines](https://developers.cloudflare.com/pipelines/)
 
 ```bash
 wrangler pipelines setup
@@ -86,7 +86,7 @@ SQL は Apache DataFusion ベースです。
 layout: two-cols-header
 ---
 
-# [R2](https://developers.cloudflare.com/r2/) — オブジェクトストレージ
+# [R2](https://developers.cloudflare.com/r2/)
 
 ```bash
 wrangler r2 bucket create < bucket-name >
