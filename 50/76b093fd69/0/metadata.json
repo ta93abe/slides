@@ -1,0 +1,43 @@
+{
+  "cli_version": "0.6.1",
+  "checkpoint_id": "5076b093fd69",
+  "session_id": "2cc7fe3e-bf24-49a2-96cb-3b9179db8782",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-12T11:19:48.102495Z",
+  "branch": "cfdp/trigger-links",
+  "checkpoints_count": 0,
+  "files_touched": [],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "37aa1c1968d4",
+  "checkpoint_transcript_start": 4854,
+  "transcript_lines_at_start": 4854,
+  "token_usage": {
+    "input_tokens": 37,
+    "cache_creation_tokens": 586411,
+    "cache_read_tokens": 12139536,
+    "output_tokens": 7820,
+    "api_call_count": 22
+  },
+  "session_metrics": {
+    "turn_count": 145
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 37,
+      "user_lines_removed": 32,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        "contents/cloudflare-data-platform/pages/data-platform.md": 15,
+        "contents/cloudflare-data-platform/pages/observability.md": 13,
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      },
+      "user_removed_per_file": {
+        "contents/cloudflare-data-platform/pages/data-platform.md": 15,
+        "contents/cloudflare-data-platform/pages/observability.md": 17
+      }
+    }
+  ]
+}
