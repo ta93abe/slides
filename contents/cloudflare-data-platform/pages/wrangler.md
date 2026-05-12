@@ -69,6 +69,8 @@ R2 や D1 のデータをそのまま見られるので、開発中のデバッ�
 
 **17 種類の公式 MCP サーバー**があります。（API + プロダクト特化）
 
+([**MCP Server Portal**](https://developers.cloudflare.com/cloudflare-one/access-controls/ai-controls/mcp-portals/) を使うと複数 MCP サーバーを 1 URL に集約 + Cloudflare Access で認証・認可・監査ができます。)
+
 https://developers.cloudflare.com/agents/model-context-protocol/mcp-servers-for-cloudflare/
 
 https://github.com/cloudflare/skills
@@ -77,7 +79,9 @@ https://github.com/cloudflare/skills
 Cloudflare は API + プロダクト特化の MCP サーバーを 17 種類公式提供しています。
 Agent Skills も GitHub の cloudflare/skills リポジトリにまとまっています。
 
-17 種類を全部登録するのは大変なので、先ほどの MCP Server Portal を使うとよさそうです。
+17 種類を全部登録するのは大変なので、MCP Server Portal を使うのがおすすめです。
+組織内で乱立する MCP server を中央集約して、Cloudflare Access で認証 / 認可 / 監査を担当させる構成。
+Shadow MCP の防止、部署別 tool アクセス制御、IDE エージェントの破壊操作の構造的封じ込めに使えます。
 -->
 
 ---
@@ -89,7 +93,7 @@ Agent Skills も GitHub の cloudflare/skills リポジトリにまとまって�
 - **llms.txt** を提供しています。（LLM フレンドリー）
 - https://isitagentready.com/developers.cloudflare.com
 - Changelog を頻繁に更新しています。（RSSで購読できて嬉しい。）
-- ブログもプロダクトの裏側が書かれていたりして参考になります。
+- [ブログ](https://blog.cloudflare.com/)もプロダクトの裏側が書かれていたりして参考になります。
 
 <!--
 ドキュメントが LLM フレンドリーに整備されています。
