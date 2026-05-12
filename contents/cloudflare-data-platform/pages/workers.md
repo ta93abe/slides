@@ -84,11 +84,13 @@ HTML / CSS / JavaScript / 画像などの静的アセットを Cloudflare Worker
 
 [Cloudflare Access](https://developers.cloudflare.com/cloudflare-one/policies/access/) を組み合わせれば認証付きの限定配信にもできます。
 
+<v-click>
 <img
     v-motion
     :initial="{ opacity: 0, y: 80 }"
-    :click-1="{ opacity: 1, y: 0 }"
-     src="/cloudflare-access.png" alt="Cloudflare Access" class="my-8 w-80 ml-auto" />
+    :enter="{ opacity: 1, y: 0, transition: { duration: 500 } }"
+    src="/cloudflare-access.png" alt="Cloudflare Access" class="my-8 w-80 ml-auto" />
+</v-click>
 
 <!--
 Static Assets は、HTML / CSS / JS / 画像を Workers から配信する仕組みです。
