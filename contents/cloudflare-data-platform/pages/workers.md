@@ -62,6 +62,7 @@ SDK のインストールも、認証情報の取り回しも、region 指定も
 
 Cloudflare のドキュメントでは「Capability-based」という表現が使われています。
 宣言されていないリソースには触る手段が無い、という最小権限のセキュリティモデルですね。
+ただ宣言された以上 Worker でどうにでもできるという危うさもあるといえばあります。
 -->
 
 ---
@@ -91,8 +92,8 @@ Cloudflare Access を組み合わせれば認証付きの限定配信にもで�
 
 <!--
 Static Assets は、HTML / CSS / JS / 画像を Workers から配信する仕組みです。
-dbt docs のような静的サイトをそのままホストできます。
+dbt docs のような静的サイトをそのままホストできます。Elementary のレポートや Evidence のダッシュボードも。
 
-GitHub Actions の wrangler-action で deploy が 1 行。
+GitHub Actions の wrangler-action で deploy が 1 行。GitHub 連携をすればゼロコンフィグで CI/CD が組まれます。
 Cloudflare Access を組み合わせれば、社内限定の認証付き配信もできます。
 -->
