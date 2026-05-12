@@ -23,7 +23,7 @@ Cloudflare のさまざまなサービスを 1 コマンドで操作できます
 
 <div class="mt-3 text-xs op-60 line-height-tight">
 
-これらは個人的に気に入って使っています。
+↓これらは個人的に気に入って使っています。
 
 - https://github.com/sivchari/kumo
 - https://github.com/sivchari/snowflake-emulator
@@ -65,41 +65,19 @@ R2 や D1 のデータをそのまま見られるので、開発中のデバッ�
 
 ---
 
-# MCP / Agent Skills
+# SDK
 
-**17 種類の公式 MCP サーバー**があります。（API + プロダクト特化）
+- TypeScript
+- Python
+- Go
 
-([**MCP Server Portal**](https://developers.cloudflare.com/cloudflare-one/access-controls/ai-controls/mcp-portals/) を使うと複数 MCP サーバーを 1 URL に集約 + Cloudflare Access で認証・認可・監査ができます。)
+の 3 つがサポートされています。
 
-https://developers.cloudflare.com/agents/model-context-protocol/mcp-servers-for-cloudflare/
-
-https://github.com/cloudflare/skills
-
-<!--
-Cloudflare は API + プロダクト特化の MCP サーバーを 17 種類公式提供しています。
-Agent Skills も GitHub の cloudflare/skills リポジトリにまとまっています。
-
-17 種類を全部登録するのは大変なので、MCP Server Portal を使うのがおすすめです。
-組織内で乱立する MCP server を中央集約して、Cloudflare Access で認証 / 認可 / 監査を担当させる構成。
-Shadow MCP の防止、部署別 tool アクセス制御、IDE エージェントの破壊操作の構造的封じ込めに使えます。
--->
-
----
-
-# Documentation / llms.txt
-
-ドキュメントも LLM が読める形で整備されています。
-
-- **llms.txt** を提供しています。（LLM フレンドリー）
-- https://isitagentready.com/developers.cloudflare.com
-- Changelog を頻繁に更新しています。（RSSで購読できて嬉しい。）
-- [ブログ](https://blog.cloudflare.com/)もプロダクトの裏側が書かれていたりして参考になります。
+SDK があることで、外部サービスや自社アプリから Cloudflare サービスを型安全に操作しやすくなります。
 
 <!--
-ドキュメントが LLM フレンドリーに整備されています。
-llms.txt を提供していて、
-Changelog も RSS で購読できる頻度で更新されています。
-ブログもプロダクトの裏側まで書かれていて読み応えがあります。
+SDK は TypeScript / Python / Go の 3 つがサポートされています。
+外部サービスや自社アプリから Cloudflare サービスを型安全に操作できます。
 -->
 
 ---
@@ -124,17 +102,39 @@ Alchemy は Workers と同じ言語で完結するので Binding が書きやす
 
 ---
 
-# SDK
+# MCP / Agent Skills
 
-- TypeScript
-- Python
-- Go
+**17 種類の公式 MCP サーバー**があります。（API + プロダクト特化）
 
-の 3 つがサポートされています。
+([**MCP Server Portal**](https://developers.cloudflare.com/cloudflare-one/access-controls/ai-controls/mcp-portals/) を使うと複数 MCP サーバーを 1 URL に集約 + Cloudflare Access で認証・認可・監査ができます。)
 
-SDK があることで、外部サービスや自社アプリから Cloudflare サービスを型安全に操作しやすくなります。
+https://developers.cloudflare.com/agents/model-context-protocol/mcp-servers-for-cloudflare/
+
+https://github.com/cloudflare/skills
 
 <!--
-SDK は TypeScript / Python / Go の 3 つがサポートされています。
-外部サービスや自社アプリから Cloudflare サービスを型安全に操作できます。
+Cloudflare は API + プロダクト特化の MCP サーバーを 17 種類公式提供しています。
+Agent Skills も GitHub の cloudflare/skills リポジトリにまとまっています。
+
+17 種類を全部登録するのは大変なので、MCP Server Portal を使うのがおすすめです。
+組織内で乱立する MCP server を中央集約して、Cloudflare Access で認証 / 認可 / 監査を担当させる構成。
+Shadow MCP の防止、部署別 tool アクセス制御、IDE エージェントの破壊操作の構造的封じ込めに使えます。
+-->
+
+---
+
+# Documentation
+
+ドキュメントも LLM が読める形で整備されています。
+
+- **llms.txt** を提供されています。
+- https://isitagentready.com/developers.cloudflare.com
+- Changelog を頻繁に更新されます。（RSSで購読できて嬉しい。）
+- [ブログ](https://blog.cloudflare.com/)もプロダクトの裏側が書かれていたりして参考になります。
+
+<!--
+ドキュメントが LLM フレンドリーに整備されています。
+llms.txt を提供していて、
+Changelog も RSS で購読できる頻度で更新されています。
+ブログもプロダクトの裏側まで書かれていて読み応えがあります。
 -->
