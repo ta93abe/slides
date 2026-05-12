@@ -19,7 +19,7 @@ layout: section
 - **V8 Isolate**: 1 プロセス内で多数の isolate を切り替える実行モデル。VM / コンテナの起動オーバーヘッドが無く、isolate のコールドスタートは ms オーダー
 - **Global 配置 + anycast network**: 1 deploy で 330+ 都市のエッジに同一バイナリを自動展開、リクエストは最寄り POP で実行（リージョン指定不要）
 - [**Binding**](https://developers.cloudflare.com/workers/runtime-apis/bindings/): `wrangler.jsonc` で宣言したリソースを `env` から呼ぶ。SDK / 認証情報不要、Capability-based セキュリティ（宣言されていないリソースには触れない）
-- **多彩なトリガー**: HTTP / Cron / Queues / Workflows / Email / WebSocket / RPC / Tail
+- **多彩なトリガー**: [HTTP](https://developers.cloudflare.com/workers/runtime-apis/handlers/fetch/) / [Cron](https://developers.cloudflare.com/workers/configuration/cron-triggers/) / [Queues](https://developers.cloudflare.com/queues/) / [Workflows](https://developers.cloudflare.com/workflows/) / [Email](https://developers.cloudflare.com/email-routing/email-workers/) / [WebSocket](https://developers.cloudflare.com/workers/runtime-apis/websockets/) / [RPC](https://developers.cloudflare.com/workers/runtime-apis/rpc/) / [Tail](https://developers.cloudflare.com/workers/observability/logs/tail-workers/)
 
 <!--
 Cloudflare Workers は、全世界 330 以上の都市のエッジで動くサーバーレス実行基盤です。
