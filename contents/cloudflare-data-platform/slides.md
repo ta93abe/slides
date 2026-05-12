@@ -8,13 +8,13 @@ info: |
 
   Cloudflare のサービスを使ってデータ基盤を作るならこんな風に
 author: 阿部拓海
-keywords: Cloudflare,Data Platform,Pipelines,R2,R2 Data Catalog,R2 SQL,Workers,wrangler,observability
+keywords: Cloudflare,Data Platform,Pipelines,R2,R2 Data Catalog,R2 SQL,Workers,wrangler
 exportFilename: cloudflare-data-platform
 drawings:
   persist: false
 htmlAttrs:
   lang: ja
-transition: slide-left
+transition: fade-out
 comark: true
 layout: cover
 ---

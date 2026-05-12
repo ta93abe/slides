@@ -16,14 +16,16 @@
     "screenshot": "slidev export example.md --format png"
   },
   "dependencies": {
-    "@slidev/types": "catalog:"
+    "@slidev/types": "catalog:",
+    "seedrandom": "^3.0.5"
   },
   "devDependencies": {
-    "@slidev/cli": "catalog:"
+    "@slidev/cli": "catalog:",
+    "@types/seedrandom": "^3.0.8"
   },
   "//": "Learn more: https://sli.dev/guide/write-theme.html",
   "slidev": {
-    "colorSchema": "both",
+    "colorSchema": "dark",
     "defaults": {
       "fonts": {
         "sans": "Noto Sans JP",
