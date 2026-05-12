@@ -150,7 +150,7 @@ Iceberg REST Catalog API 準拠なので、
 Trino / DuckDB / PyIceberg / Snowflake / Spark など、好きなクライアントから直接クエリできます。
 ベンダーロックインなし。
 
-ACID / Schema evolution / Time travel といった Iceberg V2 の機能はそのまま使えて、
+ACID / Schema evolution / Time travel といった Iceberg v2 の機能はそのまま使えて、
 Compaction や Snapshot expiration といったテーブルメンテナンスもマネージドで提供されます。
 -->
 
@@ -172,10 +172,12 @@ wrangler r2 sql query "$WAREHOUSE" \
 
 ```bash
 curl -X POST \
-  "https://api.sql.cloudflarestorage.com/api/v1/accounts/$ACCOUNT_ID/r2-sql/query/$BUCKET_NAME" \
-  -H "Authorization: Bearer $WRANGLER_R2_SQL_AUTH_TOKEN" \
+  "https://api.sql.cloudflarestorage.com/api/v1/accounts/{ACCOUNT_ID}/r2-sql/query/{BUCKET_NAME}" \
+  -H "Authorization: Bearer {API_TOKEN}" \
   -H "Content-Type: application/json" \
-  -d '{"query": "SELECT user_id, COUNT(*) AS n FROM default.events WHERE __ingest_ts > '\''2026-05-01'\'' GROUP BY user_id LIMIT 10"}'
+  -d @- <<'JSON'
+{"query": "SELECT user_id, COUNT(*) AS n FROM default.events WHERE __ingest_ts > '2026-05-01' GROUP BY user_id LIMIT 10"}
+JSON
 ```
 
 <!--
