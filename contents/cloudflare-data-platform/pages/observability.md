@@ -10,14 +10,14 @@ layout: section
 
 ---
 
-# Workers Logs
+# [Workers Logs](https://developers.cloudflare.com/workers/observability/logs/workers-logs/)
 
 Worker が出すログ (`workers_trace_events`) を、用途で 4 経路に振り分けます。
 
-- **Workers Logs**: ダッシュボードに自動収集（保持 7 日）→ 普段使いのログ閲覧
-- **Real-time Logs**: near real-time の live tail（保存はされない）→ デプロイ直後の動作確認
-- **Tail Workers**: 別 Worker でログを受けて filtering / sampling / 変換 / export → カスタム加工・別宛先転送
-- **Workers Logpush**: 外部 destination に数分バッチで push（R2 / Pipelines / 汎用 HTTP / SIEM）→ 既存 SIEM / DWH 連携・長期保管
+- [**Workers Logs**](https://developers.cloudflare.com/workers/observability/logs/workers-logs/): ダッシュボードに自動収集（保持 7 日）→ 普段使いのログ閲覧
+- [**Real-time Logs**](https://developers.cloudflare.com/workers/observability/logs/real-time-logs/): near real-time の live tail（保存はされない）→ デプロイ直後の動作確認
+- [**Tail Workers**](https://developers.cloudflare.com/workers/observability/logs/tail-workers/): 別 Worker でログを受けて filtering / sampling / 変換 / export → カスタム加工・別宛先転送
+- [**Workers Logpush**](https://developers.cloudflare.com/workers/observability/logs/logpush/): 外部 destination に数分バッチで push（R2 / Pipelines / 汎用 HTTP / SIEM）→ 既存 SIEM / DWH 連携・長期保管
 
 → **Invocation logs / Custom logs / Errors / Uncaught exceptions** が共通の元データ。`console.log` を JSON object にすると自動でフィールド抽出。
 
@@ -38,13 +38,13 @@ OpenTelemetry 互換でエクスポートも可能です。
 
 ---
 
-# Workers Metrics & Analytics
+# [Workers Metrics & Analytics](https://developers.cloudflare.com/workers/observability/metrics-and-analytics/)
 
 dashboard と API で **何が / どれくらい / どう動いたか** を測れます。
 
 - **Built-in メトリクス**: Requests / Subrequests / Wall Time / CPU Time / Execution Duration（保持 3 ヶ月）→ Worker の基本健康状態を把握
-- **GraphQL Analytics API**: 1 endpoint で Workers / KV / D1 / Workflows などを横断クエリ → 複数プロダクト集計・カスタムダッシュボード
-- **Workers Analytics Engine**: アプリ独自の高カーディナリティ時系列（保持 90 日、ClickHouse-like な columnar store）→ 業務メトリクス・per-user / per-tenant 計測
+- [**GraphQL Analytics API**](https://developers.cloudflare.com/analytics/graphql-api/): 1 endpoint で Workers / KV / D1 / Workflows などを横断クエリ → 複数プロダクト集計・カスタムダッシュボード
+- [**Workers Analytics Engine**](https://developers.cloudflare.com/analytics/analytics-engine/): アプリ独自の高カーディナリティ時系列（保持 90 日、ClickHouse-like な columnar store）→ 業務メトリクス・per-user / per-tenant 計測
 
 → Worker から **OpenTelemetry SDK で custom metrics を push** も可能（built-in は GraphQL / SQL API 経由）。
 
@@ -59,7 +59,7 @@ custom metrics は OpenTelemetry SDK 経由で外に push もできます。
 
 ---
 
-# Workers Traces
+# [Workers Traces](https://developers.cloudflare.com/workers/observability/traces/)
 
 `observability.tracing.enabled = true` の **1 行で自動 span 化**（OpenTelemetry 互換）。
 
@@ -86,9 +86,9 @@ OTLP HTTP で任意のバックエンドへ直送できます。
 layout: two-cols-header
 ---
 
-# AI Gateway
+# [AI Gateway](https://developers.cloudflare.com/ai-gateway/)
 
-**Universal Endpoint** で全 LLM プロバイダーを 1 経路に集約。**Fallback / Retry** 込みで以下の 3 カテゴリ・11 機能を一括導入できます。
+[**Universal Endpoint**](https://developers.cloudflare.com/ai-gateway/usage/universal/) で全 LLM プロバイダーを 1 経路に集約。**Fallback / Retry** 込みで以下の 3 カテゴリ・11 機能を一括導入できます。
 
 ::left::
 
@@ -153,9 +153,9 @@ Worker のスパンと同じ画面で、レイテンシ・コスト・モデル�
 
 ---
 
-# MCP Server Portal
+# [MCP Server Portal](https://developers.cloudflare.com/cloudflare-one/access-controls/ai-controls/mcp-portals/)
 
-組織内で乱立する MCP server (= LLM が叩く外部ツール群) を **中央集約してアクセス制御** する portal。**Cloudflare Access** が認証 / 認可 / 監査を担当します。
+組織内で乱立する MCP server (= LLM が叩く外部ツール群) を **中央集約してアクセス制御** する portal。[**Cloudflare Access**](https://developers.cloudflare.com/cloudflare-one/policies/access/) が認証 / 認可 / 監査を担当します。
 
 - **集約 / 認証**: 1 portal URL に複数 MCP server / OAuth 2.0 / SSO・MFA
 - **3 軸ポリシー**: Identity × Conditions × Scope
