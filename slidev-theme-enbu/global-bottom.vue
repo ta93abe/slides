@@ -9,7 +9,8 @@
  *       false にすると非表示。cover レイアウトはデフォルトで非表示 (炎エフェクトと競合するため)
  *   - `glowOpacity: number` (デフォルト 0.35)
  *   - `glowHue: number` (HSL hue-rotate、デフォルト 0)
- *   - `glowSeed: string | false` (false で毎フレーム再シャッフル、デフォルト 'enbu')
+ *   - `glowSeed: string | false` (デフォルト 'enbu'。false にすると初回ロード時にだけランダム
+ *      seed が生成され、以降そのセッションの間は同じ seed を使い続ける)
  *
  * 設計の元ネタは antfu/talks の global-bottom.vue (credits to @pi0 / @Atinux)
  */
@@ -19,7 +20,11 @@ import { computed, ref, watch } from 'vue'
 
 const { currentSlideRoute } = useNav()
 
-export type Range = [number, number]
+/** 2 次元の点 [x, y]。座標は 0..1 に正規化された値 (overflow 込みで -0.2..1.2) */
+export type Point = [number, number]
+/** 値域の閉区間 [min, max]。点ではなく軸方向の制限を表す */
+export type Interval = [number, number]
+
 export type Distribution
   = | 'full'
     | 'top'
@@ -53,6 +58,9 @@ const opacity = computed<number>(() => +(frontmatter.value.glowOpacity ?? 0.35))
 const hue = computed<number>(() => +(frontmatter.value.glowHue ?? 0))
 const seed = computed<string>(() => {
   const v = frontmatter.value.glowSeed
+  // false 指定はセッション開始時に 1 回だけ Date.now() を引いて固定する。
+  // computed の caching 特性で同じ seed が使い回されるので、毎フレーム再シャッフルは
+  // しない (それが欲しい場合は setInterval 等で別途実装が必要)。
   if (v === false || v === 'false') return Date.now().toString()
   return v || 'enbu'
 })
@@ -64,9 +72,9 @@ const disturbChance = 0.3
 function distributionToLimits(d: Distribution) {
   const min = -0.2
   const max = 1.2
-  let x: Range = [min, max]
-  let y: Range = [min, max]
-  const intersection = (a: Range, b: Range): Range => [
+  let x: Interval = [min, max]
+  let y: Interval = [min, max]
+  const intersection = (a: Interval, b: Interval): Interval => [
     Math.max(a[0], b[0]),
     Math.min(a[1], b[1]),
   ]
@@ -83,16 +91,16 @@ function distributionToLimits(d: Distribution) {
   return { x, y }
 }
 
-function distance2([x1, y1]: Range, [x2, y2]: Range) {
+function distance2([x1, y1]: Point, [x2, y2]: Point) {
   return (x2 - x1) ** 2 + (y2 - y1) ** 2
 }
 
 function usePoly(count = 16) {
-  function getPoints(): Range[] {
+  function getPoints(): Point[] {
     const dist = glow.value || 'full'
     const limits = distributionToLimits(dist as Distribution)
     const rng = seedrandom(`${seed.value}-${currentSlideRoute.value.no}-${count}`)
-    const randomBetween = ([a, b]: Range) => rng() * (b - a) + a
+    const randomBetween = ([a, b]: Interval) => rng() * (b - a) + a
     const applyOverflow = (random: number, ov: number) => {
       random = random * (1 + ov * 2) - ov
       return rng() < disturbChance ? random + (rng() - 0.5) * disturb : random
@@ -101,11 +109,11 @@ function usePoly(count = 16) {
       () => [
         applyOverflow(randomBetween(limits.x), overflow),
         applyOverflow(randomBetween(limits.y), overflow),
-      ] as Range,
+      ] as Point,
     )
   }
 
-  const points = ref<Range[]>(getPoints())
+  const points = ref<Point[]>(getPoints())
   const poly = computed(() =>
     points.value.map(([x, y]) => `${x * 100}% ${y * 100}%`).join(', '),
   )
@@ -115,7 +123,7 @@ function usePoly(count = 16) {
     const newPoints = new Set(getPoints())
     points.value = points.value.map((o) => {
       let minD = Number.POSITIVE_INFINITY
-      let closest: Range | undefined
+      let closest: Point | undefined
       for (const n of newPoints) {
         const d = distance2(o, n)
         if (d < minD) { minD = d; closest = n }
@@ -172,17 +180,19 @@ const poly3 = usePoly(3)
 </template>
 
 <style scoped>
+/* 変化するのは形 (clip-path) / ぼかし (filter) / 透明度 のみ。
+   `transition: all` だと意図しないプロパティまで対象になりブラウザ最適化も効きにくいので
+   プロパティ名を明示する。 */
 .enbu-glow,
 .clip {
-  transition: all 2.5s ease;
+  transition: clip-path 2.5s ease, filter 2.5s ease, opacity 2.5s ease;
 }
 
 /* position: fixed + z-index: -1 で「viewport の絶対背景」になり、
    slide content (z-index >= 0) より必ず後ろに行く。
    transform-gpu (= translateZ(0)) は stacking context を作って z-index を
-   ローカル化してしまうので意図的に避ける */
-/* dark のみのテーマなので opacity も固定。
-   contrast を確保しつつ「闇に揺らぐ炎」のニュアンスを残す値 */
+   ローカル化してしまうので意図的に避ける。
+   dark のみのテーマなので opacity も固定 (contrast を確保しつつ「闇に揺らぐ炎」を残す値)。 */
 .enbu-glow {
   position: fixed;
   inset: 0;
@@ -190,9 +200,10 @@ const poly3 = usePoly(3)
   opacity: 0.55;
 }
 
+/* clip-path は親で polygon(...) を inline-style で指定しているのでここでは省略。
+   position: absolute + inset: 0 で親 .enbu-glow に張り付け、aspect は親 viewport
+   依存にする (.enbu-glow が position: fixed; inset: 0 = viewport 全面)。 */
 .clip {
-  clip-path: circle(75%);
-  aspect-ratio: 16 / 9;
   position: absolute;
   inset: 0;
 }

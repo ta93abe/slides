@@ -127,9 +127,9 @@ Shadow MCP の防止、部署別 tool アクセス制御、IDE エージェン�
 
 ドキュメントも LLM が読める形で整備されています。
 
-- **llms.txt** を提供されています。
+- **llms.txt** を提供しています。
 - https://isitagentready.com/developers.cloudflare.com
-- Changelog を頻繁に更新されます。（RSSで購読できて嬉しい。）
+- Changelog を頻繁に更新しています。（RSSで購読できて嬉しい。）
 - [ブログ](https://blog.cloudflare.com/)もプロダクトの裏側が書かれていたりして参考になります。
 
 <!--
