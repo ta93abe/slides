@@ -62,6 +62,7 @@ export class ImageProcessingWorkflow extends WorkflowEntrypoint {
 <!--
 Cloudflare Workflows は耐久性のある実行エンジンです。
 ステップを連鎖させて、失敗時は自動でリトライ、長時間プロセスの状態を永続化します。
+Temporal.io が類似サービス。
 
 右のコードは画像処理ワークフローの例です。
 R2 から画像を取得、
