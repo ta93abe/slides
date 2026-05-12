@@ -1,0 +1,83 @@
+{
+  "cli_version": "0.6.1",
+  "checkpoint_id": "30e2ab3d8d5f",
+  "session_id": "2cc7fe3e-bf24-49a2-96cb-3b9179db8782",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-12T14:41:53.65049Z",
+  "branch": "cfdp/final-polish",
+  "checkpoints_count": 3,
+  "files_touched": [
+    "pnpm-lock.yaml",
+    "slidev-theme-enbu/global-bottom.vue",
+    "slidev-theme-enbu/package.json"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "81ba6418b4d6",
+  "checkpoint_transcript_start": 5210,
+  "transcript_lines_at_start": 5210,
+  "token_usage": {
+    "input_tokens": 143,
+    "cache_creation_tokens": 88599,
+    "cache_read_tokens": 61151489,
+    "output_tokens": 46447,
+    "api_call_count": 89
+  },
+  "session_metrics": {
+    "turn_count": 156
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-12T14:41:53.132558Z",
+    "agent_lines": 220,
+    "agent_removed": 3,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 220,
+    "total_lines_changed": 223,
+    "agent_percentage": 100,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 9,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 9,
+      "user_lines_removed": 0,
+      "agent_lines_added": 263,
+      "agent_lines_removed": 44,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    },
+    {
+      "checkpoint_number": 3,
+      "user_lines_added": 9,
+      "user_lines_removed": 0,
+      "agent_lines_added": 263,
+      "agent_lines_removed": 44,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    },
+    {
+      "checkpoint_number": 4,
+      "user_lines_added": 9,
+      "user_lines_removed": 0,
+      "agent_lines_added": 263,
+      "agent_lines_removed": 44,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    }
+  ]
+}
