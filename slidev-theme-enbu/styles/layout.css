@@ -60,6 +60,12 @@ pre, code, .shiki, .shiki * {
     opacity: 1 !important;
 }
 
+/* スライド本文中のリンクは Slidev デフォルトで `border-bottom: 1px dashed` (破線)
+   になっているが、視覚的に「壊れた線」に見えるので実線に上書き */
+.slidev-layout a {
+    border-bottom-style: solid !important;
+}
+
 /* Marker-pen highlight for h2 slide titles.
    Distinct from h1's hand-drawn wave: a translucent theme-color swipe behind
    the lower portion of the text, evoking a highlighter pen. Line vs area
