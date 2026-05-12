@@ -7,8 +7,8 @@ layout: section
 ## CDN？エッジコンピューティング？
 
 <!--
-まず Cloudflare 自体の話を一度しておきます。
-CDN なのか、エッジコンピューティングなのか。
+Cloudflare と聞くと、CDNの会社でしょという認識がまずあります。
+近年ではエッジコンピューティングを始め開発者のためのプラットフォームになってきています。
 -->
 
 ---
@@ -37,7 +37,7 @@ Cloudflare Data Platform を構成するサービス
 </v-click>
 
 <!--
-Cloudflare Data Platform は、2025 年 9 月の Birthday Week で発表された比較的新しいプラットフォームです。
+そんな中でCloudflare Data Platform は、2025 年 9 月の Birthday Week で発表された比較的新しいプラットフォームです。
 
 構成は Pipelines・R2 Data Catalog・R2 SQL の 3 つ。
 データレイクの「入れる・貯める・使う」を、Cloudflare 1 社で完結させる、という宣言ですね。
@@ -45,6 +45,7 @@ Cloudflare Data Platform は、2025 年 9 月の Birthday Week で発表され�
 
 補足として、2025 年 12 月に Cloudflare for Government が ISMAP に登録されました。
 「Cloudflare はエンプラ・公共系で使いにくい」と言われがちな状況も、ここで変わり始めています。
+組織アカウントが最近出たりして、ようやくというところもあります。https://blog.cloudflare.com/ja-jp/organizations-beta/
 -->
 
 ---
@@ -181,7 +182,7 @@ JSON
 ```
 
 <!--
-R2 Data Catalog の Iceberg テーブルに標準 SQL を投げられる、Cloudflare ネイティブの分散クエリエンジンです。
+R2 Data Catalog の Iceberg テーブルに標準 SQL を投げられる、Cloudflare ネイティブの分散クエリエンジンです。Athenaみたいなもの。
 Apache DataFusion ベースで、エッジで分散実行されます。
 
 Wrangler か HTTP API から実行できます。
@@ -189,4 +190,5 @@ Wrangler か HTTP API から実行できます。
 今は JOIN や WINDOW 関数はまだですが、
 基本的なフィルタ・集約・GROUP BY は通ります。
 ベータでアクティブに機能追加中、というステータスです。
+MySQL が 8.0 になって Window関数が使えるようになったあのときの気持ちをもう一度リアルタイムで味わいましょう。
 -->

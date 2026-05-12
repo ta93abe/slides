@@ -65,7 +65,7 @@ Cloudflare Workflows は耐久性のある実行エンジンです。
 
 右のコードは画像処理ワークフローの例です。
 R2 から画像を取得、
-Workers AI の LLaVA で説明文を生成、
+Workers AI の LLaVA (ラーバ)で説明文を生成、
 人間の承認を 24 時間 durable に待つ、
 承認されたら公開ディレクトリに publish。
 
