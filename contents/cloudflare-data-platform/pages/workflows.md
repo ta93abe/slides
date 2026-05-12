@@ -2,7 +2,7 @@
 layout: two-cols-header
 ---
 
-# Cloudflare Workflows
+# [Cloudflare Workflows](https://developers.cloudflare.com/workflows/)
 
 Cloudflare Workflows は耐久性のある実行エンジンです。ステップを連鎖させ、失敗時には自動で再試行し、長期間実行されるプロセス全体で状態を保持します。各 step には Workers Bindings を組み込めます。
 

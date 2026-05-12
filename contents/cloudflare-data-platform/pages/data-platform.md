@@ -21,9 +21,9 @@ Cloudflare の **Cloudflare Data Platform** は、入れる/貯める/使うを 
 
 Cloudflare Data Platform を構成するサービス
 
-- **Pipelines**: ストリーミングイベントインジェストサービス
-- **R2 Data Catalog**: Iceberg カタログサービス
-- **R2 SQL**: 分散クエリエンジン
+- [**Pipelines**](https://developers.cloudflare.com/pipelines/): ストリーミングイベントインジェストサービス
+- [**R2 Data Catalog**](https://developers.cloudflare.com/r2/data-catalog/): Iceberg カタログサービス
+- [**R2 SQL**](https://developers.cloudflare.com/r2-sql/): 分散クエリエンジン
 
 </v-click>
 
@@ -37,7 +37,7 @@ Cloudflare Data Platform を構成するサービス
 </v-click>
 
 <!--
-そんな中でCloudflare Data Platform は、2025 年 9 月の Birthday Week で発表された比較的新しいプラットフォームです。
+そんな中で Cloudflare Data Platform は、2025 年 9 月の Birthday Week で発表された比較的新しいプラットフォームです。
 
 構成は Pipelines・R2 Data Catalog・R2 SQL の 3 つ。
 データレイクの「入れる・貯める・使う」を、Cloudflare 1 社で完結させる、という宣言ですね。
@@ -50,15 +50,15 @@ Cloudflare Data Platform を構成するサービス
 
 ---
 
-# Pipelines - ストリーミングデータインジェスチョン
+# [Pipelines](https://developers.cloudflare.com/pipelines/) - ストリーミングデータインジェスチョン
 
 ```bash
 wrangler pipelines setup
 ```
 
-- **Streams** で HTTP / Workers Binding / Logpush からデータを受けます。
-- **Pipelines** で SQL 変換を行えます。（変更はできません）
-- **Sinks** で `--roll-size` or `--roll-interval` で設定した粒度で自動バッチ化し、R2 / R2 Data Catalog に書き出せます。
+- [**Streams**](https://developers.cloudflare.com/pipelines/streams/) で HTTP / Workers Binding / Logpush からデータを受けます。
+- [**Pipelines**](https://developers.cloudflare.com/pipelines/pipelines/) で SQL 変換を行えます。（変更はできません）
+- [**Sinks**](https://developers.cloudflare.com/pipelines/sinks/) で `--roll-size` or `--roll-interval` で設定した粒度で自動バッチ化し、R2 / R2 Data Catalog に書き出せます。
 - 2025年4月に買収した [Arroyo](https://www.arroyo.dev/) をベースとしています。
 
 <div class="p-4">
@@ -86,7 +86,7 @@ SQL は Apache DataFusion ベースです。
 layout: two-cols-header
 ---
 
-# R2 — オブジェクトストレージ
+# [R2](https://developers.cloudflare.com/r2/) — オブジェクトストレージ
 
 ```bash
 wrangler r2 bucket create < bucket-name >
@@ -94,7 +94,7 @@ wrangler r2 bucket create < bucket-name >
 
 ::left::
 
-- **Really Requestable**: エグレスコストがゼロ。ストレージ、Class A (write), Class B (read) も他のプロバイダーより安価。
+- **Really Requestable**: エグレスコストがゼロ。Standard tier 同士で比較するとストレージ・Class A (write)・Class B (read) も他のプロバイダーより安価。
 - **Repositioning Records**: S3 互換 API を提供していて、既存のツールや SDK がそのまま使える。
 - **Ridiculously Reliable**: 99.999999999% (イレブンナイン) の耐久性、99.9% の可用性。
 - **Radically Reprogrammable**: Workers Binding 統合。
@@ -124,7 +124,7 @@ R2 はデータ基盤の置き場所です。Parquet も Iceberg も全部ここ
 layout: two-cols-header
 ---
 
-# R2 Data Catalog
+# [R2 Data Catalog](https://developers.cloudflare.com/r2/data-catalog/)
 
 データを **構造化する** レイヤーです。R2 上の Apache Iceberg テーブルをマネージドで管理します。
 
@@ -148,7 +148,7 @@ wrangler r2 bucket catalog enable < bucket-name >
 R2 上の Apache Iceberg テーブルをマネージドで管理してくれるレイヤーです。
 
 Iceberg REST Catalog API 準拠なので、
-Trino / DuckDB / PyIceberg / Snowflake / Spark など、好きなクライアントから直接クエリできます。
+Trino / DuckDB / PyIceberg / Snowflake / Spark / StarRocks など、好きなクライアントから直接クエリできます。
 ベンダーロックインなし。
 
 ACID / Schema evolution / Time travel といった Iceberg v2 の機能はそのまま使えて、
@@ -157,13 +157,13 @@ Compaction や Snapshot expiration といったテーブルメンテナンスも
 
 ---
 
-# R2 SQL — 分散クエリエンジン
+# [R2 SQL](https://developers.cloudflare.com/r2-sql/)
 
 R2 Data Catalog の Iceberg テーブルに標準 SQL を実行できる、Cloudflare ネイティブの分散クエリエンジンです。[Apache DataFusion](https://github.com/apache/datafusion) をベースにしています。
 
 基本的な演算はできますが、JOIN や WINDOW 関数はまだ対応していません。ベータ版で開発真っ只中。
 
-実行方法は **Wrangler** と **HTTP API** の 2 つがあります。Web SQL エディターみたいなものはありません。
+実行方法は [**Wrangler**](https://developers.cloudflare.com/workers/wrangler/) と [**HTTP API**](https://developers.cloudflare.com/r2-sql/query-data/#query-via-api) の 2 つがあります。Web SQL エディターみたいなものはありません。
 
 ```bash
 wrangler r2 sql query "$WAREHOUSE" \
@@ -183,7 +183,7 @@ JSON
 
 <!--
 R2 Data Catalog の Iceberg テーブルに標準 SQL を投げられる、Cloudflare ネイティブの分散クエリエンジンです。Athenaみたいなもの。
-Apache DataFusion ベースで、エッジで分散実行されます。
+Apache DataFusion ベースで、R2 オブジェクトストレージと同じ Cloudflare のインフラ層の分散コンピュート上で実行されます。
 
 Wrangler か HTTP API から実行できます。
 

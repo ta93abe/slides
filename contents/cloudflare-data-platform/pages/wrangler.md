@@ -10,7 +10,7 @@ layout: section
 
 ---
 
-# Wrangler
+# [Wrangler](https://developers.cloudflare.com/workers/wrangler/)
 
 
 Cloudflare には `wrangler` という優れた CLI があります。
@@ -19,7 +19,7 @@ Cloudflare のさまざまなサービスを 1 コマンドで操作できます
 
 `wrangler types` コマンドで Binding の TypeScript 型を自動生成できます。
 
-**LocalStack**、**Floci** などのサードパーティのローカルエミュレーターサービスは、どこまで行っても API レベルのエミュレートしかできません。一方で `wrangler` は Cloudflare のエッジ環境で動いている workerd ランタイムが Miniflare を介してローカルで動きます。
+**LocalStack**、**Floci** などのサードパーティのローカルエミュレーターサービスは、どこまで行っても API レベルのエミュレートしかできません。一方で `wrangler` は Cloudflare のエッジ環境で動いている [workerd](https://github.com/cloudflare/workerd) ランタイムが [Miniflare](https://developers.cloudflare.com/workers/testing/miniflare/) を介してローカルで動きます。
 
 <div class="mt-3 text-xs op-60 line-height-tight">
 

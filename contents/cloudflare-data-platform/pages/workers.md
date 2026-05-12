@@ -11,14 +11,14 @@ layout: section
 
 ---
 
-# Cloudflare Workers
+# [Cloudflare Workers](https://developers.cloudflare.com/workers/)
 
 全世界 330+ 都市のエッジで動くサーバーレス実行基盤です。
 
 特徴:
 - **V8 Isolate**: 1 プロセス内で多数の isolate を切り替える実行モデル。VM / コンテナの起動オーバーヘッドが無く、isolate のコールドスタートは ms オーダー
 - **Global 配置 + anycast network**: 1 deploy で 330+ 都市のエッジに同一バイナリを自動展開、リクエストは最寄り POP で実行（リージョン指定不要）
-- **Binding**: `wrangler.jsonc` で宣言したリソースを `env` から呼ぶ。SDK / 認証情報不要、Capability-based セキュリティ（宣言されていないリソースには触れない）
+- [**Binding**](https://developers.cloudflare.com/workers/runtime-apis/bindings/): `wrangler.jsonc` で宣言したリソースを `env` から呼ぶ。SDK / 認証情報不要、Capability-based セキュリティ（宣言されていないリソースには触れない）
 - **多彩なトリガー**: HTTP / Cron / Queues / Workflows / Email / WebSocket / RPC / Tail
 
 <!--
@@ -67,7 +67,7 @@ Cloudflare のドキュメントでは「Capability-based」という表現が�
 
 ---
 
-## Static Assets
+## [Static Assets](https://developers.cloudflare.com/workers/static-assets/)
 
 HTML / CSS / JavaScript / 画像などの静的アセットを Cloudflare Workers から配信できます。dbt docs のような静的サイトをそのままホストできます。
 
@@ -82,7 +82,7 @@ HTML / CSS / JavaScript / 画像などの静的アセットを Cloudflare Worker
           command: deploy
 ```
 
-Cloudflare Access を組み合わせれば認証付きの限定配信にもできます。
+[Cloudflare Access](https://developers.cloudflare.com/cloudflare-one/policies/access/) を組み合わせれば認証付きの限定配信にもできます。
 
 <img
     v-motion
