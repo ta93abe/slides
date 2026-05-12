@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.6.1",
+  "checkpoint_id": "ba9225fb670b",
+  "strategy": "manual-commit",
+  "branch": "cfdp/final-polish",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/summary.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/ba/9225fb670b/0/metadata.json",
+      "transcript": "/ba/9225fb670b/0/full.jsonl",
+      "content_hash": "/ba/9225fb670b/0/content_hash.txt",
+      "prompt": ""
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 5,
+    "cache_creation_tokens": 3038,
+    "cache_read_tokens": 3669621,
+    "output_tokens": 2126,
+    "api_call_count": 5
+  }
+}
