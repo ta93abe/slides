@@ -1,0 +1,13 @@
+cloudflare-data-platform のスライド読んで見て感想を述べて
+
+---
+
+Honeycomb エクスポートのデモを作りたいんだけどどういう操作をCloudflareでやればHoneycombでデータが確認できる？
+
+---
+
+trace はどうすればいい？
+
+---
+
+../cloudflare-observability-demo を作ってそこでWorkers ObservabilityとAI GatewayのHoneycombエクスポートを実装しよう。
