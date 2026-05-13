@@ -161,7 +161,7 @@ Cloudflare ダッシュボードが Workflow コードを parse し、**step / �
 - 並列ステップ / 条件分岐も自動レイアウト
 - TypeScript Workflows で利用可能 (Python は未対応)
 
-実例: 右図は一つ前のスライドの画像に説明文を付与するコード例をちょっとに複雑にしたものです。
+実例: 右図は一つ前のスライドの画像に説明文を付与するコード例をちょっと複雑にしたものです。
 
 [Workflows Visualizer Doc](https://developers.cloudflare.com/workflows/build/visualizer/)
 
