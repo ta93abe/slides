@@ -116,16 +116,6 @@ class IngestWorkflow(WorkflowEntrypoint):
   <li><span :class="['transition-opacity duration-300', $clicks === 0 || $clicks === 4 || $clicks > 4 ? '' : 'opacity-30']">`await merge()` 実行 — 依存先が並列起動</span></li>
 </ol>
 
-<Excalidraw
-  v-motion
-  :initial="{ y: 60, opacity: 0 }"
-  :click-5="{ y: 0, opacity: 1, transition: { duration: 600, ease: [0.16, 1, 0.3, 1] } }"
-  drawFilePath="./workflows-python-dag.excalidraw"
-  :darkMode="true"
-  :background="false"
-  class="mt-4"
-/>
-
 <style>
 .agent-example pre,
 .agent-example code,
