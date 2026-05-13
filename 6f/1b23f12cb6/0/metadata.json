@@ -1,0 +1,167 @@
+{
+  "cli_version": "0.6.1",
+  "checkpoint_id": "6f1b23f12cb6",
+  "session_id": "7e6c49b6-9078-451b-a86f-11162204240d",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-13T14:50:29.007957Z",
+  "branch": "cfdp/containers-binding-polish",
+  "checkpoints_count": 11,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/containers.md",
+    "slidev-theme-enbu/styles/layout.css"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "bd3b58ec68de",
+  "token_usage": {
+    "input_tokens": 148,
+    "cache_creation_tokens": 392867,
+    "cache_read_tokens": 5036657,
+    "output_tokens": 44620,
+    "api_call_count": 43
+  },
+  "session_metrics": {
+    "turn_count": 11
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-13T14:50:28.993187Z",
+    "agent_lines": 7,
+    "agent_removed": 40,
+    "human_added": 3534,
+    "human_modified": 1,
+    "human_removed": 0,
+    "total_committed": 3542,
+    "total_lines_changed": 3582,
+    "agent_percentage": 1.3121161362367393,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 10,
+      "user_lines_removed": 1,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        "contents/cloudflare-data-platform/pages/containers.md": 1,
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      },
+      "user_removed_per_file": {
+        "contents/cloudflare-data-platform/pages/containers.md": 1
+      }
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 9,
+      "user_lines_removed": 0,
+      "agent_lines_added": 1,
+      "agent_lines_removed": 1,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    },
+    {
+      "checkpoint_number": 3,
+      "user_lines_added": 9,
+      "user_lines_removed": 0,
+      "agent_lines_added": 1,
+      "agent_lines_removed": 1,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    },
+    {
+      "checkpoint_number": 4,
+      "user_lines_added": 9,
+      "user_lines_removed": 0,
+      "agent_lines_added": 1,
+      "agent_lines_removed": 1,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    },
+    {
+      "checkpoint_number": 5,
+      "user_lines_added": 9,
+      "user_lines_removed": 0,
+      "agent_lines_added": 2,
+      "agent_lines_removed": 30,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    },
+    {
+      "checkpoint_number": 6,
+      "user_lines_added": 9,
+      "user_lines_removed": 0,
+      "agent_lines_added": 2,
+      "agent_lines_removed": 30,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    },
+    {
+      "checkpoint_number": 7,
+      "user_lines_added": 9,
+      "user_lines_removed": 0,
+      "agent_lines_added": 2,
+      "agent_lines_removed": 30,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    },
+    {
+      "checkpoint_number": 8,
+      "user_lines_added": 9,
+      "user_lines_removed": 0,
+      "agent_lines_added": 4,
+      "agent_lines_removed": 32,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    },
+    {
+      "checkpoint_number": 9,
+      "user_lines_added": 9,
+      "user_lines_removed": 0,
+      "agent_lines_added": 12,
+      "agent_lines_removed": 22,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    },
+    {
+      "checkpoint_number": 10,
+      "user_lines_added": 1066,
+      "user_lines_removed": 0,
+      "agent_lines_added": 12,
+      "agent_lines_removed": 37,
+      "user_added_per_file": {
+        "contents/cloudflare-data-platform/public/dbt-docs-hosting.excalidraw": 1057,
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    },
+    {
+      "checkpoint_number": 11,
+      "user_lines_added": 1248,
+      "user_lines_removed": 0,
+      "agent_lines_added": 9,
+      "agent_lines_removed": 41,
+      "user_added_per_file": {
+        "contents/cloudflare-data-platform/public/dbt-docs-hosting.excalidraw": 1239,
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    },
+    {
+      "checkpoint_number": 12,
+      "user_lines_added": 1248,
+      "user_lines_removed": 0,
+      "agent_lines_added": 9,
+      "agent_lines_removed": 41,
+      "user_added_per_file": {
+        "contents/cloudflare-data-platform/public/dbt-docs-hosting.excalidraw": 1239,
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    }
+  ]
+}

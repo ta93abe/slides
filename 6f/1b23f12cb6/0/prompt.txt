@@ -1,0 +1,48 @@
+Workers を R2 のリバースプロキシとして dbt docs を配信
+この表現をファクトチェックして
+
+---
+
+R2 をBindingしてWorkerで公開できるの？
+
+---
+
+リバースプロキシとして実装するよりバインディングしたほうがいいの？
+
+---
+
+containerのコード例いらないわ。
+
+---
+
+R2 に dbt docs をおいて外部公開できる？
+
+---
+
+Accessで認証かけられる？
+
+---
+
+リバースプロキシの表現をやめよう。Bindingで実装する。
+
+---
+
+- dbt artifacts を **R2 に Binding 経由**で永続化
+- Workers が R2 Binding 経由で dbt docs を配信
+- Cloudflare Access で社内限定配信
+- [**Workers Secrets**](https://developers.cloudflare.com/workers/configuration/secrets/) または [**Secrets Store**](https://developers.cloudflare.com/secrets-store/) が `wrangler.jsonc` に集約
+- [Workers Observability](https://developers.cloudflare.com/workers/observability/) でログを一元管理
+このアーキテクチャ図をMermaidで右側に書いて。
+
+---
+
+見出しのh2の下線を消して。
+
+---
+
+containersスライドのアニメーションなくして。
+
+---
+
+https://blog.cloudflare.com/browser-run-containers/
+これ説明して
