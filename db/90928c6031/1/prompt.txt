@@ -1,0 +1,27 @@
+workers の自動スパンって珍しい機能なの？
+
+---
+
+X-Rayとかは設定楽なの？
+Workerはwrangler.jsoncに書くだけでしょ
+
+---
+
+traceはどう有効化するの？
+
+---
+
+[Image #1] 
+Cloudflare で実装できそう？
+
+---
+
+Cloudflare + Snowflakeならどう？AWSのところをCloudflare に置き換えたい
+
+---
+
+-d @- <<'JSON'
+{"query": "SELECT user_id, COUNT(*) AS n FROM default.events WHERE __ingest_ts > '2026-05-01' GROUP BY user_id LIMIT 10"}
+JSON
+
+ここ変
