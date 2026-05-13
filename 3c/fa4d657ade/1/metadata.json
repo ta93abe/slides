@@ -1,0 +1,137 @@
+{
+  "cli_version": "0.6.1",
+  "checkpoint_id": "3cfa4d657ade",
+  "session_id": "44e29980-8712-4d6e-b00a-e29fa88fc068",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-13T10:03:20.632471Z",
+  "branch": "tweak/cfdp-workflows-restructure",
+  "checkpoints_count": 7,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/workers.md",
+    "contents/cloudflare-data-platform/pages/workflows.md",
+    "contents/cloudflare-data-platform/slides.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "a395e4a36d5d",
+  "token_usage": {
+    "input_tokens": 121,
+    "cache_creation_tokens": 457945,
+    "cache_read_tokens": 7119601,
+    "output_tokens": 56888,
+    "api_call_count": 53
+  },
+  "session_metrics": {
+    "turn_count": 7
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-13T10:03:20.612836Z",
+    "agent_lines": 0,
+    "agent_removed": 4,
+    "human_added": 0,
+    "human_modified": 38,
+    "human_removed": 1,
+    "total_committed": 0,
+    "total_lines_changed": 43,
+    "agent_percentage": 9.30232558139535,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 11,
+      "user_lines_removed": 1,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        "contents/cloudflare-data-platform/pages/workers.md": 2,
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      },
+      "user_removed_per_file": {
+        "contents/cloudflare-data-platform/pages/workers.md": 1
+      }
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 9,
+      "user_lines_removed": 0,
+      "agent_lines_added": 2,
+      "agent_lines_removed": 1,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    },
+    {
+      "checkpoint_number": 3,
+      "user_lines_added": 12,
+      "user_lines_removed": 3,
+      "agent_lines_added": 3,
+      "agent_lines_removed": 2,
+      "user_added_per_file": {
+        "contents/cloudflare-data-platform/pages/workflows.md": 3,
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      },
+      "user_removed_per_file": {
+        "contents/cloudflare-data-platform/pages/workflows.md": 3
+      }
+    },
+    {
+      "checkpoint_number": 4,
+      "user_lines_added": 41,
+      "user_lines_removed": 32,
+      "agent_lines_added": 10,
+      "agent_lines_removed": 15,
+      "user_added_per_file": {
+        "contents/cloudflare-data-platform/pages/workflows.md": 32,
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      },
+      "user_removed_per_file": {
+        "contents/cloudflare-data-platform/pages/workflows.md": 32
+      }
+    },
+    {
+      "checkpoint_number": 5,
+      "user_lines_added": 9,
+      "user_lines_removed": 0,
+      "agent_lines_added": 35,
+      "agent_lines_removed": 40,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    },
+    {
+      "checkpoint_number": 6,
+      "user_lines_added": 9,
+      "user_lines_removed": 0,
+      "agent_lines_added": 35,
+      "agent_lines_removed": 40,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    },
+    {
+      "checkpoint_number": 7,
+      "user_lines_added": 11,
+      "user_lines_removed": 2,
+      "agent_lines_added": 35,
+      "agent_lines_removed": 40,
+      "user_added_per_file": {
+        "contents/cloudflare-data-platform/pages/workflows.md": 2,
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      },
+      "user_removed_per_file": {
+        "contents/cloudflare-data-platform/pages/workflows.md": 2
+      }
+    },
+    {
+      "checkpoint_number": 8,
+      "user_lines_added": 9,
+      "user_lines_removed": 0,
+      "agent_lines_added": 37,
+      "agent_lines_removed": 42,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    }
+  ]
+}
