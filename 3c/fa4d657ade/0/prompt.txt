@@ -1,0 +1,70 @@
+それぞれのサービスがブログでのリリース時にどんな課題を解決できるか書いてあるはずだからそれをもってきて。
+
+---
+
+サービスのリンクを張ってほしい。
+
+---
+
+コミットして
+
+---
+
+/pr review
+
+---
+
+PR #40 (cfdp/final-polish) の CI が全 SUCCESS なら squash merge --delete-branch。Workers Builds が IN_PROGRESS ならさらに 60s 待つ。
+
+---
+
+中身を磨く所ある？
+
+---
+
+7 だけ修正したい
+
+---
+
+/pr review
+
+---
+
+h1 がリンクのときは下線とホバーのCSSなくしたい。globalにオフにして
+
+---
+
+/pr review
+
+---
+
+Workerのオブザーバビリティの機能って何？
+
+---
+
+ContainersやSandboxはWorkerのログとして見れるの？
+
+---
+
+R2, Workflows, Pipelines, D1, Email Service, Durable Objects, Browser Runはどうなの？
+
+---
+
+Queues, Hyperdrive, KVもどう？
+
+---
+
+R2 Data Catalogは？最近のチェンジログも
+
+---
+
+星取り表書いて。
+
+---
+
+自動span(Worker から)
+これってなんなの
+
+---
+
+/zettelkasten-write これらについてノートにまとめてほしい。
