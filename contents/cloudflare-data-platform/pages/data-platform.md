@@ -125,7 +125,7 @@ wrangler r2 bucket catalog enable < bucket-name >
 ::left::
 
 - Trino / DuckDB / PyIceberg / Snowflake / Spark / StarRocks などのクライアントから直接クエリ可能
-- **Iceberg v2 の機能**はそのまま使える（ACID / Schema evolution / Time travel 等）
+- ACID / Schema evolution / Time travel などの Iceberg らしい機能はもちろん対応している。
 - テーブルメンテナンス
   - **Compaction**: `--target-size` で指定したサイズに合わせて Parquet ファイルを集約
   - **Snapshot expiration**: `--older-than-days` で古いスナップショットを削除、`--retain-last` で最低限残す数を指定
@@ -153,7 +153,7 @@ R2 Data Catalog の Iceberg テーブルに標準 SQL を実行できる、Cloud
 
 基本的な演算はできますが、JOIN や WINDOW 関数はまだ対応していません。ベータ版で開発真っ只中。
 
-実行方法は [**Wrangler**](https://developers.cloudflare.com/workers/wrangler/) と [**HTTP API**](https://developers.cloudflare.com/r2-sql/query-data/#query-via-api) の 2 つがあります。Web SQL エディターはありません。
+実行方法は [**Wrangler**](https://developers.cloudflare.com/workers/wrangler/) と [**HTTP API**](https://developers.cloudflare.com/r2-sql/query-data/#query-via-api) の 2 つがあります。管理画面などに Web SQL エディターはありません。
 
 ```bash
 wrangler r2 sql query "$WAREHOUSE" \
@@ -166,13 +166,7 @@ curl -X POST \
   "https://api.sql.cloudflarestorage.com/api/v1/accounts/{ACCOUNT_ID}/r2-sql/query/{BUCKET_NAME}" \
   -H "Authorization: Bearer {API_TOKEN}" \
   -H "Content-Type: application/json" \
-  -d @- <<'JSON'
-{
-  "query": "SELECT user_id, COUNT(*) AS n FROM default.events
-            WHERE __ingest_ts > '2026-05-01'
-            GROUP BY user_id LIMIT 10"
-}
-JSON
+  -d {"query": "SELECT user_id, COUNT(*) AS n FROM default.events WHERE __ingest_ts > '2026-05-01' GROUP BY user_id LIMIT 10"}
 ```
 
 <!--

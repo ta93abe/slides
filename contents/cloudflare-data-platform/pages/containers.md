@@ -6,9 +6,9 @@ layout: two-cols-header
 
 ::left::
 
-Workers では **128 MB** の実行メモリ制限があります。
+Cloudflare Workers では **128 MB** の実行メモリ制限や CPU時間制限があります。
 
-そこで Containers を使えば、この制約を突破できます。
+そこで Cloudflare Containers を使えば、この制約を突破できます。
 例えば dbt の実行を行えます。バッチデータインジェスチョンがしたいなら dlt を使うと良いでしょう。
 
 
