@@ -1,0 +1,29 @@
+{
+  "cli_version": "0.6.1",
+  "checkpoint_id": "79048ffab360",
+  "strategy": "manual-commit",
+  "branch": "cfdp/containers-binding-polish",
+  "checkpoints_count": 4,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/data-platform.md",
+    "contents/cloudflare-data-platform/public/cloudflare-pipelines.excalidraw",
+    "contents/cloudflare-data-platform/public/data-platform-main-components.excalidraw",
+    "contents/cloudflare-data-platform/public/dbt-docs-hosting.excalidraw",
+    "contents/cloudflare-data-platform/slides.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/79/048ffab360/0/metadata.json",
+      "transcript": "/79/048ffab360/0/full.jsonl",
+      "content_hash": "/79/048ffab360/0/content_hash.txt",
+      "prompt": "/79/048ffab360/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 199,
+    "cache_creation_tokens": 426890,
+    "cache_read_tokens": 9866467,
+    "output_tokens": 70791,
+    "api_call_count": 70
+  }
+}

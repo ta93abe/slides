@@ -1,0 +1,86 @@
+{
+  "cli_version": "0.6.1",
+  "checkpoint_id": "79048ffab360",
+  "session_id": "7e6c49b6-9078-451b-a86f-11162204240d",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-13T15:35:04.983923Z",
+  "branch": "cfdp/containers-binding-polish",
+  "checkpoints_count": 4,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/data-platform.md",
+    "contents/cloudflare-data-platform/public/cloudflare-pipelines.excalidraw",
+    "contents/cloudflare-data-platform/public/data-platform-main-components.excalidraw",
+    "contents/cloudflare-data-platform/public/dbt-docs-hosting.excalidraw",
+    "contents/cloudflare-data-platform/slides.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "c7b66ff86d6e",
+  "token_usage": {
+    "input_tokens": 199,
+    "cache_creation_tokens": 426890,
+    "cache_read_tokens": 9866467,
+    "output_tokens": 70791,
+    "api_call_count": 70
+  },
+  "session_metrics": {
+    "turn_count": 16
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-13T15:35:04.967899Z",
+    "agent_lines": 0,
+    "agent_removed": 234,
+    "human_added": 151,
+    "human_modified": 340,
+    "human_removed": 0,
+    "total_committed": 401,
+    "total_lines_changed": 727,
+    "agent_percentage": 32.18707015130674,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0
+    },
+    {
+      "checkpoint_number": 3,
+      "user_lines_added": 9,
+      "user_lines_removed": 0,
+      "agent_lines_added": 249,
+      "agent_lines_removed": 235,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    },
+    {
+      "checkpoint_number": 4,
+      "user_lines_added": 498,
+      "user_lines_removed": 340,
+      "agent_lines_added": 259,
+      "agent_lines_removed": 235,
+      "user_added_per_file": {
+        "contents/cloudflare-data-platform/pages/data-platform.md": 1,
+        "contents/cloudflare-data-platform/public/dbt-docs-hosting.excalidraw": 488,
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      },
+      "user_removed_per_file": {
+        "contents/cloudflare-data-platform/pages/data-platform.md": 1,
+        "contents/cloudflare-data-platform/public/dbt-docs-hosting.excalidraw": 339
+      }
+    },
+    {
+      "checkpoint_number": 5,
+      "user_lines_added": 9,
+      "user_lines_removed": 0,
+      "agent_lines_added": 749,
+      "agent_lines_removed": 574,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    }
+  ]
+}
