@@ -25,11 +25,12 @@ layout: section
 <!--
 Cloudflare Workers は、全世界 330 以上の都市のエッジで動くサーバーレス実行基盤です。
 
-特徴は 4 つあります。
+主な特徴を紹介します。
 V8 Isolate で起動は ms オーダー、コールドスタートが構造的に発生しない。
 Global 配置 + anycast network で、1 deploy で全エッジに自動展開されます。
 Binding で他の Cloudflare サービスを呼び出せて、
 HTTP / Cron / Queues / Workflows / Email / WebSocket / RPC / Tail と多彩なトリガーに対応します。
+Observability も Workers Logs と OpenTelemetry エクスポートでカバーされています。
 -->
 
 ---

@@ -174,7 +174,7 @@ Cloudflare ダッシュボードが Workflow コードを parse し、**step / �
 Workflow コードをダッシュボードがパースして、
 step・並列・条件分岐・ループのフロー図を自動描画してくれます。
 
-右図は dbt build を Workflows で実行した例。
-loop / try-catch / retry-backoff を含むパイプラインを一画面で俯瞰できます。
+右図は前スライドの画像処理ワークフローをちょっと複雑にした例で、
+画像取得 → AI による説明生成 → 承認 → 公開のフローが可視化されています。
 Airflow の DAG View に相当します。
 -->
