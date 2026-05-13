@@ -66,21 +66,6 @@ pre, code, .shiki, .shiki * {
     border-bottom-style: solid !important;
 }
 
-/* Marker-pen highlight for h2 slide titles.
-   Distinct from h1's hand-drawn wave: a translucent theme-color swipe behind
-   the lower portion of the text, evoking a highlighter pen. Line vs area
-   contrast keeps the visual hierarchy while sharing the theme primary. */
-.slidev-layout:not(.cover):not(.section) h2 {
-    display: inline-block;
-    padding: 0 0.25em;
-    background: linear-gradient(
-        to top,
-        rgba(243, 128, 32, 0.32) 0%,
-        rgba(243, 128, 32, 0.32) 38%,
-        transparent 38%
-    );
-}
-
 /* Status badges for slide titles (Beta / preview / GA など).
    Use as: `# Title <span class="badge badge-beta">BETA</span>` */
 .badge {
