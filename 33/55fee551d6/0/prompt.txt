@@ -1,0 +1,8 @@
+env.BUCKET.put(
+これの続き書いて
+
+---
+
+git の diff 見て。
+(`env.BUCKET.put('*.json', )`)
+これを完成させてほしい
