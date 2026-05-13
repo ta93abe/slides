@@ -34,9 +34,11 @@ Cloudflare のサービスを組み合わせて、データ基盤を実際にど
 src: ./pages/data-platform.md
 ---
 
+<!--
 ---
 src: ./pages/workers.md
 ---
+-->
 
 ---
 src: ./pages/containers.md
