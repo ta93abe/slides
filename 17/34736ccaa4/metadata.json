@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.6.1",
+  "checkpoint_id": "1734736ccaa4",
+  "strategy": "manual-commit",
+  "branch": "cfdp/containers-binding-polish",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/data-platform.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/17/34736ccaa4/0/metadata.json",
+      "transcript": "/17/34736ccaa4/0/full.jsonl",
+      "content_hash": "/17/34736ccaa4/0/content_hash.txt",
+      "prompt": "/17/34736ccaa4/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 13,
+    "cache_creation_tokens": 5415,
+    "cache_read_tokens": 1364372,
+    "output_tokens": 4078,
+    "api_call_count": 8
+  }
+}
