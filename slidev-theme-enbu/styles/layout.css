@@ -60,6 +60,16 @@ pre, code, .shiki, .shiki * {
     opacity: 1 !important;
 }
 
+/* h2 内のリンクも h1 と同様の扱い。マーカーペン背景は h2 自身の background なので影響しない */
+.slidev-layout:not(.cover):not(.section) h2 a,
+.slidev-layout:not(.cover):not(.section) h2 a:hover,
+.slidev-layout:not(.cover):not(.section) h2 a:visited {
+    text-decoration: none !important;
+    color: inherit !important;
+    border-bottom: none !important;
+    opacity: 1 !important;
+}
+
 /* スライド本文中のリンクは Slidev デフォルトで `border-bottom: 1px dashed` (破線)
    になっているが、視覚的に「壊れた線」に見えるので実線に上書き */
 .slidev-layout a {
