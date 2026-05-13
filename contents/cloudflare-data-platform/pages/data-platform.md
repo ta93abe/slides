@@ -18,16 +18,6 @@ Cloudflare と聞くと、CDNの会社でしょという認識がまずありま
 Cloudflare の **Cloudflare Data Platform** は、入れる/貯める/使うを 1 つのプラットフォームで提供します。<br>([Announcing the Cloudflare Data Platform: ingest, store, and query your data directly on Cloudflare](https://blog.cloudflare.com/cloudflare-data-platform/))
 
 <v-click>
-
-Cloudflare Data Platform を構成するサービス
-
-- [**Pipelines**](https://developers.cloudflare.com/pipelines/): ストリーミングイベントインジェストサービス
-- [**R2 Data Catalog**](https://developers.cloudflare.com/r2/data-catalog/): Iceberg カタログサービス
-- [**R2 SQL**](https://developers.cloudflare.com/r2-sql/): 分散クエリエンジン
-
-</v-click>
-
-<v-click>
 <Excalidraw
   drawFilePath="./data-platform-main-components.excalidraw"
   :darkMode="true"
