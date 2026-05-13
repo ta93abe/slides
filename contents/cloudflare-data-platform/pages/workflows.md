@@ -74,44 +74,6 @@ Workers AI の LLaVA (ラーバ)で説明文を生成、
 -->
 
 ---
-
-## ビジュアライザ
-
-Cloudflare ダッシュボードが Workflow コードを parse し、**step / 並列 / 条件分岐 / ループの DAG 図** を自動生成します。
-
-<div class="grid grid-cols-[3fr_2fr] gap-6 mt-3 text-sm">
-
-<div>
-
-- ループ / nested logic を **折りたたみ ↔ 展開** で切替
-- 並列ステップ / 条件分岐も自動レイアウト
-- TypeScript / JavaScript Workflows で利用可能 (Python は未対応)
-
-実例: 右図は **dbt build を Workflows で実行** した際のビジュアライザです。`loop` / `try-catch` / `retry-backoff` を含むパイプラインを一画面で構造把握できます。
-
-[Workflows Visualizer Doc](https://developers.cloudflare.com/workflows/build/visualizer/)
-
-</div>
-
-<div class="flex items-center justify-center">
-
-<img src="/dbt-build-diagram.png" alt="dbt-build Workflow visualizer" class="max-h-[420px] w-auto rounded border border-zinc-700/60 shadow-lg" />
-
-</div>
-
-</div>
-
-<!--
-2026 年 2 月にリリースされた機能です。
-Workflow コードをダッシュボードがパースして、
-step・並列・条件分岐・ループの DAG を自動描画してくれます。
-
-右図は dbt build を Workflows で実行した例。
-loop / try-catch / retry-backoff を含むパイプラインを一画面で俯瞰できます。
-Airflow の DAG View に相当します。
--->
-
----
 layout: two-cols-header
 ---
 
@@ -151,7 +113,7 @@ class IngestWorkflow(WorkflowEntrypoint):
   <li><span :class="['transition-opacity duration-300', $clicks === 0 || $clicks === 1 || $clicks > 4 ? '' : 'opacity-30']">`fetch_a` を `@step.do()` で定義</span></li>
   <li><span :class="['transition-opacity duration-300', $clicks === 0 || $clicks === 2 || $clicks > 4 ? '' : 'opacity-30']">`fetch_b` を独立した step として定義</span></li>
   <li><span :class="['transition-opacity duration-300', $clicks === 0 || $clicks === 3 || $clicks > 4 ? '' : 'opacity-30']">`merge` を `concurrent=True` + 引数名 `fetch_a` / `fetch_b` で依存宣言</span></li>
-  <li><span :class="['transition-opacity duration-300', $clicks === 0 || $clicks === 4 || $clicks > 4 ? '' : 'opacity-30']">`await merge()` 実行 — 依存先が並列起動 (diamond DAG)</span></li>
+  <li><span :class="['transition-opacity duration-300', $clicks === 0 || $clicks === 4 || $clicks > 4 ? '' : 'opacity-30']">`await merge()` 実行 — 依存先が並列起動</span></li>
 </ol>
 
 <Excalidraw
@@ -183,4 +145,36 @@ merge 関数の引数名が fetch_a で、定義済みステップと同名な�
 
 concurrent=True を付ければ、diamond shaped DAG が宣言的に書けます。
 Python の ML / data 系処理と相性がいい設計です。
+-->
+
+---
+layout: two-cols-header
+---
+
+## ビジュアライザ
+
+Cloudflare ダッシュボードが Workflow コードを parse し、**step / 並列 / 条件分岐 / ループのフロー図** を自動生成します。
+
+::left::
+
+- ループ / nested logic を **折りたたみ ↔ 展開** で切替
+- 並列ステップ / 条件分岐も自動レイアウト
+- TypeScript Workflows で利用可能 (Python は未対応)
+
+実例: 右図は一つ前のスライドの画像に説明文を付与するコード例をちょっと複雑にしたものです。
+
+[Workflows Visualizer Doc](https://developers.cloudflare.com/workflows/build/visualizer/)
+
+::right::
+
+<img src="/image-processing-diagram.png" alt="Image Processing Workflow visualizer" class="scale-75 mt-[-80px] rounded border border-zinc-700/60 shadow-lg" />
+
+<!--
+2026 年 2 月にリリースされた機能です。
+Workflow コードをダッシュボードがパースして、
+step・並列・条件分岐・ループのフロー図を自動描画してくれます。
+
+右図は前スライドの画像処理ワークフローをちょっと複雑にした例で、
+画像取得 → AI による説明生成 → 承認 → 公開のフローが可視化されています。
+Airflow の DAG View に相当します。
 -->

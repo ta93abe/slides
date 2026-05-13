@@ -56,10 +56,10 @@ Cloudflare Data Platform を構成するサービス
 wrangler pipelines setup
 ```
 
-- [**Streams**](https://developers.cloudflare.com/pipelines/streams/) で HTTP / Workers Binding / Logpush からデータを受けます。
-- [**Pipelines**](https://developers.cloudflare.com/pipelines/pipelines/) で SQL 変換を行えます。（変更はできません）
-- [**Sinks**](https://developers.cloudflare.com/pipelines/sinks/) で `--roll-size` or `--roll-interval` で設定した粒度で自動バッチ化し、R2 / R2 Data Catalog に書き出せます。
 - 2025年4月に買収した [Arroyo](https://www.arroyo.dev/) をベースとしています。
+- [**Streams**](https://developers.cloudflare.com/pipelines/streams/) で HTTP / Workers Binding / Logpush からデータを受けます。
+- [**Pipelines**](https://developers.cloudflare.com/pipelines/pipelines/) で SQL 変換を行えます。
+- [**Sinks**](https://developers.cloudflare.com/pipelines/sinks/) で `--roll-size` or `--roll-interval` で設定した粒度で自動バッチ化し、R2 / R2 Data Catalog に書き出せます。
 
 <div class="p-4">
     <Excalidraw
@@ -177,7 +177,11 @@ curl -X POST \
   -H "Authorization: Bearer {API_TOKEN}" \
   -H "Content-Type: application/json" \
   -d @- <<'JSON'
-{"query": "SELECT user_id, COUNT(*) AS n FROM default.events WHERE __ingest_ts > '2026-05-01' GROUP BY user_id LIMIT 10"}
+{
+  "query": "SELECT user_id, COUNT(*) AS n FROM default.events
+            WHERE __ingest_ts > '2026-05-01'
+            GROUP BY user_id LIMIT 10"
+}
 JSON
 ```
 
