@@ -48,6 +48,24 @@ pre, code, .shiki, .shiki * {
         url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 22' preserveAspectRatio='none'%3E%3Cpath d='M3 11 Q 12 19 22 5 Q 30 1 42 16 Q 54 19 66 4 Q 78 1 90 15 Q 102 20 114 5 Q 124 1 138 14 Q 150 18 162 5 Q 174 1 186 13 Q 194 16 198 11' fill='none' stroke='%23F38020' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' opacity='0.55'/%3E%3C/svg%3E");
 }
 
+/* h1 内のリンクは「タイトル全体が docs に飛ぶショートカット」として扱う。
+   ブラウザデフォルトの下線・色・ホバー透過は全て無効化して、純粋なタイトル見た目を維持。
+   wavy underline は h1 自身の background-image なので影響しない */
+.slidev-layout:not(.cover):not(.section) h1 a,
+.slidev-layout:not(.cover):not(.section) h1 a:hover,
+.slidev-layout:not(.cover):not(.section) h1 a:visited {
+    text-decoration: none !important;
+    color: inherit !important;
+    border-bottom: none !important;
+    opacity: 1 !important;
+}
+
+/* スライド本文中のリンクは Slidev デフォルトで `border-bottom: 1px dashed` (破線)
+   になっているが、視覚的に「壊れた線」に見えるので実線に上書き */
+.slidev-layout a {
+    border-bottom-style: solid !important;
+}
+
 /* Marker-pen highlight for h2 slide titles.
    Distinct from h1's hand-drawn wave: a translucent theme-color swipe behind
    the lower portion of the text, evoking a highlighter pen. Line vs area
