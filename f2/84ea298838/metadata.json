@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.6.1",
+  "checkpoint_id": "f284ea298838",
+  "strategy": "manual-commit",
+  "branch": "cfdp/fix-workers-exclusion",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "contents/cloudflare-data-platform/slides.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/f2/84ea298838/0/metadata.json",
+      "transcript": "/f2/84ea298838/0/full.jsonl",
+      "content_hash": "/f2/84ea298838/0/content_hash.txt",
+      "prompt": "/f2/84ea298838/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 14,
+    "cache_creation_tokens": 6950,
+    "cache_read_tokens": 1145641,
+    "output_tokens": 4770,
+    "api_call_count": 5
+  }
+}
