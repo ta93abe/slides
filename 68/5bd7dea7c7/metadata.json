@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.6.1",
+  "checkpoint_id": "685bd7dea7c7",
+  "strategy": "manual-commit",
+  "branch": "cfdp/containers-binding-polish",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "slidev-theme-enbu/styles/layout.css"
+  ],
+  "sessions": [
+    {
+      "metadata": "/68/5bd7dea7c7/0/metadata.json",
+      "transcript": "/68/5bd7dea7c7/0/full.jsonl",
+      "content_hash": "/68/5bd7dea7c7/0/content_hash.txt",
+      "prompt": "/68/5bd7dea7c7/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 200,
+    "cache_creation_tokens": 427393,
+    "cache_read_tokens": 10069044,
+    "output_tokens": 71092,
+    "api_call_count": 71
+  }
+}

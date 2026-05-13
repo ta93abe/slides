@@ -1,0 +1,37 @@
+{
+  "cli_version": "0.6.1",
+  "checkpoint_id": "685bd7dea7c7",
+  "session_id": "7e6c49b6-9078-451b-a86f-11162204240d",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-13T15:35:15.576792Z",
+  "branch": "cfdp/containers-binding-polish",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "slidev-theme-enbu/styles/layout.css"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "c7b66ff86d6e",
+  "token_usage": {
+    "input_tokens": 200,
+    "cache_creation_tokens": 427393,
+    "cache_read_tokens": 10069044,
+    "output_tokens": 71092,
+    "api_call_count": 71
+  },
+  "session_metrics": {
+    "turn_count": 16
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-13T15:35:15.557823Z",
+    "agent_lines": 10,
+    "agent_removed": 0,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 10,
+    "total_lines_changed": 10,
+    "agent_percentage": 100,
+    "metric_version": 2
+  }
+}
