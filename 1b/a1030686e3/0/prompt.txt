@@ -1,0 +1,25 @@
+/pr review
+
+---
+
+24h durable が意味わからない
+
+---
+
+wrangler.md を slides.mdでコメントアウトして
+
+---
+
+approved イベントを最大 24h 待機
+
+---
+
+Slackとかで承認できるの？
+
+---
+
+workflows.mdのコード例だと承認のステップ動かない？
+
+---
+
+Cloudflare 管理画面から承認ができるの？
