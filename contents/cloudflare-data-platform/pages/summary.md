@@ -1,26 +1,20 @@
 ---
-layout: section
+layout: center
 ---
 
 # まとめ
 
-<!--
-まとめに入ります。
--->
-
----
-layout: center
----
-
-- まずは cloudflare.com にたどり着きましょう。
+- まずは [cloudflare.com](https://cloudflare.com) にたどり着きましょう。
 - 無事たどり着いて管理画面に入ったら **Agent Lee** が迎えてくれます。
 - こんな Cloudflare の始め方もあります。
   - ドメインを購入する or 移管してくる。
-  - 個人のサイト/ブログをホスティングする。 (Astro というフレームワークを使えばフロントエンドも簡単に作れます。Markdown でコンテンツを書いて Content Collections でいい感じに表示できます)
+  - 個人のサイト/ブログを Workers Static Assets でホスティングしてみる。
   - [R2 Data Catalog は Iceberg を始めるには結構お手軽です。](https://developers.cloudflare.com/r2/data-catalog/get-started/)
   - AI エージェントを実装してみる。 [Agent](https://developers.cloudflare.com/agents/) / [Workers AI](https://developers.cloudflare.com/workers-ai/) / [AI Gateway](https://developers.cloudflare.com/ai-gateway/) / [Dynamic Workers](https://developers.cloudflare.com/dynamic-workers/) / [Sandbox](https://developers.cloudflare.com/sandbox/) / [AI Search](https://developers.cloudflare.com/ai-search/) / [Browser Run](https://developers.cloudflare.com/browser-rendering/) / [Artifacts](https://developers.cloudflare.com/artifacts/) / [Durable Objects](https://developers.cloudflare.com/durable-objects/)
 
 <!--
+まとめに入ります。
+
 今日の内容で、まず手を動かすなら。
 
 最初の一歩は cloudflare.com にたどり着くことです。
