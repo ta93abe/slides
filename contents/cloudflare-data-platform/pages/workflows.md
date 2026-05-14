@@ -28,7 +28,7 @@ export class ImageProcessingWorkflow extends WorkflowEntrypoint {
     });
 
     await step.waitForEvent('await approval', {
-      event: 'approved',
+      type: 'approved',
       timeout: '24 hours',
     });
 
