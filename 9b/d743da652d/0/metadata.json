@@ -1,0 +1,65 @@
+{
+  "cli_version": "0.6.1",
+  "checkpoint_id": "9bd743da652d",
+  "session_id": "7e6c49b6-9078-451b-a86f-11162204240d",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-14T07:46:01.727719Z",
+  "branch": "cfdp/visualizer-h1-link",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/workflows.md"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-7[1m]",
+  "turn_id": "a06fa240bae2",
+  "checkpoint_transcript_start": 1118,
+  "transcript_lines_at_start": 1118,
+  "token_usage": {
+    "input_tokens": 26,
+    "cache_creation_tokens": 15292,
+    "cache_read_tokens": 4789437,
+    "output_tokens": 6656,
+    "api_call_count": 12
+  },
+  "session_metrics": {
+    "turn_count": 45
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-14T07:46:01.692653Z",
+    "agent_lines": 0,
+    "agent_removed": 2,
+    "human_added": 4,
+    "human_modified": 2,
+    "human_removed": 0,
+    "total_committed": 4,
+    "total_lines_changed": 8,
+    "agent_percentage": 25,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 9,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 12,
+      "user_lines_removed": 1,
+      "agent_lines_added": 1,
+      "agent_lines_removed": 3,
+      "user_added_per_file": {
+        "contents/cloudflare-data-platform/pages/workflows.md": 3,
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      },
+      "user_removed_per_file": {
+        "contents/cloudflare-data-platform/pages/workflows.md": 1
+      }
+    }
+  ]
+}
