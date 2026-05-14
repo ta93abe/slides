@@ -43,11 +43,11 @@ workers.md は本登壇から一時的に除外中 (pages/workers.md は保持)�
 -->
 
 ---
-src: ./pages/containers.md
+src: ./pages/workflows.md
 ---
 
 ---
-src: ./pages/workflows.md
+src: ./pages/containers.md
 ---
 
 <!--

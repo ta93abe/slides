@@ -44,7 +44,7 @@ Cloudflare の **Cloudflare Data Platform** は、入れる/貯める/使うを 
 wrangler pipelines setup
 ```
 
-- 2025年4月に買収した [Arroyo](https://www.arroyo.dev/) をベースとしています。
+- 2025年4月に買収した [Arroyo](https://www.arroyo.dev/) をベースとしたストリーミングインジェストサービスです。
 - [**Streams**](https://developers.cloudflare.com/pipelines/streams/) で HTTP / Workers Binding / Logpush からデータを受けます。
 - [**Pipelines**](https://developers.cloudflare.com/pipelines/pipelines/) で SQL 変換を行えます。
 - [**Sinks**](https://developers.cloudflare.com/pipelines/sinks/) で `--roll-size` or `--roll-interval` で設定した粒度で自動バッチ化し、R2 / R2 Data Catalog に書き出せます。

@@ -16,7 +16,7 @@ Cloudflare で完結させるメリットは次のとおりです。
 
 <div class="text-xs">
 
-- dbt artifacts を **R2 に Binding 経由**で永続化 
+- dbt artifacts を **R2 に Binding 経由**で永続化
   - (`env.BUCKET.put('*.json', body)`)
 - Workers が R2 Binding 経由で dbt docs を配信
 - Cloudflare Access で社内限定配信
