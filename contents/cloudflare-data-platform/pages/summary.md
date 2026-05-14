@@ -17,7 +17,7 @@ layout: center
 - こんな Cloudflare の始め方もあります。
   - ドメインを購入する or 移管してくる。
   - 個人のサイト/ブログをホスティングする。 (Astro というフレームワークを使えばフロントエンドも簡単に作れます。Markdown でコンテンツを書いて Content Collections でいい感じに表示できます)
-  - R2 Data Catalog は Iceberg を始めるには結構お手軽です。
+  - [R2 Data Catalog は Iceberg を始めるには結構お手軽です。](https://developers.cloudflare.com/r2/data-catalog/get-started/)
   - AI エージェントを実装してみる。 [Agent](https://developers.cloudflare.com/agents/) / [Workers AI](https://developers.cloudflare.com/workers-ai/) / [AI Gateway](https://developers.cloudflare.com/ai-gateway/) / [Dynamic Workers](https://developers.cloudflare.com/dynamic-workers/) / [Sandbox](https://developers.cloudflare.com/sandbox/) / [AI Search](https://developers.cloudflare.com/ai-search/) / [Browser Run](https://developers.cloudflare.com/browser-rendering/) / [Artifacts](https://developers.cloudflare.com/artifacts/) / [Durable Objects](https://developers.cloudflare.com/durable-objects/)
 
 <!--

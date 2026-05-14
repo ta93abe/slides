@@ -125,7 +125,7 @@ Shadow MCP の防止、部署別 tool アクセス制御、IDE エージェン�
 
 # Documentation
 
-ドキュメントも LLM が読める形で整備されています。
+ドキュメントも LLM が読める形で整備されています。developers.cloudflare.com
 
 - **llms.txt** を提供しています。
 - https://isitagentready.com/developers.cloudflare.com
