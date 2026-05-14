@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.6.1",
+  "checkpoint_id": "86c66b4a82cd",
+  "strategy": "manual-commit",
+  "branch": "tweak/cfdp-tweet-scale-down",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/data-platform.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/86/c66b4a82cd/0/metadata.json",
+      "transcript": "/86/c66b4a82cd/0/full.jsonl",
+      "content_hash": "/86/c66b4a82cd/0/content_hash.txt",
+      "prompt": "/86/c66b4a82cd/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 96,
+    "cache_creation_tokens": 77086,
+    "cache_read_tokens": 185171,
+    "output_tokens": 2924,
+    "api_call_count": 4
+  }
+}
