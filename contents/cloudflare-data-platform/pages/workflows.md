@@ -28,7 +28,7 @@ export class ImageProcessingWorkflow extends WorkflowEntrypoint {
     });
 
     await step.waitForEvent('await approval', {
-      event: 'approved',
+      type: 'approved',
       timeout: '24 hours',
     });
 
@@ -46,7 +46,7 @@ export class ImageProcessingWorkflow extends WorkflowEntrypoint {
 <ol class="ml-4">
   <li><span :class="['transition-opacity duration-300', $clicks === 0 || $clicks === 1 || $clicks > 4 ? '' : 'opacity-30']">R2 から画像を取得</span></li>
   <li><span :class="['transition-opacity duration-300', $clicks === 0 || $clicks === 2 || $clicks > 4 ? '' : 'opacity-30']">LLaVA で 1 文の説明を生成</span></li>
-  <li><span :class="['transition-opacity duration-300', $clicks === 0 || $clicks === 3 || $clicks > 4 ? '' : 'opacity-30']">24h durable に人間承認を待つ</span></li>
+  <li><span :class="['transition-opacity duration-300', $clicks === 0 || $clicks === 3 || $clicks > 4 ? '' : 'opacity-30']">`approved` イベントを最大 24h 待機</span></li>
   <li><span :class="['transition-opacity duration-300', $clicks === 0 || $clicks === 4 || $clicks > 4 ? '' : 'opacity-30']">R2 へ publish (公開ディレクトリ)</span></li>
 </ol>
 
@@ -67,7 +67,7 @@ Temporal.io が類似サービス。
 右のコードは画像処理ワークフローの例です。
 R2 から画像を取得、
 Workers AI の LLaVA (ラーバ)で説明文を生成、
-人間の承認を 24 時間 durable に待つ、
+`approved` イベントを最大 24h 待機 (durable に pause)、
 承認されたら公開ディレクトリに publish。
 
 各ステップで Workers Binding がそのまま使えるのが Cloudflare ならではの強みです。
