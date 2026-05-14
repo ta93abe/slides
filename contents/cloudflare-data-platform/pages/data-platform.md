@@ -17,14 +17,12 @@ Cloudflare と聞くと、CDNの会社でしょという認識がまずありま
 
 Cloudflare の **Cloudflare Data Platform** は、入れる/貯める/使うを 1 つのプラットフォームで提供します。<br>([Announcing the Cloudflare Data Platform: ingest, store, and query your data directly on Cloudflare](https://blog.cloudflare.com/cloudflare-data-platform/))
 
-<v-click>
 <Excalidraw
   drawFilePath="./data-platform-main-components.excalidraw"
   :darkMode="true"
   :background="false"
   class="my-16"
 />
-</v-click>
 
 <!--
 そんな中で Cloudflare Data Platform は、2025 年 9 月の Birthday Week で発表された比較的新しいプラットフォームです。

@@ -35,9 +35,11 @@ src: ./pages/data-platform.md
 ---
 
 <!--
----
-src: ./pages/workers.md
----
+workers.md は本登壇から一時的に除外中 (pages/workers.md は保持)。
+復活させたい場合は以下のブロックをこの直下に追加 (インデントを外す):
+  ---
+  src: ./pages/workers.md
+  ---
 -->
 
 ---
