@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.6.1",
+  "checkpoint_id": "6bdfd916f207",
+  "strategy": "manual-commit",
+  "branch": "cfdp/polish-workflows-wrangler",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/workflows.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/6b/dfd916f207/0/metadata.json",
+      "transcript": "/6b/dfd916f207/0/full.jsonl",
+      "content_hash": "/6b/dfd916f207/0/content_hash.txt",
+      "prompt": ""
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 7,
+    "cache_creation_tokens": 7725,
+    "cache_read_tokens": 2485701,
+    "output_tokens": 4646,
+    "api_call_count": 7
+  }
+}
