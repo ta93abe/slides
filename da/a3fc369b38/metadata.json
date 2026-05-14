@@ -1,0 +1,27 @@
+{
+  "cli_version": "0.6.1",
+  "checkpoint_id": "daa3fc369b38",
+  "strategy": "manual-commit",
+  "branch": "cfdp/reorder-workflows-containers",
+  "checkpoints_count": 4,
+  "files_touched": [
+    "contents/cloudflare-data-platform/pages/containers.md",
+    "contents/cloudflare-data-platform/pages/data-platform.md",
+    "contents/cloudflare-data-platform/slides.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/da/a3fc369b38/0/metadata.json",
+      "transcript": "/da/a3fc369b38/0/full.jsonl",
+      "content_hash": "/da/a3fc369b38/0/content_hash.txt",
+      "prompt": "/da/a3fc369b38/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 43,
+    "cache_creation_tokens": 20452,
+    "cache_read_tokens": 3981588,
+    "output_tokens": 14627,
+    "api_call_count": 14
+  }
+}
