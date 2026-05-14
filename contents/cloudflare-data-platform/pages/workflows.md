@@ -141,7 +141,7 @@ Python の ML / data 系処理と相性がいい設計です。
 layout: two-cols-header
 ---
 
-## ビジュアライザ
+# [ビジュアライザ](https://developers.cloudflare.com/workflows/build/visualizer/)
 
 Cloudflare ダッシュボードが Workflow コードを parse し、**step / 並列 / 条件分岐 / ループのフロー図** を自動生成します。
 
@@ -153,11 +153,11 @@ Cloudflare ダッシュボードが Workflow コードを parse し、**step / �
 
 実例: 右図は一つ前のスライドの画像に説明文を付与するコード例をちょっと複雑にしたものです。
 
-[Workflows Visualizer Doc](https://developers.cloudflare.com/workflows/build/visualizer/)
+[How we use Abstract Syntax Trees (ASTs) to turn Workflows code into visual diagrams](https://blog.cloudflare.com/ja-jp/workflow-diagrams/)
 
 ::right::
 
-<img src="/image-processing-diagram.png" alt="Image Processing Workflow visualizer" class="scale-75 mt-[-80px] rounded border border-zinc-700/60 shadow-lg" />
+<img src="/image-processing-diagram.png" alt="Image Processing Workflow visualizer" class="scale-60 mt-[-100px] rounded border border-zinc-700/60 shadow-lg" />
 
 <!--
 2026 年 2 月にリリースされた機能です。
