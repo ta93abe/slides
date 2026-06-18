@@ -1,0 +1,3 @@
+このレポジトリはslidevをモノレポ的に複数にしているんだけど、
+https://github.com/yusukebe/cloudflare-workshop
+こんな感じでMDX一枚でスライドになってほしい。
