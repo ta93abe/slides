@@ -3,7 +3,7 @@
   "checkpoint_id": "6d96886abdc7",
   "strategy": "manual-commit",
   "branch": "feat/honox-mdx-migration",
-  "checkpoints_count": 1,
+  "checkpoints_count": 3,
   "files_touched": [
     "app/routes/cloudflare-data-platform.mdx"
   ],
@@ -13,13 +13,19 @@
       "transcript": "/6d/96886abdc7/0/full.jsonl",
       "content_hash": "/6d/96886abdc7/0/content_hash.txt",
       "prompt": "/6d/96886abdc7/0/prompt.txt"
+    },
+    {
+      "metadata": "/6d/96886abdc7/1/metadata.json",
+      "transcript": "/6d/96886abdc7/1/full.jsonl",
+      "content_hash": "/6d/96886abdc7/1/content_hash.txt",
+      "prompt": "/6d/96886abdc7/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 49561,
-    "cache_creation_tokens": 89160,
-    "cache_read_tokens": 725989,
-    "output_tokens": 14335,
-    "api_call_count": 11
+    "input_tokens": 139151,
+    "cache_creation_tokens": 586643,
+    "cache_read_tokens": 5152904,
+    "output_tokens": 103449,
+    "api_call_count": 57
   }
 }
