@@ -1,0 +1,5 @@
+zellij のSend-keyを使ってOpenCodeに指示出せる？
+
+---
+
+Claudeで思考して、OpenCodeで実装したい。

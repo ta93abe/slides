@@ -1,0 +1,51 @@
+{
+  "cli_version": "0.7.6",
+  "checkpoint_id": "6d96886abdc7",
+  "session_id": "918e1ba0-22aa-4d94-bdef-e4c15ed0ab18",
+  "strategy": "manual-commit",
+  "created_at": "2026-06-22T13:21:23.560127Z",
+  "branch": "feat/honox-mdx-migration",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "app/routes/cloudflare-data-platform.mdx"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-8[1m]",
+  "turn_id": "1054162fbf93",
+  "token_usage": {
+    "input_tokens": 49561,
+    "cache_creation_tokens": 89160,
+    "cache_read_tokens": 725989,
+    "output_tokens": 14335,
+    "api_call_count": 11
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-06-22T13:21:23.55083Z",
+    "agent_lines": 0,
+    "agent_removed": 0,
+    "human_added": 353,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 353,
+    "total_lines_changed": 353,
+    "agent_percentage": 0,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 2055,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        "app/routes/cloudflare-data-platform.mdx": 353,
+        "docs/superpowers/plans/2026-06-19-slidev-to-honox-mdx.md": 1693,
+        "slidev-theme-enbu/.claude/settings.local.json": 9
+      }
+    }
+  ]
+}
