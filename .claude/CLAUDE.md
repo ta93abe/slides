@@ -4,90 +4,53 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## プロジェクト概要
 
-Slidevプレゼンテーションのモノレポ。各スライドがpnpmワークスペースの独立パッケージとして管理され、Cloudflare Workers（Static Assets + Worker handler）でホスティングされる。
+HonoX + MDX で作るスライドサイト。`app/routes/*.mdx` を 1 枚置けば 1 スライドデッキになる。MDX は `@mdx-js/rollup` で JSX にコンパイルされ Hono が SSR、`@hono/vite-ssg` がビルド時に静的 HTML を生成し、Cloudflare Workers (Static Assets) で配信する。
 
 ## コマンド
 
 ```bash
-# 新しいスライドプロジェクトの作成
-# /new-slide コマンドまたは「新しいスライドを作って」で実行（.claude/skills/new-slide 参照）
-cd contents && pnpm create slidev <project-name>
-
-# 対話 picker で dev / build / export を実行
-pnpm dev              # = pnpm pick dev
-pnpm pick build
-pnpm export           # = pnpm pick export
-
-# 特定スライドのみ
-pnpm --filter <slide-name> dev
-pnpm --filter <slide-name> build
-pnpm --filter <slide-name> export
-
-# 全スライド並列ビルド（dist/ に出力 + slides.json 生成）
-pnpm build
+pnpm dev       # Vite dev サーバ
+pnpm build     # 静的 HTML を dist/ に生成
+pnpm preview   # wrangler dev でローカル配信
+pnpm deploy    # build して wrangler deploy
 ```
 
 ## アーキテクチャ
 
 ```
 /
-├── contents/                      # 全スライドの格納ディレクトリ
-│   └── <event-name-YYYY-MM-DD>/   # 各スライドプロジェクト（pnpmワークスペースパッケージ）
-│       ├── package.json           # slidev フィールド (title, date, description, addons)
-│       ├── slides.md              # スライド本体（Slidev Markdown）
-│       ├── components/            # Vueカスタムコンポーネント（任意）
-│       ├── snippets/              # コードスニペット（任意）
-│       └── pages/                 # 追加ページ（任意）
-├── slidev-theme-enbu/             # Slidevカスタムテーマ (workspace package)
-├── scripts/
-│   ├── build.js                   # 各スライドの build wrapper (favicon + dist-stale cache)
-│   ├── build-all.js               # 全体オーケストレータ (clean + pnpm -r build + slides.json)
-│   └── picker.js                  # 対話 CLI (dev/build/export)
-├── src/
-│   └── index.js                   # Cloudflare Worker handler (/ → ta93abe.com/slides 302)
-├── pnpm-workspace.yaml            # workspaces + catalog (依存バージョン統一)
-├── wrangler.jsonc                  # Cloudflare Workers (assets + main handler)
-├── dist-stale/                    # 過去ビルドキャッシュ（gitignore、削除で再ビルド）
-└── dist/                          # ビルド成果物（gitignore）
-    ├── <slide-name>/              # 各スライドの SPA
-    └── slides.json                # スライド一覧メタデータ
+├── app/
+│   ├── routes/
+│   │   ├── _renderer.tsx                  # slide.css / slide.js を inline 注入する renderer
+│   │   ├── index.mdx                      # スライド一覧トップ (/)
+│   │   └── <deck-name>.mdx                # 1 ファイル = 1 デッキ
+│   ├── slide.css                          # スライドスタイル
+│   ├── slide.js                           # ---分割 / カラム / ページ送り / コピーボタン
+│   ├── server.ts                          # HonoX サーバエントリ
+│   ├── client.tsx                         # HonoX クライアントエントリ
+│   └── global.d.ts                        # frontmatter 型
+├── public/                                # 画像・favicon・図 (svg/png)
+├── vite.config.ts
+├── wrangler.jsonc                          # Cloudflare Workers (Static Assets)
+└── package.json
 ```
 
-### 依存管理 (pnpm catalog)
+### スライドの書き方
 
-`pnpm-workspace.yaml` の `catalog:` に Slidev 本体・テーマ・vue などの共通依存を集約。各スライドの `package.json` は `"@slidev/cli": "catalog:"` のように `catalog:` 参照を書く。バージョンを 1 箇所で管理できる。
+- frontmatter に `slide: true` を付けるとスライドモードになる。`theme` は `dark` (既定) / `cloudflare` / `light`。
+- `---` (水平線) でスライドを分割する。
+- `::right::` で 2 カラムにする (先頭見出しは全幅、`::right::` の前が左・後が右カラム)。
+- コードハイライトは highlight.js を CDN ロード。
+- スピーカーノートは `{/* ... */}` (MDX コメント) で本文に残せる (実行時 DOM には出ない)。
+- 図 (Excalidraw 等) は事前に SVG/PNG 化して `public/` に置き、`![alt](/path)` で埋め込む。
 
-### テーマの利用
+### ルーティング / トップ
 
-`slidev-theme-enbu/` は pnpm workspace package。スライドから利用するには:
+`app/routes/index.mdx` がトップ (`/`)。デッキ一覧を置く。
 
-1. スライドの `package.json` に `"slidev-theme-enbu": "workspace:*"` を追加
-2. `slides.md` の frontmatter で `theme: enbu` を指定
+### デプロイ
 
-npm 公開する場合は `slidev-theme-enbu/` ディレクトリから `npm publish` するだけで移行可能。
-
-### ビルドの仕組み
-
-- `pnpm build` = `node scripts/build-all.js`
-- `dist/` を clean → `pnpm -r --parallel --filter "./contents/*" run build` で全スライド並列ビルド → `slides.json` 生成
-- 各スライドの `package.json` の `build` スクリプトは `node ../../scripts/build.js /<slide-id>/`
-- `scripts/build.js`: `dist-stale/<slide-id>/` があれば cp してビルドスキップ。無ければ favicon を `public/` にコピーして `slidev build --base /<slide-id>/ --out ../../dist/<slide-id>/`
-
-### dist-stale キャッシュ
-
-過去スライドを毎回再ビルドすると CI 時間が伸びるので、`dist-stale/<slide-id>/` にビルド結果を残しておけば次回以降の `pnpm build` でそのまま採用される。再ビルドしたい場合は該当ディレクトリを削除。
-
-### ルーティング (Worker handler)
-
-`src/index.js` で `/` → `https://ta93abe.com/slides` (302) を返す。それ以外のパスは `env.ASSETS.fetch(request)` で静的配信。`_redirects` は使わない。
-
-### スライドの命名規則
-
-`<イベント名>-<YYYY-MM-DD>` 形式（例: `pug-at-fukuoka-2025-06-06`）
-
-### スライドの識別
-
-各スライドの `package.json` 内の `slidev` フィールドがビルド対象の識別子。このフィールドがないディレクトリはスキップされる。
+`pnpm deploy` で `vite build` → `wrangler deploy`。`wrangler.jsonc` の `assets.directory` は `./dist`。
 
 ## ナレッジソース
 
@@ -95,7 +58,8 @@ npm 公開する場合は `slidev-theme-enbu/` ディレクトリから `npm pub
 
 ## 技術スタック
 
-- **Slidev** (v52+): Markdownベースのプレゼンテーションフレームワーク（Vue 3）
-- **pnpm**: パッケージマネージャ（ワークスペース管理 + catalog）
-- **Cloudflare Workers**: Static Assets + Worker handler
-- **Node.js 20**
+- **HonoX / Hono**: ファイルベースルーティング + SSR
+- **MDX**: `@mdx-js/rollup`
+- **Vite + @hono/vite-ssg**: 静的 HTML 生成
+- **Cloudflare Workers**: Static Assets
+- **pnpm** / **Node.js 20+**
