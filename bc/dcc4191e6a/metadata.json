@@ -3,7 +3,7 @@
   "checkpoint_id": "bcdcc4191e6a",
   "strategy": "manual-commit",
   "branch": "feat/honox-mdx-migration",
-  "checkpoints_count": 1,
+  "checkpoints_count": 3,
   "files_touched": [
     "docs/improvements/codex-review.md",
     "docs/improvements/opencode-brief.md"
@@ -14,13 +14,19 @@
       "transcript": "/bc/dcc4191e6a/0/full.jsonl",
       "content_hash": "/bc/dcc4191e6a/0/content_hash.txt",
       "prompt": "/bc/dcc4191e6a/0/prompt.txt"
+    },
+    {
+      "metadata": "/bc/dcc4191e6a/1/metadata.json",
+      "transcript": "/bc/dcc4191e6a/1/full.jsonl",
+      "content_hash": "/bc/dcc4191e6a/1/content_hash.txt",
+      "prompt": "/bc/dcc4191e6a/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 47085,
-    "cache_creation_tokens": 103838,
-    "cache_read_tokens": 785557,
-    "output_tokens": 18839,
-    "api_call_count": 11
+    "input_tokens": 47111,
+    "cache_creation_tokens": 104285,
+    "cache_read_tokens": 990358,
+    "output_tokens": 18949,
+    "api_call_count": 12
   }
 }
