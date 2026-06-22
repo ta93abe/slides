@@ -2,7 +2,7 @@
 
 ## コード変更後
 1. `pnpm build` でビルドが成功することを確認
-2. `dist/index.html` と `dist/<deck-name>/index.html` が生成されていることを確認
+2. `dist/index.html` と `dist/<deck-name>.html` が生成されていることを確認 (`@hono/vite-ssg` はルートごとにフラットな `.html` を出力する)
 
 ## 新しいスライド作成後
 1. `app/routes/<deck-name>.mdx` を作成 (frontmatter に `slide: true`)
@@ -15,4 +15,4 @@
 2. `pnpm build` でビルド成功
 3. `dist/` の内容を確認
    - `index.html` が存在
-   - 各デッキのディレクトリが存在
+   - 各デッキの `<deck-name>.html` が存在
