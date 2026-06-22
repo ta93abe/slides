@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.7.6",
+  "checkpoint_id": "bcdcc4191e6a",
+  "strategy": "manual-commit",
+  "branch": "feat/honox-mdx-migration",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/improvements/codex-review.md",
+    "docs/improvements/opencode-brief.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/bc/dcc4191e6a/0/metadata.json",
+      "transcript": "/bc/dcc4191e6a/0/full.jsonl",
+      "content_hash": "/bc/dcc4191e6a/0/content_hash.txt",
+      "prompt": "/bc/dcc4191e6a/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 47085,
+    "cache_creation_tokens": 103838,
+    "cache_read_tokens": 785557,
+    "output_tokens": 18839,
+    "api_call_count": 11
+  }
+}
