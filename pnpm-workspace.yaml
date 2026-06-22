@@ -1,17 +1,5 @@
-packages:
-  - contents/*
-  - slidev-theme-enbu
-
-catalog:
-  "@slidev/cli": ^52.15.0
-  "@slidev/types": ^52.15.0
-  "@slidev/theme-default": ^0.25.0
-  "@slidev/theme-seriph": ^0.25.0
-  "slidev-addon-excalidraw": ^1.1.0
-  vue: ^3.5.32
-
-overrides:
-  "@ungap/structured-clone": ^1.3.1
-
-onlyBuiltDependencies:
-  - esbuild
+packages: []
+allowBuilds:
+  esbuild: true
+  sharp: true
+  workerd: true
