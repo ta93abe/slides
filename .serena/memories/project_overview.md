@@ -1,47 +1,33 @@
 # Slides - プロジェクト概要
 
 ## 目的
-Slidevを使用したプレゼンテーションスライドをモノレポで管理するプロジェクト。
-複数のスライドプロジェクトを一元管理し、Cloudflare Workersにデプロイする。
+HonoX + MDX で作るスライドサイト。`app/routes/*.mdx` を 1 枚置けば 1 スライドデッキになる。
 
 ## 技術スタック
-- **ビルドツール**: Node.js (build.js)
-- **パッケージマネージャ**: pnpm (ワークスペース)
-- **スライド作成**: Slidev
-- **スキャフォールディング**: scaffdog
-- **デプロイ先**: Cloudflare Workers (静的アセット)
+- **フレームワーク**: HonoX / Hono (ファイルベースルーティング + SSR)
+- **MDX**: `@mdx-js/rollup`
+- **ビルド**: Vite + `@hono/vite-ssg` (静的 HTML 生成)
+- **パッケージマネージャ**: pnpm
+- **デプロイ先**: Cloudflare Workers (Static Assets)
 
 ## ディレクトリ構成
 ```
-contents/
-├── build.ts              # Denoビルドスクリプト
-├── deno.json             # Denoタスク定義
-├── package.json          # pnpmワークスペース設定
-├── pnpm-workspace.yaml   # ワークスペース定義
-├── wrangler.toml         # Cloudflare Workers設定
-├── .scaffdog/            # scaffdogテンプレート
-├── dist/                 # ビルド成果物
-│   ├── slides.json       # スライド一覧API
-│   ├── _redirects        # リダイレクト設定
-│   └── <slide-id>/       # 各スライドのビルド
-└── <slide-project>/      # 各スライドプロジェクト
-    ├── package.json      # slidevメタデータ含む
-    └── slides.md         # スライド本体
-```
-
-## スライドプロジェクトの構成
-各スライドプロジェクトの`package.json`に`slidev`フィールドでメタデータを定義:
-```json
-{
-  "slidev": {
-    "title": "スライドタイトル",
-    "date": "YYYY-MM-DD",
-    "description": "説明"
-  }
-}
+/
+├── app/
+│   ├── routes/
+│   │   ├── _renderer.tsx   # slide.css / slide.js を inline 注入する renderer
+│   │   ├── index.mdx       # スライド一覧トップ (/)
+│   │   └── <deck-name>.mdx # 1 ファイル = 1 デッキ
+│   ├── slide.css
+│   ├── slide.js
+│   ├── server.ts
+│   └── client.tsx
+├── public/                 # 画像・favicon・図 (svg/png)
+├── vite.config.ts
+├── wrangler.jsonc
+└── package.json
 ```
 
 ## デプロイ
-- ホスト: `slides.ta93abe.com`
-- トップページは `ta93abe.com/slides` にリダイレクト
-- `slides.json` APIを提供し、ポートフォリオサイト(Astro)がビルド時にfetch
+- `pnpm build` → `dist/` に静的 HTML 生成
+- `pnpm deploy` → `wrangler deploy` で Cloudflare Workers へデプロイ

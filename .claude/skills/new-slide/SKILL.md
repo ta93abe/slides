@@ -1,87 +1,63 @@
 ---
 name: new-slide
-description: This skill should be used when the user asks to "create a new slide", "make a presentation", "新しいスライドを作って", "スライドを追加", "プレゼンを作成", or mentions creating a Slidev project. Scaffolds a new Slidev slide project under the contents/ directory.
+description: This skill should be used when the user asks to "create a new slide", "make a presentation", "新しいスライドを作って", "スライドを追加", "プレゼンを作成", or mentions creating a slide deck. Scaffolds a new MDX slide deck under app/routes/.
 ---
 
-# New Slide Project
+# New Slide Deck
 
-新しいSlidevスライドプロジェクトを `contents/` 配下にスキャフォールドするスキル。
+新しい MDX スライドデッキを `app/routes/<deck-name>.mdx` にスキャフォールドするスキル。
 
 ## 必要な情報
 
-以下をユーザーから取得する（引数またはヒアリング）：
-
 | パラメータ | 必須 | 例 | 説明 |
 |---|---|---|---|
-| タイトル | Yes | `PUG at Fukuoka` | スライドのタイトル |
-| 概要 | Yes | `Cloudflare Workersの紹介` | スライドの説明 |
-| 発表日 | No | `2025-06-06` | YYYY-MM-DD形式。未指定なら今日の日付 |
-| プロジェクト名 | No | `pug-at-fukuoka-2025-06-06` | 未指定ならタイトル+日付から自動生成 |
+| タイトル | Yes | `Cloudflare で始める Data Platform` | スライドのタイトル |
+| デッキ名 | No | `cloudflare-data-platform` | ファイル名 (未指定ならタイトルから生成) |
+| テーマ | No | `dark` | `dark` (既定) / `cloudflare` / `light` |
 
-## プロジェクト名の生成ルール
+## デッキ名の生成ルール
 
-`<イベント名>-<YYYY-MM-DD>` 形式。タイトルから以下のように変換する：
-
-1. 英語に変換（日本語タイトルの場合は意訳）
-2. 小文字化
-3. スペースをハイフンに置換
-4. 末尾に `-YYYY-MM-DD` を付与
-
-例: `PUG at Fukuoka` + `2025-06-06` → `pug-at-fukuoka-2025-06-06`
+タイトルを英語化 → 小文字化 → スペースをハイフンに → `app/routes/<deck-name>.mdx`。
 
 ## ナレッジソース
 
-スライドの内容を充実させるため、`~/zettelkasten`（Obsidian Vault）から関連ノートを検索・参照する。
-タイトルやトピックに関連するキーワードで Glob/Grep を使って該当ノートを探し、slides.md の素材として活用する。
+`~/zettelkasten` (Obsidian Vault) から関連ノートを検索し、内容の素材にする。
 
 ## 作成手順
 
-### 0. Obsidian Vaultから関連ノートを検索
+1. `~/zettelkasten` で関連ノートを Glob/Grep で探す。
+2. `app/routes/<deck-name>.mdx` を作成し、以下の雛形を書く:
 
-タイトル・概要のキーワードで `~/zettelkasten` 内を検索し、関連するノートがあれば内容をスライドに反映する。
+   ```mdx
+   ---
+   title: '<タイトル>'
+   slide: true
+   theme: dark
+   ---
 
-### 1. pnpm create slidev でプロジェクト作成
+   # <タイトル>
 
-```bash
-cd contents && pnpm create slidev <project-name>
-```
+   ## <発表者>
 
-第1引数にプロジェクト名を渡すと対話式プロンプトをスキップできる。
-依存関係のインストールを聞かれたら `yes` を選択。
+   {/* スピーカーノート */}
 
-### 2. package.json に slidev メタデータを追加
+   ---
 
-`create-slidev` が生成する `package.json` には `slidev` フィールドがない。
-`build.js` がスライドを検出するために必要なので、以下を追加する：
+   ## 次のスライド
 
-```json
-{
-  "slidev": {
-    "title": "<タイトル>",
-    "date": "<YYYY-MM-DD>",
-    "description": "<概要>"
-  }
-}
-```
+   - 箇条書き
 
-### 3. slides.md の frontmatter を更新
+   ::right::
 
-生成された `slides.md` の frontmatter 内の `title` と `info` をユーザー指定の値に置換する。
-最初のスライドの見出しとサブタイトルも更新する。
+   ![図](/diagrams/xxx.svg)
+   ```
 
-### 4. 不要ファイルの削除
+3. 図は事前に SVG/PNG 化して `public/` に置き `![alt](/path)` で埋め込む。
+4. `app/routes/index.mdx` のデッキ一覧にリンクを追加する。
+5. `pnpm dev` で確認する。
 
-以下のファイルはこのリポジトリでは不要なので削除する：
+## ルール
 
-- `netlify.toml` — Netlify用設定
-- `vercel.json` — Vercel用設定（Cloudflare Workersでデプロイするため）
-- `README.md` — 個別スライドにREADMEは不要
-
-### 5. 確認
-
-完了後、以下を案内する：
-
-```bash
-# 開発サーバー起動
-pnpm --filter <project-name> dev
-```
+- `---` でスライド分割、`::right::` で 2 カラム (先頭見出しは全幅)。
+- スピーカーノートは `{/* ... */}` で本文に残す。
+- 本文に他社プロダクト名・機能リリース日付・擬人化比喩は入れない (詳細・出典はノートへ)。

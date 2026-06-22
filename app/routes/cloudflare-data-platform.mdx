@@ -1,0 +1,353 @@
+---
+title: 'Cloudflare で始める Data Platform'
+slide: true
+theme: dark
+---
+
+# Cloudflare で始める<br />Data Platform
+
+## 阿部拓海
+
+{/*
+はじめまして、阿部拓海です。
+今日は「Cloudflare で始める Data Platform」というタイトルで、10 分お時間いただきます。
+Cloudflare のサービスを組み合わせて、データ基盤を実際にどう作るか。
+基礎から観測・統制までを駆け足で通します。
+*/}
+
+---
+
+# Cloudflare とは
+
+## CDN？エッジコンピューティング？
+
+{/*
+Cloudflare と聞くと、CDNの会社でしょという認識がまずあります。
+近年ではエッジコンピューティングを始め開発者のためのプラットフォームになってきています。
+*/}
+
+---
+
+# Cloudflare Data Platform
+
+Cloudflare の **Cloudflare Data Platform** は、入れる/貯める/使うを 1 つのプラットフォームで提供します。<br />([Announcing the Cloudflare Data Platform: ingest, store, and query your data directly on Cloudflare](https://blog.cloudflare.com/cloudflare-data-platform/))
+
+![Cloudflare Data Platform main components](/diagrams/data-platform-main-components.svg)
+
+{/*
+そんな中で Cloudflare Data Platform は、2025 年 9 月の Birthday Week で発表された比較的新しいプラットフォームです。
+
+構成は Pipelines・R2 Data Catalog・R2 SQL の 3 つ。
+データレイクの「入れる・貯める・使う」を、Cloudflare 1 社で完結させる、という宣言ですね。
+データ層への本格進出の転換点と捉えています。
+
+補足として、2025 年 12 月に Cloudflare for Government が ISMAP に登録されました。
+「Cloudflare はエンプラ・公共系で使いにくい」と言われがちな状況も、ここで変わり始めています。
+組織アカウントが最近出たりして、ようやくというところもあります。https://blog.cloudflare.com/ja-jp/organizations-beta/
+*/}
+
+---
+
+# [Pipelines](https://developers.cloudflare.com/pipelines/)
+
+```bash
+wrangler pipelines setup
+```
+
+- 2025年4月に買収した [Arroyo](https://www.arroyo.dev/) をベースとしたストリーミングインジェストサービスです。
+- [**Streams**](https://developers.cloudflare.com/pipelines/streams/) で HTTP / Workers Binding / Logpush からデータを受けます。
+- [**Pipelines**](https://developers.cloudflare.com/pipelines/pipelines/) で SQL 変換を行えます。
+- [**Sinks**](https://developers.cloudflare.com/pipelines/sinks/) で `--roll-size` or `--roll-interval` で設定した粒度で自動バッチ化し、R2 / R2 Data Catalog に書き出せます。
+
+![Cloudflare Pipelines](/diagrams/cloudflare-pipelines.svg)
+
+{/*
+Pipelines はストリーミングインジェストサービスです。
+
+構成は 3 段です。
+Streams が HTTP / Workers Binding / Logpush などのソースから受け取り、
+Pipelines で SQL 変換、
+Sinks でロールサイズかインターバルでバッチ化して R2 / R2 Data Catalog に書き出す。
+
+ベースは 2025 年 4 月に買収した Arroyo です。
+スペイン語で「小川」「細い水路」という意味の、Apache Flink 相当のストリーム処理エンジンですね。
+SQL は Apache DataFusion ベースです。
+*/}
+
+---
+
+# [R2](https://developers.cloudflare.com/r2/)
+
+```bash
+wrangler r2 bucket create <bucket-name>
+```
+
+- **Really Requestable**: エグレスコストがゼロ。Standard tier 同士で比較するとストレージ・Class A (write)・Class B (read) も他のプロバイダーより安価。
+- **Repositioning Records**: S3 互換 API を提供していて、既存のツールや SDK がそのまま使える。
+- **Ridiculously Reliable**: 99.999999999% (イレブンナイン) の耐久性、99.9% の可用性。
+- **Radically Reprogrammable**: Workers Binding 統合。
+
+::right::
+
+![R2 — the 4 R's (tweet)](/diagrams/r2-tweet.png)
+
+{/*
+R2 はデータ基盤の置き場所です。Parquet も Iceberg も全部ここに入ります。
+
+ポイントは 4 つ。
+エグレスコストがゼロ、S3 互換 API、イレブンナインの耐久性、そして Workers Binding 統合。
+
+一番大きいのはやはりエグレス無料です。
+マルチクラウドのデータ集約ハブとして R2 を使うのが現実解になります。
+*/}
+
+---
+
+# [R2 Data Catalog](https://developers.cloudflare.com/r2/data-catalog/)
+
+データを **構造化する** レイヤーです。R2 上の Apache Iceberg テーブルをマネージドで管理します。
+
+```bash
+wrangler r2 bucket catalog enable <bucket-name>
+```
+
+- Trino / DuckDB / PyIceberg / Snowflake / Spark / StarRocks などのクライアントから直接クエリ可能
+- ACID / Schema evolution / Time travel などの Iceberg らしい機能はもちろん対応している。
+- テーブルメンテナンス
+  - **Compaction**: `--target-size` で指定したサイズに合わせて Parquet ファイルを集約
+  - **Snapshot expiration**: `--older-than-days` で古いスナップショットを削除、`--retain-last` で最低限残す数を指定
+
+::right::
+
+![iceberg_table_format_version=2](/check-iceberg-version.png)
+
+{/*
+R2 上の Apache Iceberg テーブルをマネージドで管理してくれるレイヤーです。
+
+Iceberg REST Catalog API 準拠なので、
+Trino / DuckDB / PyIceberg / Snowflake / Spark / StarRocks など、好きなクライアントから直接クエリできます。
+ベンダーロックインなし。
+
+ACID / Schema evolution / Time travel といった Iceberg v2 の機能はそのまま使えて、
+Compaction や Snapshot expiration といったテーブルメンテナンスもマネージドで提供されます。
+*/}
+
+---
+
+# [R2 SQL](https://developers.cloudflare.com/r2-sql/)
+
+R2 Data Catalog の Iceberg テーブルに標準 SQL を実行できる、Cloudflare ネイティブの分散クエリエンジンです。[Apache DataFusion](https://github.com/apache/datafusion) をベースにしています。
+
+基本的な演算はできますが、JOIN や WINDOW 関数はまだ対応していません。ベータ版で開発真っ只中。
+
+実行方法は [**Wrangler**](https://developers.cloudflare.com/workers/wrangler/) と [**HTTP API**](https://developers.cloudflare.com/r2-sql/query-data/#query-via-api) の 2 つがあります。管理画面などに Web SQL エディターはありません。
+
+```bash
+wrangler r2 sql query "$WAREHOUSE" \
+  "SELECT user_id, COUNT(*) AS n FROM default.events
+   WHERE __ingest_ts > '2026-05-01' GROUP BY user_id LIMIT 10"
+```
+
+```bash
+curl -X POST \
+  "https://api.sql.cloudflarestorage.com/api/v1/accounts/{ACCOUNT_ID}/r2-sql/query/{BUCKET_NAME}" \
+  -H "Authorization: Bearer {API_TOKEN}" \
+  -H "Content-Type: application/json" \
+  -d '{"query": "SELECT user_id, COUNT(*) AS n FROM default.events WHERE __ingest_ts > '"'"'2026-05-01'"'"' GROUP BY user_id LIMIT 10"}'
+```
+
+{/*
+R2 Data Catalog の Iceberg テーブルに標準 SQL を投げられる、Cloudflare ネイティブの分散クエリエンジンです。Athenaみたいなもの。
+Apache DataFusion ベースで、R2 オブジェクトストレージと同じ Cloudflare のインフラ層の分散コンピュート上で実行されます。
+
+Wrangler か HTTP API から実行できます。
+
+今は JOIN や WINDOW 関数はまだですが、
+基本的なフィルタ・集約・GROUP BY は通ります。
+ベータでアクティブに機能追加中、というステータスです。
+MySQL が 8.0 になって Window関数が使えるようになったあのときの気持ちをもう一度リアルタイムで味わいましょう。
+*/}
+
+---
+
+# [Cloudflare Workflows](https://developers.cloudflare.com/workflows/)
+
+Cloudflare Workflows は耐久性のある実行エンジンです。ステップを連鎖させ、失敗時には自動で再試行し、長期間実行されるプロセス全体で状態を保持します。各 step には Workers Bindings を組み込めます。
+
+```typescript
+export class ImageProcessingWorkflow extends WorkflowEntrypoint {
+  async run(event: WorkflowEvent, step: WorkflowStep) {
+    const imageData = await step.do('fetch image', async () => {
+      const object = await this.env.BUCKET.get(event.params.imageKey);
+      return await object.arrayBuffer();
+    });
+
+    const description = await step.do('generate description', async () => {
+      const imageArray = Array.from(new Uint8Array(imageData));
+      return await this.env.AI.run('@cf/llava-hf/llava-1.5-7b-hf', {
+        image: imageArray,
+        prompt: 'Describe this image in one sentence',
+        max_tokens: 50,
+      });
+    });
+
+    await step.waitForEvent('await approval', {
+      type: 'approved',
+      timeout: '24 hours',
+    });
+
+    await step.do('publish', async () => {
+      await this.env.BUCKET.put(`public/${event.params.imageKey}`, imageData);
+    });
+  }
+}
+```
+
+::right::
+
+1. R2 から画像を取得
+2. LLaVA で 1 文の説明を生成
+3. `approved` イベントを最大 24h 待機
+4. R2 へ publish (公開ディレクトリ)
+
+{/*
+Cloudflare Workflows は耐久性のある実行エンジンです。
+ステップを連鎖させて、失敗時は自動でリトライ、長時間プロセスの状態を永続化します。
+Temporal.io が類似サービス。
+
+右のコードは画像処理ワークフローの例です。
+R2 から画像を取得、
+Workers AI の LLaVA (ラーバ)で説明文を生成、
+approved イベントを最大 24h 待機 (durable に pause)、
+承認されたら公開ディレクトリに publish。
+
+各ステップで Workers Binding がそのまま使えるのが Cloudflare ならではの強みです。
+*/}
+
+---
+
+## Python SDK
+
+`WorkflowEntrypoint` を Python で継承します。**関数パラメータ名で依存を暗黙解決** する DAG 表現が特徴です。引数名による暗黙的依存解決で DAG が宣言的に書けます。
+
+```python
+from workers import WorkflowEntrypoint
+
+class IngestWorkflow(WorkflowEntrypoint):
+    async def run(self, event, step):
+        @step.do()
+        async def fetch_a():
+            return await get_a()
+
+        @step.do()
+        async def fetch_b():
+            return await get_b()
+
+        @step.do(concurrent=True)
+        async def merge(fetch_a, fetch_b):   # 引数名で依存
+            return combine(fetch_a, fetch_b)
+
+        await merge()
+```
+
+::right::
+
+1. `fetch_a` を `@step.do()` で定義
+2. `fetch_b` を独立した step として定義
+3. `merge` を `concurrent=True` + 引数名 `fetch_a` / `fetch_b` で依存宣言
+4. `await merge()` 実行 — 依存先が並列起動
+
+{/*
+2025 年 8 月から Beta で、同じ Workflows を Python で書けます。
+
+特徴的なのは DAG の表現方法です。
+merge 関数の引数名が fetch_a で、定義済みステップと同名なら、
+それが完了してから merge が実行される、という風に
+引数名で依存を暗黙解決します。
+
+concurrent=True を付ければ、diamond shaped DAG が宣言的に書けます。
+Python の ML / data 系処理と相性がいい設計です。
+*/}
+
+---
+
+# [ビジュアライザ](https://developers.cloudflare.com/workflows/build/visualizer/)
+
+Cloudflare ダッシュボードが Workflow コードを parse し、**step / 並列 / 条件分岐 / ループのフロー図** を自動生成します。
+
+- ループ / nested logic を **折りたたみ ↔ 展開** で切替
+- 並列ステップ / 条件分岐も自動レイアウト
+- TypeScript Workflows で利用可能 (Python は未対応)
+
+実例: 右図は一つ前のスライドの画像に説明文を付与するコード例をちょっと複雑にしたものです。
+
+[How we use Abstract Syntax Trees (ASTs) to turn Workflows code into visual diagrams](https://blog.cloudflare.com/ja-jp/workflow-diagrams/)
+
+::right::
+
+![Image Processing Workflow visualizer](/image-processing-diagram.png)
+
+{/*
+2026 年 2 月にリリースされた機能です。
+Workflow コードをダッシュボードがパースして、
+step・並列・条件分岐・ループのフロー図を自動描画してくれます。
+
+右図は前スライドの画像処理ワークフローをちょっと複雑にした例で、
+画像取得 → AI による説明生成 → 承認 → 公開のフローが可視化されています。
+Airflow の DAG View に相当します。
+*/}
+
+---
+
+# [Cloudflare Containers](https://developers.cloudflare.com/containers/)
+
+Cloudflare Workers では **128 MB** の実行メモリ制限や CPU時間制限があります。
+
+そこで Cloudflare Containers を使えば、この制約を突破できます。例えば dbt の実行を行えます。バッチデータインジェストがしたいなら dlt を使うと良いでしょう。
+
+Cloudflare で完結させるメリットは次のとおりです。
+
+- dbt artifacts を **R2 に Binding 経由**で永続化 (`env.BUCKET.put('*.json', body)`)
+- Workers が R2 Binding 経由で dbt docs を配信
+- Cloudflare Access で社内限定配信
+- [Workers Observability](https://developers.cloudflare.com/workers/observability/) でログを一元管理
+
+::right::
+
+![dbt docs hosting on Cloudflare](/diagrams/dbt-docs-hosting.svg)
+
+{/*
+Workers には 128 MB のメモリ制限があります。
+これを超える処理を走らせたい時に Containers です。
+
+例えば dbt の実行環境を Dockerfile で定義して、Linux microVM 上で動かす。
+idle 時は sleepAfter で課金ゼロです。
+
+Cloudflare 完結のメリットは、
+アーティファクトを R2 に Binding で永続化、
+Workers が R2 Binding 経由で dbt docs を配信、
+secrets が wrangler.jsonc に集約、
+Workers Observability でログを横断、といったあたりです。
+*/}
+
+---
+
+# まとめ
+
+- まずは [cloudflare.com](https://cloudflare.com) にたどり着きましょう。
+- 無事たどり着いて管理画面に入ったら **Agent Lee** が迎えてくれます。
+- こんな Cloudflare の始め方もあります。
+  - ドメインを購入する or 移管してくる。
+  - 個人のサイト/ブログを Workers Static Assets でホスティングしてみる。
+  - [R2 Data Catalog は Iceberg を始めるには結構お手軽です。](https://developers.cloudflare.com/r2/data-catalog/get-started/)
+  - AI エージェントを実装してみる。 [Agent](https://developers.cloudflare.com/agents/) / [Workers AI](https://developers.cloudflare.com/workers-ai/) / [AI Gateway](https://developers.cloudflare.com/ai-gateway/) / [Dynamic Workers](https://developers.cloudflare.com/dynamic-workers/) / [Sandbox](https://developers.cloudflare.com/sandbox/) / [AI Search](https://developers.cloudflare.com/ai-search/) / [Browser Run](https://developers.cloudflare.com/browser-rendering/) / [Artifacts](https://developers.cloudflare.com/artifacts/) / [Durable Objects](https://developers.cloudflare.com/durable-objects/)
+
+{/*
+まとめに入ります。今日の内容で、まず手を動かすなら。
+最初の一歩は cloudflare.com にたどり着くことです。管理画面に入ると Agent Lee が出迎えてくれます。
+Workers Paid は 5 USD/month です。個人開発のおもちゃとしては十分すぎる。
+こんな始め方もあります。ドメインを購入する、個人サイトやブログを Workers Static Assets でホスティングする、R2 Data Catalog で Iceberg を始めてみる、など。AI エージェントを実装してみる。
+各 primitive は Cloudflare 公式 blog で明示された課題を解くために生まれている。
+次回登壇する機会があれば、商用環境でのユースケースが聞けると嬉しいです。
+ご清聴ありがとうございました。
+*/}

@@ -1,15 +1,11 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "slides",
-  "compatibility_date": "2024-09-23",
-  "main": "src/index.js",
-  "build": {
-    "command": "pnpm build"
-  },
+  "compatibility_date": "2025-04-01",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
   "assets": {
-    "directory": "./dist",
-    "binding": "ASSETS",
-    "html_handling": "auto-trailing-slash",
-    "not_found_handling": "none"
+    "directory": "./dist"
   }
 }
