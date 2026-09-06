@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import app from "../src/worker.ts";
+import app, { PdfWorkflow } from "../src/worker.ts";
 
 const html = (body: string, status = 200) =>
   new Response(body, {
@@ -26,10 +26,21 @@ const assets = {
 } as Fetcher;
 
 describe("worker", () => {
-  it("returns health json", async () => {
+  it("returns health json with binding presence", async () => {
     const response = await app.request("/health", {}, { ASSETS: assets });
     expect(response.status).toBe(200);
-    expect(await response.json()).toEqual({ ok: true });
+    expect(await response.json()).toEqual({
+      ok: true,
+      bindings: {
+        ASSETS: true,
+        R2: false,
+        BROWSER: false,
+        IMAGES: false,
+        PDF_QUEUE: false,
+        ANALYTICS: false,
+        PDF_WORKFLOW: false,
+      },
+    });
   });
 
   it("serves the listing at /", async () => {
@@ -68,5 +79,37 @@ describe("worker", () => {
     } as Fetcher;
     const response = await app.request("/favicon.ico", {}, { ASSETS: withIcon });
     expect(await response.text()).toContain("<svg");
+  });
+
+  it("reports wired bindings as present without calling them", async () => {
+    const response = await app.request(
+      "/health",
+      {},
+      {
+        ASSETS: assets,
+        R2: {},
+        BROWSER: {},
+        IMAGES: {},
+        PDF_QUEUE: {},
+        ANALYTICS: {},
+        PDF_WORKFLOW: {},
+      },
+    );
+    expect(await response.json()).toEqual({
+      ok: true,
+      bindings: {
+        ASSETS: true,
+        R2: true,
+        BROWSER: true,
+        IMAGES: true,
+        PDF_QUEUE: true,
+        ANALYTICS: true,
+        PDF_WORKFLOW: true,
+      },
+    });
+  });
+
+  it("exports the registered PDF Workflow class", () => {
+    expect(typeof PdfWorkflow).toBe("function");
   });
 });

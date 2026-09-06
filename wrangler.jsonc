@@ -22,5 +22,39 @@
       "enabled": true,
       "head_sampling_rate": 1
     }
-  }
+  },
+  // ADR-0007: unused at runtime until TA-806 / TA-810. Empty bucket and queue are enough.
+  "r2_buckets": [
+    {
+      "binding": "R2",
+      "bucket_name": "slides"
+    }
+  ],
+  "browser": {
+    "binding": "BROWSER"
+  },
+  "images": {
+    "binding": "IMAGES"
+  },
+  "queues": {
+    "producers": [
+      {
+        "binding": "PDF_QUEUE",
+        "queue": "slides-pdf"
+      }
+    ]
+  },
+  "analytics_engine_datasets": [
+    {
+      "binding": "ANALYTICS",
+      "dataset": "slides"
+    }
+  ],
+  "workflows": [
+    {
+      "binding": "PDF_WORKFLOW",
+      "name": "slides-pdf",
+      "class_name": "PdfWorkflow"
+    }
+  ]
 }
