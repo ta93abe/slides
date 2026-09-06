@@ -38,10 +38,10 @@ describe("wrangler bindings (TA-813)", () => {
     );
   });
 
-  it("binds a PDF queue producer without requiring a consumer yet", () => {
+  it("binds a PDF queue producer and a single-concurrency consumer", () => {
     const queues = config.queues as {
       producers?: Array<Record<string, string>>;
-      consumers?: unknown[];
+      consumers?: Array<Record<string, unknown>>;
     };
     expect(queues.producers).toEqual(
       expect.arrayContaining([
@@ -51,7 +51,15 @@ describe("wrangler bindings (TA-813)", () => {
         }),
       ]),
     );
-    expect(queues.consumers ?? []).toEqual([]);
+    expect(queues.consumers).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          queue: "slides-pdf",
+          max_batch_size: 1,
+          max_concurrency: 1,
+        }),
+      ]),
+    );
   });
 
   it("binds Analytics Engine", () => {

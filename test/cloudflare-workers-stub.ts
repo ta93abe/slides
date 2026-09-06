@@ -13,5 +13,12 @@ export type WorkflowEvent<T> = {
 };
 
 export type WorkflowStep = {
-  do: <T>(name: string, callback: () => Promise<T>) => Promise<T>;
+  do: {
+    <T>(name: string, callback: () => Promise<T>): Promise<T>;
+    <T>(
+      name: string,
+      config: Record<string, unknown>,
+      callback: () => Promise<T>,
+    ): Promise<T>;
+  };
 };

@@ -28,6 +28,56 @@
   font-variant-numeric: tabular-nums;
 }
 
+.pdf-link {
+  pointer-events: auto;
+  position: fixed;
+  left: 1.1rem;
+  bottom: 0.7rem;
+  color: var(--color-ink-dim);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+}
+
+.pdf-link:hover {
+  color: var(--color-accent);
+}
+
+html.is-print,
+html.is-print body,
+html.is-print .stage-wrap,
+html.is-print .deck {
+  width: auto;
+  height: auto;
+  min-height: 0;
+  background: var(--color-bg);
+  box-shadow: none;
+  display: block;
+  place-items: unset;
+}
+
+html.is-print .slide,
+html.is-print .slide.is-active,
+html.is-print .slide[hidden] {
+  position: relative;
+  inset: auto;
+  display: flex !important;
+  width: 13.333in;
+  height: 7.5in;
+  overflow: hidden;
+  break-after: page;
+  page-break-after: always;
+}
+
+html.is-print .slide:last-child {
+  break-after: auto;
+  page-break-after: auto;
+}
+
+html.is-print .player-ui {
+  display: none !important;
+}
+
 @media print {
   html,
   body,
@@ -43,18 +93,26 @@
   }
 
   @page {
-    size: 13.333in 7.5in landscape;
+    size: 13.333in 7.5in;
     margin: 0;
   }
 
-  .slide {
+  .slide,
+  .slide.is-active,
+  .slide[hidden] {
     position: relative;
+    inset: auto;
     display: flex !important;
     width: 13.333in;
     height: 7.5in;
     overflow: hidden;
     break-after: page;
     page-break-after: always;
+  }
+
+  .slide:last-child {
+    break-after: auto;
+    page-break-after: auto;
   }
 
   .player-ui,

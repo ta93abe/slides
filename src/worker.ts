@@ -1,10 +1,14 @@
 import { Hono } from "hono";
 import type { Context } from "hono";
 import { bindingPresence } from "./bindings.ts";
+import { isPrintQuery } from "./pdf.ts";
+import { handlePdfQueue } from "./pdf-queue.ts";
+import { servePdf } from "./pdf-route.ts";
 
 export type Bindings = Env;
 
 export { PdfWorkflow } from "./pdf-workflow.ts";
+export { handlePdfQueue };
 
 const app = new Hono<{ Bindings: Bindings }>();
 
@@ -40,11 +44,17 @@ app.get("/", (c) => asset(c.env, c.req.raw, "/index.html"));
 
 async function deckPage(c: Context<{ Bindings: Bindings }>) {
   const slug = c.req.param("slug") ?? "";
+  if (slug.endsWith(".pdf")) {
+    return servePdf(c, slug.slice(0, -".pdf".length));
+  }
   if (slug.includes(".") || slug === "assets" || slug === "media") {
     return c.env.ASSETS.fetch(c.req.raw);
   }
 
-  const page = await asset(c.env, c.req.raw, `/${slug}/index.html`);
+  const path = isPrintQuery(c.req.query("print"))
+    ? `/${slug}/print.html`
+    : `/${slug}/index.html`;
+  const page = await asset(c.env, c.req.raw, path);
   if (page.status === 404) {
     return asset(c.env, c.req.raw, "/404.html", 404);
   }
@@ -62,4 +72,9 @@ app.all("*", async (c) => {
   return response;
 });
 
-export default app;
+export { app };
+
+export default {
+  fetch: app.fetch,
+  queue: handlePdfQueue,
+};

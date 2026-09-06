@@ -8,22 +8,38 @@ function escapeHtml(value: string): string {
     .replaceAll('"', "&quot;");
 }
 
-export function renderDeckPage(deck: Deck): string {
+export function renderDeckPage(
+  deck: Deck,
+  options: { print?: boolean } = {},
+): string {
   const { title, description, slug, theme } = deck.frontmatter;
+  const print = options.print === true;
   const slides = deck.slides
     .map((slide, index) => {
       const notes = slide.notes
         ? `<div class="speaker-notes">${escapeHtml(slide.notes)}</div>`
         : "";
-      return `<section class="slide${index === 0 ? " is-active" : ""}" data-type="${slide.type}" data-index="${index + 1}" id="s${index + 1}" aria-label="${index + 1} / ${deck.slides.length}"${index === 0 ? "" : " hidden inert"}>
+      const active = print || index === 0 ? " is-active" : "";
+      const hidden = print || index === 0 ? "" : " hidden inert";
+      return `<section class="slide${active}" data-type="${slide.type}" data-index="${index + 1}" id="s${index + 1}" aria-label="${index + 1} / ${deck.slides.length}"${hidden}>
   <div class="slide-body">${slide.html}</div>
   ${notes}
 </section>`;
     })
     .join("\n");
 
+  const player = print
+    ? ""
+    : `  <div class="player-ui">
+    <div class="progress" role="progressbar" aria-valuemin="1" aria-valuemax="${deck.slides.length}" aria-valuenow="1"><i></i></div>
+    <p class="counter" aria-live="polite"><span data-current>1</span> / ${deck.slides.length}</p>
+    <a class="pdf-link" href="/${escapeHtml(slug)}.pdf">PDF</a>
+  </div>
+  <script src="/assets/player.js" type="module"></script>
+`;
+
   return `<!DOCTYPE html>
-<html lang="ja" data-theme="${escapeHtml(theme)}" style="color-scheme: ${escapeHtml(theme)}">
+<html lang="ja"${print ? " data-print-ready class=\"is-print\"" : ""} data-theme="${escapeHtml(theme)}" style="color-scheme: ${escapeHtml(theme)}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,6 +48,7 @@ export function renderDeckPage(deck: Deck): string {
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/design-system.css">
   <link rel="stylesheet" href="/assets/player.css">
+  ${print ? "" : `<link rel="alternate" type="application/pdf" href="/${escapeHtml(slug)}.pdf">`}
 </head>
 <body>
   <div class="stage-wrap">
@@ -39,12 +56,7 @@ export function renderDeckPage(deck: Deck): string {
       ${slides}
     </article>
   </div>
-  <div class="player-ui">
-    <div class="progress" role="progressbar" aria-valuemin="1" aria-valuemax="${deck.slides.length}" aria-valuenow="1"><i></i></div>
-    <p class="counter" aria-live="polite"><span data-current>1</span> / ${deck.slides.length}</p>
-  </div>
-  <script src="/assets/player.js" type="module"></script>
-</body>
+${player}</body>
 </html>
 `;
 }

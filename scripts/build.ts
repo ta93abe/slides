@@ -69,6 +69,10 @@ async function main() {
     const outDir = path.join(dist, deck.frontmatter.slug);
     await mkdir(outDir, { recursive: true });
     await writeFile(path.join(outDir, "index.html"), renderDeckPage(deck));
+    await writeFile(
+      path.join(outDir, "print.html"),
+      renderDeckPage(deck, { print: true }),
+    );
 
     const mediaSrc = path.join(decksDir, deck.frontmatter.slug);
     try {

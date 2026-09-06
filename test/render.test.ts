@@ -18,6 +18,7 @@ describe("render", () => {
     const html = renderDeckPage(deck);
     expect(html).toContain('data-theme="light"');
     expect(html).toContain("color-scheme: light");
+    expect(html).toContain('href="/light.pdf"');
   });
 
   it("keeps the listing on dark and shows theme pills", () => {

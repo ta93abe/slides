@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import app, { PdfWorkflow } from "../src/worker.ts";
+import { app, PdfWorkflow } from "../src/worker.ts";
 
 const html = (body: string, status = 200) =>
   new Response(body, {
