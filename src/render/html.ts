@@ -1,4 +1,4 @@
-import type { Deck } from "../parser/types.ts";
+import type { Deck, DeckFrontmatter } from "../parser/types.ts";
 
 function escapeHtml(value: string): string {
   return value
@@ -9,7 +9,7 @@ function escapeHtml(value: string): string {
 }
 
 export function renderDeckPage(deck: Deck): string {
-  const { title, description, slug } = deck.frontmatter;
+  const { title, description, slug, theme } = deck.frontmatter;
   const slides = deck.slides
     .map((slide, index) => {
       const notes = slide.notes
@@ -23,7 +23,7 @@ export function renderDeckPage(deck: Deck): string {
     .join("\n");
 
   return `<!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" data-theme="${escapeHtml(theme)}" style="color-scheme: ${escapeHtml(theme)}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -49,13 +49,14 @@ export function renderDeckPage(deck: Deck): string {
 `;
 }
 
-export function renderListingPage(
-  decks: Array<{ title: string; date: string; description: string; slug: string }>,
-): string {
+export function renderListingPage(decks: DeckFrontmatter[]): string {
   const cards = decks
     .map(
       (deck) => `<a class="card" href="/${escapeHtml(deck.slug)}">
-  <time datetime="${escapeHtml(deck.date)}">${escapeHtml(deck.date)}</time>
+  <div class="meta">
+    <time datetime="${escapeHtml(deck.date)}">${escapeHtml(deck.date)}</time>
+    <span class="theme-pill">${escapeHtml(deck.theme)}</span>
+  </div>
   <h2>${escapeHtml(deck.title)}</h2>
   <p>${escapeHtml(deck.description)}</p>
 </a>`,
@@ -68,7 +69,7 @@ export function renderListingPage(
       : cards;
 
   return `<!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" data-theme="dark" style="color-scheme: dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -93,7 +94,7 @@ export function renderListingPage(
 
 export function renderNotFoundPage(): string {
   return `<!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" data-theme="dark" style="color-scheme: dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">

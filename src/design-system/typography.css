@@ -78,7 +78,7 @@
 }
 
 .slide-body pre {
-  background: #0a0c10;
+  background: var(--color-code-bg);
   border: 1px solid var(--color-line);
   border-radius: var(--radius);
   padding: var(--space-4) var(--space-5);

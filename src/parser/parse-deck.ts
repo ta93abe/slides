@@ -5,7 +5,10 @@ import { splitSlides } from "./split-slides.ts";
 import {
   DECK_FRONTMATTER_KEYS,
   DeckError,
+  isColorTheme,
   isSlideType,
+  REQUIRED_FRONTMATTER_KEYS,
+  type ColorTheme,
   type Deck,
   type DeckFrontmatter,
   type Slide,
@@ -56,7 +59,7 @@ function parseFrontmatter(
     );
   }
 
-  for (const key of DECK_FRONTMATTER_KEYS) {
+  for (const key of REQUIRED_FRONTMATTER_KEYS) {
     const value = data[key];
     if (typeof value !== "string" || value.trim() === "") {
       throw new DeckError(`frontmatter の ${key} は必須です`);
@@ -67,6 +70,14 @@ function parseFrontmatter(
   const date = String(data.date).trim();
   const description = String(data.description).trim();
   const slug = String(data.slug).trim();
+  let theme: ColorTheme = "dark";
+  if (data.theme !== undefined) {
+    const raw = String(data.theme).trim().toLowerCase();
+    if (!isColorTheme(raw)) {
+      throw new DeckError(`theme は light か dark です: ${String(data.theme)}`);
+    }
+    theme = raw;
+  }
 
   if (!DATE_PATTERN.test(date)) {
     throw new DeckError(`date は YYYY-MM-DD にしてください: ${date}`);
@@ -83,7 +94,7 @@ function parseFrontmatter(
     }
   }
 
-  return { title, date, description, slug };
+  return { title, date, description, slug, theme };
 }
 
 function extractNotes(source: string): { notes: string; body: string } {
@@ -101,6 +112,7 @@ async function parseSlide(
   source: string,
   slug: string,
   index: number,
+  theme: ColorTheme,
 ): Promise<Slide> {
   let rest = source;
   let type: SlideType = "body";
@@ -131,8 +143,8 @@ async function parseSlide(
         `スライド ${index + 1}: split は <!-- column --> を 1 つだけ使って左右を分けます`,
       );
     }
-    const left = await markdownToHtml(columnParts[0].trim(), slug);
-    const right = await markdownToHtml(columnParts[1].trim(), slug);
+    const left = await markdownToHtml(columnParts[0].trim(), slug, theme);
+    const right = await markdownToHtml(columnParts[1].trim(), slug, theme);
     return {
       type,
       html: `<div class="split-pane">${left}</div><div class="split-pane">${right}</div>`,
@@ -147,7 +159,7 @@ async function parseSlide(
     );
   }
 
-  const html = await markdownToHtml(rest, slug);
+  const html = await markdownToHtml(rest, slug, theme);
   if (!html) {
     throw new DeckError(`スライド ${index + 1}: 本文が空です`);
   }
@@ -180,7 +192,7 @@ export async function parseDeck(
 
   const slides: Slide[] = [];
   for (const [index, chunk] of chunks.entries()) {
-    slides.push(await parseSlide(chunk, frontmatter.slug, index));
+    slides.push(await parseSlide(chunk, frontmatter.slug, index, frontmatter.theme));
   }
 
   return { frontmatter, slides };

@@ -46,11 +46,36 @@ describe("parseDeck", () => {
     expect(deck.slides[0]?.html).toContain("split-pane");
   });
 
-  it("rejects unknown frontmatter keys", async () => {
+  it("defaults theme to dark", async () => {
+    const deck = await parse("# 本文\n\n```ts\nconst n = 1;\n```");
+    expect(deck.frontmatter.theme).toBe("dark");
+    expect(deck.slides[0]?.html).toContain("min-dark");
+  });
+
+  it("accepts theme light", async () => {
+    const deck = await parseDeck(
+      `---\ntitle: t\ndate: 2026-09-06\ndescription: d\nslug: sample\ntheme: light\n---\n\n# x\n\n\`\`\`ts\nconst n = 1;\n\`\`\`\n`,
+      { filename: "sample.md" },
+    );
+    expect(deck.frontmatter.theme).toBe("light");
+    expect(deck.slides[0]?.html).toContain("min-light");
+  });
+
+  it("rejects unknown theme values", async () => {
     await expect(
-      parseDeck(`---\ntitle: t\ndate: 2026-09-06\ndescription: d\nslug: sample\ntheme: dark\n---\n\n# x`, {
-        filename: "sample.md",
-      }),
+      parseDeck(
+        `---\ntitle: t\ndate: 2026-09-06\ndescription: d\nslug: sample\ntheme: seriph\n---\n\n# x`,
+        { filename: "sample.md" },
+      ),
+    ).rejects.toBeInstanceOf(DeckError);
+  });
+
+  it("rejects look keys other than theme", async () => {
+    await expect(
+      parseDeck(
+        `---\ntitle: t\ndate: 2026-09-06\ndescription: d\nslug: sample\nlayout: cover\n---\n\n# x`,
+        { filename: "sample.md" },
+      ),
     ).rejects.toBeInstanceOf(DeckError);
   });
 

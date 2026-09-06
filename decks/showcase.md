@@ -3,6 +3,7 @@ title: デザインシステム ショーケース
 date: 2026-09-06
 description: 全スライド型と日本語本文の見本。基盤の受け入れに使う。
 slug: showcase
+theme: dark
 ---
 
 <!-- type: cover -->

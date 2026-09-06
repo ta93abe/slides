@@ -28,6 +28,6 @@ dist/                      Workers Static Assets
 
 型の指定はスライド先頭の `<!-- type: cover -->`。未指定は `body`。split は `<!-- column -->`。
 
-禁止: デッキ内 CSS、JSX、MDX import、未知の frontmatter キー。
+frontmatter の見た目キーは任意の `theme: dark | light` だけ（省略時 dark）。禁止: デッキ内 CSS、JSX、MDX import、未知の frontmatter キー。
 
 PDF（Browser Run → R2）はまだ後続。印刷 CSS はプレイヤーに入っている。

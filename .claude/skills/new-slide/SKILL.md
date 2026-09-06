@@ -19,7 +19,7 @@ description: This skill should be used when the user asks to "create a new slide
 ## 手順
 
 1. 必要なら `~/zettelkasten` から関連ノートを探す
-2. `decks/<slug>.md` を作る。frontmatter は `title` / `date` / `description` / `slug` のみ
+2. `decks/<slug>.md` を作る。frontmatter は `title` / `date` / `description` / `slug`。任意で `theme: dark` か `theme: light`（省略時 dark）
 3. スライドは `---` で区切る。型は `<!-- type: cover -->` など。未指定は `body`
 4. CSS・コンポーネント・JSX は書かない
 5. 画像が要るときだけ `decks/<slug>/` に置き、`![alt](./file.svg)` で参照する

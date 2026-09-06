@@ -5,6 +5,7 @@ import remarkRehype from "remark-rehype";
 import rehypeStringify from "rehype-stringify";
 import { unified } from "unified";
 import { visit } from "unist-util-visit";
+import type { ColorTheme } from "./types.ts";
 
 type ImageNode = {
   type: "image";
@@ -28,14 +29,16 @@ function rewriteRelativeImages(slug: string) {
 export async function markdownToHtml(
   markdown: string,
   slug: string,
+  theme: ColorTheme = "dark",
 ): Promise<string> {
+  const highlighter = theme === "light" ? "min-light" : "min-dark";
   const file = await unified()
     .use(remarkParse)
     .use(remarkGfm)
     .use(rewriteRelativeImages(slug))
     .use(remarkRehype, { allowDangerousHtml: false })
     .use(rehypeShiki, {
-      theme: "min-dark",
+      theme: highlighter,
     })
     .use(rehypeStringify)
     .process(markdown);

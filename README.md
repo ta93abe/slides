@@ -1,6 +1,6 @@
 # Slides
 
-Markdown に本文だけ書く。見た目はグローバルなデザインシステムが担う。Web と PDF は同一ソース。実装は Cloudflare Workers。
+Markdown に本文だけ書く。見た目はグローバルなデザインシステムが担う。アクセントは紫。紙面は frontmatter の `theme: dark` か `theme: light` だけ切り替える。Web と PDF は同一ソース。実装は Cloudflare Workers。
 
 方針と ADR は Linear の [Slides](https://linear.app/ta93abe/project/slides-5f2513034e0a) プロジェクトにある。
 

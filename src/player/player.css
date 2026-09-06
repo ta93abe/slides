@@ -6,7 +6,7 @@
 
 .progress {
   height: 0.22rem;
-  background: rgb(255 255 255 / 0.08);
+  background: var(--color-track);
 }
 
 .progress i {

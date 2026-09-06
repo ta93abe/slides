@@ -2,7 +2,7 @@
 
 1 デッキ = Markdown 1 ファイル。見た目は書かない。
 
-契約の決定: [ADR-0010](https://linear.app/ta93abe/document/adr-0010-スライド型は-html-コメントで指定する-e347dd843d49)
+契約の決定: [ADR-0010](https://linear.app/ta93abe/document/adr-0010-スライド型は-html-コメントで指定する-e347dd843d49) / [ADR-0012](https://linear.app/ta93abe/document/adr-0012-アクセントは紫theme-は-light-dark-だけ-0b32786e9ca9)
 
 ## 置き場
 
@@ -15,7 +15,7 @@ decks/<slug>/図.png   # 任意。画像などの実体
 
 ## frontmatter
 
-ファイル先頭のみ。見た目のキーは置かない。
+ファイル先頭のみ。見た目のキーは `theme` だけ。値は `dark` か `light`。省略時は `dark`。色コードは置かない。
 
 ```yaml
 ---
@@ -23,6 +23,7 @@ title: 発表タイトル
 date: 2026-09-06
 description: 一覧に出す一行
 slug: event-name-2026-09-06
+theme: dark
 ---
 ```
 
