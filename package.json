@@ -3,12 +3,31 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node scripts/build-all.js",
-    "dev": "node scripts/picker.js dev",
-    "export": "node scripts/picker.js export",
-    "pick": "node scripts/picker.js"
+    "build": "tsx scripts/build.ts",
+    "dev": "pnpm build && wrangler dev",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "hono": "^4.13.7"
   },
   "devDependencies": {
-    "prompts": "^2.4.2"
+    "@cloudflare/workers-types": "^5.20260903.1",
+    "@shikijs/rehype": "^3.12.2",
+    "@types/node": "^24.3.1",
+    "rehype-stringify": "^10.0.1",
+    "remark-gfm": "^4.0.1",
+    "remark-parse": "^11.0.0",
+    "remark-rehype": "^11.1.2",
+    "shiki": "^3.12.2",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2",
+    "unified": "^11.0.5",
+    "unist-util-visit": "^5.0.0",
+    "vitest": "^3.2.4",
+    "wrangler": "^4.34.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild", "workerd"]
   }
 }

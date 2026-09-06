@@ -1,0 +1,71 @@
+:root {
+  --color-bg: #0c0e12;
+  --color-bg-deep: #050608;
+  --color-surface: #141821;
+  --color-ink: #f3efe6;
+  --color-ink-dim: #9aa3b2;
+  --color-line: #2a3140;
+  --color-accent: #f38020;
+  --color-accent-deep: #c45f10;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2.25rem;
+  --space-7: 3.25rem;
+  --space-8: 4.5rem;
+  --pad: clamp(2.1rem, 5.4vw, 4.6rem);
+  --radius: 0.85rem;
+  --slide-w: 16;
+  --slide-h: 9;
+  --font: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI",
+    "Yu Gothic", "Noto Sans JP", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas,
+    monospace;
+  --fs-display: clamp(2.5rem, 5.8vw, 4.4rem);
+  --fs-section: clamp(2.2rem, 5.2vw, 3.8rem);
+  --fs-h1: clamp(1.7rem, 3.4vw, 2.45rem);
+  --fs-h2: clamp(1.2rem, 2.2vw, 1.55rem);
+  --fs-body: clamp(1.05rem, 1.7vw, 1.32rem);
+  --fs-caption: clamp(0.85rem, 1.3vw, 1rem);
+  --lh-heading: 1.35;
+  --lh-body: 1.75;
+  --track-heading: 0.04em;
+  --track-body: 0.02em;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--color-bg-deep);
+  color: var(--color-ink);
+  font-family: var(--font);
+}
+
+body {
+  letter-spacing: var(--track-body);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
