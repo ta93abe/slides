@@ -1,15 +1,26 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "slides",
-  "compatibility_date": "2024-09-23",
-  "main": "src/index.js",
+  "compatibility_date": "2026-09-06",
+  "main": "src/worker.ts",
   "build": {
-    "command": "pnpm build"
+    "command": "npm run build"
   },
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
-    "html_handling": "auto-trailing-slash",
-    "not_found_handling": "none"
+    "html_handling": "none",
+    "not_found_handling": "404-page",
+    "run_worker_first": true
+  },
+  "observability": {
+    "enabled": true,
+    "logs": {
+      "head_sampling_rate": 1
+    },
+    "traces": {
+      "enabled": true,
+      "head_sampling_rate": 1
+    }
   }
 }

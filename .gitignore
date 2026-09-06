@@ -6,3 +6,4 @@ dist-stale
 *.local
 .agents
 .cortex
+.playwright-mcp

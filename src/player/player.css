@@ -1,0 +1,64 @@
+.player-ui {
+  position: fixed;
+  inset: auto 0 0;
+  pointer-events: none;
+}
+
+.progress {
+  height: 0.22rem;
+  background: var(--color-track);
+}
+
+.progress i {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--color-accent);
+  transform-origin: left center;
+}
+
+.counter {
+  position: fixed;
+  right: 1.1rem;
+  bottom: 0.7rem;
+  margin: 0;
+  color: var(--color-ink-dim);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+}
+
+@media print {
+  html,
+  body,
+  .stage-wrap,
+  .deck {
+    width: auto;
+    height: auto;
+    min-height: 0;
+    background: var(--color-bg);
+    box-shadow: none;
+    display: block;
+    place-items: unset;
+  }
+
+  @page {
+    size: 13.333in 7.5in landscape;
+    margin: 0;
+  }
+
+  .slide {
+    position: relative;
+    display: flex !important;
+    width: 13.333in;
+    height: 7.5in;
+    overflow: hidden;
+    break-after: page;
+    page-break-after: always;
+  }
+
+  .player-ui,
+  .deck.is-overview {
+    display: none !important;
+  }
+}
