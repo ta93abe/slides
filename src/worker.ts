@@ -1,9 +1,10 @@
 import { Hono } from "hono";
 import type { Context } from "hono";
+import { bindingPresence } from "./bindings.ts";
 
-export type Bindings = {
-  ASSETS: Fetcher;
-};
+export type Bindings = Env;
+
+export { PdfWorkflow } from "./pdf-workflow.ts";
 
 const app = new Hono<{ Bindings: Bindings }>();
 
@@ -24,7 +25,12 @@ async function asset(
   return response;
 }
 
-app.get("/health", (c) => c.json({ ok: true }));
+app.get("/health", (c) =>
+  c.json({
+    ok: true,
+    bindings: bindingPresence(c.env),
+  }),
+);
 
 app.get("/favicon.ico", (c) =>
   asset(c.env, c.req.raw, "/assets/favicon.svg"),
