@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Markdown スライド。見た目はグローバルなデザインシステム。ランタイムは Cloudflare Workers + Hono。プレイヤーはバニラ JS。
+Markdown スライド。見た目はグローバルなデザインシステム。ランタイムは Cloudflare Workers + Hono。プレイヤーはバニラ JS。Node 22 以上。
 
 ## コマンド
 
