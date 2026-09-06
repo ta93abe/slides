@@ -52,4 +52,21 @@ describe("worker", () => {
     expect(response.status).toBe(404);
     expect(await response.text()).toContain("missing");
   });
+
+  it("maps favicon.ico to the svg asset", async () => {
+    const withIcon = {
+      ...assets,
+      fetch: async (input: RequestInfo | URL) => {
+        const url = new URL(input instanceof Request ? input.url : String(input));
+        if (url.pathname === "/assets/favicon.svg") {
+          return new Response("<svg></svg>", {
+            headers: { "content-type": "image/svg+xml" },
+          });
+        }
+        return assets.fetch(input);
+      },
+    } as Fetcher;
+    const response = await app.request("/favicon.ico", {}, { ASSETS: withIcon });
+    expect(await response.text()).toContain("<svg");
+  });
 });

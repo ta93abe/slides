@@ -28,7 +28,10 @@ function parseHash() {
 
 function render() {
   slides.forEach((slide, slideIndex) => {
+    const on = overview || slideIndex === index;
     slide.classList.toggle("is-active", slideIndex === index);
+    slide.toggleAttribute("hidden", !on);
+    slide.toggleAttribute("inert", !on);
   });
   const ratio = ((index + 1) / total) * 100;
   if (progress instanceof HTMLElement) {
@@ -57,11 +60,7 @@ function go(next) {
 function setOverview(on) {
   overview = on;
   deck.classList.toggle("is-overview", on);
-  if (!on) {
-    render();
-  } else {
-    slides.forEach((slide) => slide.classList.add("is-active"));
-  }
+  render();
 }
 
 window.addEventListener("keydown", (event) => {

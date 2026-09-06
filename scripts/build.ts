@@ -44,6 +44,10 @@ async function main() {
     path.join(dist, "assets/player.js"),
     await readFile(path.join(root, "src/player/player.js"), "utf8"),
   );
+  await writeFile(
+    path.join(dist, "assets/favicon.svg"),
+    await readFile(path.join(root, "src/design-system/favicon.svg"), "utf8"),
+  );
 
   const files = (await readdir(decksDir))
     .filter((name) => name.endsWith(".md"))

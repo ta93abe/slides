@@ -20,8 +20,13 @@
   padding: var(--pad);
 }
 
-.slide.is-active {
+.slide.is-active,
+.deck.is-overview .slide {
   display: flex;
+}
+
+.slide[hidden] {
+  display: none !important;
 }
 
 .slide-body {

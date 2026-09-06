@@ -15,7 +15,7 @@ export function renderDeckPage(deck: Deck): string {
       const notes = slide.notes
         ? `<div class="speaker-notes">${escapeHtml(slide.notes)}</div>`
         : "";
-      return `<section class="slide" data-type="${slide.type}" data-index="${index + 1}" id="s${index + 1}" aria-label="${index + 1} / ${deck.slides.length}">
+      return `<section class="slide${index === 0 ? " is-active" : ""}" data-type="${slide.type}" data-index="${index + 1}" id="s${index + 1}" aria-label="${index + 1} / ${deck.slides.length}"${index === 0 ? "" : " hidden inert"}>
   <div class="slide-body">${slide.html}</div>
   ${notes}
 </section>`;
@@ -29,6 +29,7 @@ export function renderDeckPage(deck: Deck): string {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="${escapeHtml(description)}">
   <title>${escapeHtml(title)}</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/design-system.css">
   <link rel="stylesheet" href="/assets/player.css">
 </head>
@@ -72,6 +73,7 @@ export function renderListingPage(
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Slides</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/design-system.css">
   <link rel="stylesheet" href="/assets/listing.css">
 </head>
@@ -96,6 +98,7 @@ export function renderNotFoundPage(): string {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>見つかりません</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/design-system.css">
   <link rel="stylesheet" href="/assets/listing.css">
 </head>

@@ -14,7 +14,7 @@ async function asset(
   status?: number,
 ): Promise<Response> {
   const url = new URL(path, request.url);
-  const response = await env.ASSETS.fetch(new Request(url, request));
+  const response = await env.ASSETS.fetch(url.toString());
   if (status && status !== response.status) {
     return new Response(response.body, {
       status,
@@ -25,6 +25,10 @@ async function asset(
 }
 
 app.get("/health", (c) => c.json({ ok: true }));
+
+app.get("/favicon.ico", (c) =>
+  asset(c.env, c.req.raw, "/assets/favicon.svg"),
+);
 
 app.get("/", (c) => asset(c.env, c.req.raw, "/index.html"));
 
