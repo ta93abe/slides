@@ -74,7 +74,11 @@ app.all("*", async (c) => {
 
 export { app };
 
-export default {
-  fetch: app.fetch,
+const worker = {
+  fetch(request: Request, env: Env, ctx: ExecutionContext) {
+    return app.fetch(request, env, ctx);
+  },
   queue: handlePdfQueue,
 };
+
+export default worker;
