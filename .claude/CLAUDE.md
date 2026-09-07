@@ -22,14 +22,14 @@ src/parser/                unified + remark。MDX は失敗
 src/design-system/         トークン / タイポ / 型
 src/player/                キーボード・スワイプ・ハッシュ
 src/render/                一覧とデッキ HTML
-src/worker.ts              Hono。export default app
+src/worker.ts              Hono。export default { fetch, queue }
 dist/                      Workers Static Assets
 ```
 
-バインディング（R2 / Browser / Images / Queue / Analytics Engine / Workflow）は wrangler.jsonc。業務ロジックは後続。`Bindings` 型は `wrangler types` の `Env`。
+バインディング（R2 / Browser / Images / Queue / Analytics Engine / Workflow）は wrangler.jsonc。`Bindings` 型は `wrangler types` の `Env`。PDF は Browser Run → Workflow → R2。紙面は `docs/PDF.md`。
 
 型の指定はスライド先頭の `<!-- type: cover -->`。未指定は `body`。split は `<!-- column -->`。
 
 frontmatter の見た目キーは任意の `theme: dark | light` だけ（省略時 dark）。禁止: デッキ内 CSS、JSX、MDX import、未知の frontmatter キー。
 
-PDF（Browser Run → R2）はまだ後続。印刷 CSS はプレイヤーに入っている。
+PDF は `/:slug.pdf`。印刷 CSS はプレイヤーに入っている。

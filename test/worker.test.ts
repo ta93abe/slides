@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import app, { PdfWorkflow } from "../src/worker.ts";
+import worker, { app, PdfWorkflow } from "../src/worker.ts";
 
 const html = (body: string, status = 200) =>
   new Response(body, {
@@ -50,6 +50,16 @@ describe("worker", () => {
 
   it("serves a deck at /:slug", async () => {
     const response = await app.request("/showcase", {}, { ASSETS: assets });
+    expect(await response.text()).toContain("deck");
+  });
+
+  it("serves a deck through the Worker fetch export", async () => {
+    const { fetch } = worker;
+    const response = await fetch(
+      new Request("https://example.com/showcase"),
+      { ASSETS: assets } as Env,
+      {} as ExecutionContext,
+    );
     expect(await response.text()).toContain("deck");
   });
 

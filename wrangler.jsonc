@@ -23,7 +23,7 @@
       "head_sampling_rate": 1
     }
   },
-  // ADR-0007: unused at runtime until TA-806 / TA-810. Empty bucket and queue are enough.
+  // ADR-0007: R2 holds generated PDFs. Queue consumer starts PdfWorkflow one at a time.
   "r2_buckets": [
     {
       "binding": "R2",
@@ -41,6 +41,15 @@
       {
         "binding": "PDF_QUEUE",
         "queue": "slides-pdf"
+      }
+    ],
+    "consumers": [
+      {
+        "queue": "slides-pdf",
+        "max_batch_size": 1,
+        "max_batch_timeout": 1,
+        "max_retries": 5,
+        "max_concurrency": 1
       }
     ]
   },
